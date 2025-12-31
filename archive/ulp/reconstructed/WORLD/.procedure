@@ -1,4 +1,0 @@
-procedure render_lines
-(([
-interrupt PRINT
-[((
