@@ -1,0 +1,19 @@
+#!/bin/sh
+#===============================================================================
+# worlds/conversation_demo.world - Multimedia Story Demonstration
+#===============================================================================
+# Encodes Conversation Series Article I as ULP trace, then projects to all formats
+set -eu
+
+ARTICLE_PATH="/data/data/com.termux/files/home/universal-life-protocol/Conversation Series/ARTICLE I.md"
+
+echo "=== CONVERSATION AT THE GATE ===" >&2
+echo "Encoding: Solomon, Solon, and ʿAsabiyyah" >&2
+echo "" >&2
+
+# Encode the article as structured story trace
+cat "$ARTICLE_PATH" | ./interrupts/ENCODE_CONVERSATION_STORY.sh
+
+echo "" >&2
+echo "✓ Story encoded as ULP trace" >&2
+echo "✓ Ready for multimedia projections" >&2
