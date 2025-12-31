@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversation Series - Complete AR/VR Experience</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  <style>
+    body { margin: 0; overflow: hidden; font-family: serif; }
+
+    #ui-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    #article-selector {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid #ffd700;
+      pointer-events: all;
+    }
+
+    #article-selector h2 {
+      color: #ffd700;
+      font-size: 16px;
+      margin: 0 0 10px 0;
+    }
+
+    .article-nav {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 5px;
+      margin-top: 10px;
+    }
+
+    .article-nav button {
+      padding: 8px;
+      background: linear-gradient(135deg, #8b6914 0%, #ffd700 100%);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 11px;
+      transition: all 0.3s;
+    }
+
+    .article-nav button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 15px rgba(255, 215, 0, 0.6);
+    }
+
+    .article-nav button.active {
+      background: linear-gradient(135deg, #00d4ff 0%, #0084ff 100%);
+      color: #fff;
+    }
+
+    #dialogue-panel {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 20px;
+      max-height: 250px;
+      overflow-y: auto;
+      border-top: 3px solid #ffd700;
+      pointer-events: all;
+    }
+
+    #dialogue-panel h3 {
+      color: #ffd700;
+      font-size: 18px;
+      margin: 0 0 15px 0;
+    }
+
+    .dialogue-line {
+      margin: 10px 0;
+      padding: 10px;
+      background: rgba(255, 215, 0, 0.1);
+      border-left: 3px solid #ffd700;
+      border-radius: 4px;
+    }
+
+    .speaker {
+      color: #00d4ff;
+      font-weight: bold;
+      font-size: 14px;
+      margin-bottom: 5px;
+    }
+
+    .text {
+      color: #fff;
+      font-style: italic;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    #controls-panel {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 15px;
+      border-radius: 8px;
+      border: 2px solid #00d4ff;
+      pointer-events: all;
+    }
+
+    #controls-panel h2 {
+      color: #00d4ff;
+      font-size: 14px;
+      margin: 0 0 10px 0;
+    }
+
+    .control-btn {
+      display: block;
+      width: 100%;
+      padding: 8px;
+      margin: 5px 0;
+      background: #333;
+      color: #fff;
+      border: 1px solid #555;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.3s;
+    }
+
+    .control-btn:hover {
+      background: #00d4ff;
+      color: #000;
+    }
+
+    .control-btn.active {
+      background: #ffd700;
+      color: #000;
+      border-color: #ffd700;
+    }
+
+    #ar-instructions {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: rgba(0, 0, 0, 0.9);
+      padding: 30px;
+      border-radius: 12px;
+      text-align: center;
+      color: #ffd700;
+      max-width: 400px;
+      pointer-events: all;
+    }
+
+    #ar-instructions h1 {
+      font-size: 24px;
+      margin-bottom: 20px;
+    }
+
+    #ar-instructions p {
+      font-size: 14px;
+      line-height: 1.8;
+      color: #ccc;
+      margin: 10px 0;
+    }
+
+    #start-btn {
+      margin-top: 20px;
+      padding: 15px 30px;
+      background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+      color: #000;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    #start-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 215, 0, 0.8);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+  </style>
+</head>
+<body>
+  <div id="ui-overlay">
+    <div id="ar-instructions">
+      <h1>📖 Conversation Series</h1>
+      <p>🥽 <strong>Complete AR/VR Experience</strong></p>
+      <p>8 Articles • 3 Characters • Infinite Perspectives</p>
+      <p>📱 Point your camera at a flat surface<br>🎭 Navigate between articles<br>🎨 Customize the scene</p>
+      <button id="start-btn">Enter the Conversation</button>
+    </div>
+
+    <div id="article-selector" class="hidden">
+      <h2>📚 Select Article</h2>
+      <div class="article-nav">
+        <button class="active" data-article="1">I</button>
+        <button data-article="2">II</button>
+        <button data-article="3">III</button>
+        <button data-article="4">IV</button>
+        <button data-article="5">V</button>
+        <button data-article="6">VI</button>
+        <button data-article="7">VII</button>
+        <button data-article="8">VIII</button>
+      </div>
+    </div>
+
+    <div id="controls-panel" class="hidden">
+      <h2>⚙️ Scene</h2>
+      <button class="control-btn active" id="toggle-solomon">Solomon</button>
+      <button class="control-btn active" id="toggle-solon">Solon</button>
+      <button class="control-btn active" id="toggle-ibn">Ibn Khaldun</button>
+      <button class="control-btn active" id="toggle-gate">Gate</button>
+      <button class="control-btn active" id="toggle-labels">Labels</button>
+      <button class="control-btn" id="toggle-animation">Animate</button>
+    </div>
+
+    <div id="dialogue-panel" class="hidden">
+      <h3 id="article-title">Article I: Solomon, Solon, and ʿAsabiyyah</h3>
+      <div id="dialogues">
+        <div class="dialogue-line">
+          <div class="speaker">Solomon</div>
+          <div class="text">"Order does not begin with law. It begins with right relation."</div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Solon</div>
+          <div class="text">"Laws are the practice of wisdom made visible."</div>
+        </div>
+        <div class="dialogue-line">
+          <div class="speaker">Ibn Khaldun</div>
+          <div class="text">"ʿAsabiyyah — the social cohesion that binds us together."</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+    <!-- Lighting -->
+    <a-entity light="type: ambient; color: #CCC; intensity: 0.6"></a-entity>
+    <a-entity light="type: directional; color: #FFD700; intensity: 0.9" position="-2 4 2"></a-entity>
+    <a-entity light="type: point; color: #00D4FF; intensity: 0.3" position="0 3 -3"></a-entity>
+
+    <!-- Characters -->
+    <a-entity id="solomon-entity" class="character">
+      <a-box id="solomon-box" position="0 1.8 -3" rotation="0 0 0" color="#FFD700"
+             scale="0.5 2 0.3" shadow>
+        <a-text id="solomon-label" value="Solomon" align="center" color="#000"
+                position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
+      </a-box>
+      <a-entity id="solomon-glow" geometry="primitive: sphere; radius: 0.3"
+                material="color: #FFD700; opacity: 0.3; transparent: true"
+                position="0 1.8 -3"></a-entity>
+    </a-entity>
+
+    <a-entity id="solon-entity" class="character">
+      <a-box id="solon-box" position="2 1.7 -2.5" rotation="0 -30 0" color="#7777FF"
+             scale="0.5 2 0.3" shadow>
+        <a-text id="solon-label" value="Solon" align="center" color="#FFF"
+                position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
+      </a-box>
+      <a-entity id="solon-glow" geometry="primitive: sphere; radius: 0.3"
+                material="color: #7777FF; opacity: 0.3; transparent: true"
+                position="2 1.7 -2.5"></a-entity>
+    </a-entity>
+
+    <a-entity id="ibn-entity" class="character">
+      <a-box id="ibn-box" position="-2 1.75 -2.5" rotation="0 30 0" color="#66CC66"
+             scale="0.5 2 0.3" shadow>
+        <a-text id="ibn-label" value="Ibn Khaldun" align="center" color="#000"
+                position="0 1.2 0.2" scale="0.7 0.7 0.7"></a-text>
+      </a-box>
+      <a-entity id="ibn-glow" geometry="primitive: sphere; radius: 0.3"
+                material="color: #66CC66; opacity: 0.3; transparent: true"
+                position="-2 1.75 -2.5"></a-entity>
+    </a-entity>
+
+    <!-- Environment -->
+    <a-entity id="gate-entity">
+      <a-box id="city-gate" position="0 2 -5" rotation="0 0 0" color="#8B7355" scale="5 4 0.5">
+        <a-text value="Gate of the City" align="center" color="#FFD700"
+                position="0 1 0.3" scale="1.5 1.5 1.5"></a-text>
+      </a-box>
+    </a-entity>
+
+    <a-plane position="0 0 -3" rotation="-90 0 0" width="20" height="20"
+             color="#7BC8A4" shadow></a-plane>
+
+    <a-sky color="#1a1a2e"></a-sky>
+
+    <!-- Camera -->
+    <a-camera position="0 1.6 5"></a-camera>
+  </a-scene>
+
+  <script>
+    const articles = [
+      { num: 1, title: "Article I: Solomon, Solon, and ʿAsabiyyah",
+        dialogues: [
+          { speaker: "Solomon", text: "Order does not begin with law. It begins with right relation." },
+          { speaker: "Solon", text: "Laws are the practice of wisdom made visible." },
+          { speaker: "Ibn Khaldun", text: "ʿAsabiyyah — the social cohesion that binds us." }
+        ]
+      },
+      { num: 2, title: "Article II: The Dialogue Deepens", dialogues: [{ speaker: "Solomon", text: "The conversation continues..." }] },
+      { num: 3, title: "Article III: Understanding Emerges", dialogues: [{ speaker: "Solon", text: "Between us, wisdom grows..." }] },
+      { num: 4, title: "Article IV: Practical Application", dialogues: [{ speaker: "Ibn Khaldun", text: "Theory meets practice..." }] },
+      { num: 5, title: "Article V: Social Bonds", dialogues: [{ speaker: "Solomon", text: "The ties that bind communities..." }] },
+      { num: 6, title: "Article VI: Justice and Law", dialogues: [{ speaker: "Solon", text: "Law is wisdom institutionalized..." }] },
+      { num: 7, title: "Article VII: Collective Spirit", dialogues: [{ speaker: "Ibn Khaldun", text: "The group soul animates civilization..." }] },
+      { num: 8, title: "Article VIII: Synthesis", dialogues: [{ speaker: "All", text: "Together, we understand what none could alone..." }] }
+    ];
+
+    let currentArticle = 0;
+    let animationEnabled = false;
+
+    // Start button
+    document.getElementById('start-btn').addEventListener('click', function() {
+      document.getElementById('ar-instructions').classList.add('hidden');
+      document.getElementById('article-selector').classList.remove('hidden');
+      document.getElementById('controls-panel').classList.remove('hidden');
+      document.getElementById('dialogue-panel').classList.remove('hidden');
+    });
+
+    // Article navigation
+    document.querySelectorAll('.article-nav button').forEach((btn, idx) => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.article-nav button').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+        currentArticle = idx;
+        updateArticle(idx);
+      });
+    });
+
+    function updateArticle(idx) {
+      const article = articles[idx];
+      document.getElementById('article-title').textContent = article.title;
+
+      const dialoguesDiv = document.getElementById('dialogues');
+      dialoguesDiv.innerHTML = '';
+      article.dialogues.forEach(d => {
+        const line = document.createElement('div');
+        line.className = 'dialogue-line';
+        line.innerHTML = `
+          <div class="speaker">${d.speaker}</div>
+          <div class="text">"${d.text}"</div>
+        `;
+        dialoguesDiv.appendChild(line);
+      });
+    }
+
+    // Character toggles
+    document.getElementById('toggle-solomon').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.getElementById('solomon-entity').setAttribute('visible', this.classList.contains('active'));
+    });
+
+    document.getElementById('toggle-solon').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.getElementById('solon-entity').setAttribute('visible', this.classList.contains('active'));
+    });
+
+    document.getElementById('toggle-ibn').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.getElementById('ibn-entity').setAttribute('visible', this.classList.contains('active'));
+    });
+
+    // Gate toggle
+    document.getElementById('toggle-gate').addEventListener('click', function() {
+      this.classList.toggle('active');
+      document.getElementById('gate-entity').setAttribute('visible', this.classList.contains('active'));
+    });
+
+    // Labels toggle
+    document.getElementById('toggle-labels').addEventListener('click', function() {
+      this.classList.toggle('active');
+      const visible = this.classList.contains('active');
+      document.getElementById('solomon-label').setAttribute('visible', visible);
+      document.getElementById('solon-label').setAttribute('visible', visible);
+      document.getElementById('ibn-label').setAttribute('visible', visible);
+    });
+
+    // Animation toggle
+    document.getElementById('toggle-animation').addEventListener('click', function() {
+      this.classList.toggle('active');
+      animationEnabled = this.classList.contains('active');
+
+      if (animationEnabled) {
+        document.getElementById('solomon-box').setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear');
+        document.getElementById('solon-box').setAttribute('animation', 'property: rotation; to: 0 -390 0; loop: true; dur: 25000; easing: linear');
+        document.getElementById('ibn-box').setAttribute('animation', 'property: rotation; to: 0 390 0; loop: true; dur: 22000; easing: linear');
+      } else {
+        document.getElementById('solomon-box').removeAttribute('animation');
+        document.getElementById('solon-box').removeAttribute('animation');
+        document.getElementById('ibn-box').removeAttribute('animation');
+      }
+    });
+
+    // Initialize
+    updateArticle(0);
+  </script>
+</body>
+</html>

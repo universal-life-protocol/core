@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Interactive 3D/AR/VR experience of the Conversation Series - Solomon, Solon, and ʿAsabiyyah at the Gate of the City">
+  <meta name="keywords" content="philosophy, AR, VR, 3D, Solomon, Solon, Ibn Khaldun, conversation, wisdom">
+  <meta name="author" content="Universal Life Protocol">
+  <title>Conversation Series - Interactive Multimedia Experience</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+      color: #fff;
+      overflow-x: hidden;
+    }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background:
+        radial-gradient(ellipse at top, rgba(255, 215, 0, 0.1) 0%, transparent 60%),
+        radial-gradient(ellipse at bottom, rgba(0, 212, 255, 0.1) 0%, transparent 60%);
+    }
+
+    h1 {
+      font-size: clamp(2rem, 5vw, 4rem);
+      color: #ffd700;
+      margin-bottom: 20px;
+      text-shadow: 0 0 30px rgba(255, 215, 0, 0.5);
+      animation: glow 3s ease-in-out infinite alternate;
+    }
+
+    @keyframes glow {
+      from { text-shadow: 0 0 20px rgba(255, 215, 0, 0.3); }
+      to { text-shadow: 0 0 40px rgba(255, 215, 0, 0.8); }
+    }
+
+    .subtitle {
+      font-size: clamp(1rem, 2.5vw, 1.5rem);
+      color: #00d4ff;
+      margin-bottom: 40px;
+      font-style: italic;
+    }
+
+    .description {
+      max-width: 700px;
+      font-size: clamp(0.9rem, 2vw, 1.1rem);
+      line-height: 1.8;
+      color: #ccc;
+      margin-bottom: 50px;
+    }
+
+    .cta-container {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 60px;
+    }
+
+    .cta-btn {
+      padding: 18px 35px;
+      font-size: 1.1rem;
+      font-weight: bold;
+      text-decoration: none;
+      border-radius: 12px;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      border: none;
+      font-family: 'Georgia', serif;
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .cta-primary {
+      background: linear-gradient(135deg, #ffd700 0%, #ff8c00 100%);
+      color: #000;
+    }
+
+    .cta-primary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.5);
+    }
+
+    .cta-secondary {
+      background: linear-gradient(135deg, #00d4ff 0%, #0084ff 100%);
+      color: #000;
+    }
+
+    .cta-secondary:hover {
+      transform: translateY(-3px) scale(1.05);
+      box-shadow: 0 10px 30px rgba(0, 212, 255, 0.5);
+    }
+
+    .cta-outline {
+      background: transparent;
+      color: #fff;
+      border: 2px solid #fff;
+    }
+
+    .cta-outline:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: translateY(-3px);
+    }
+
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 40px 20px;
+    }
+
+    .feature-card {
+      background: rgba(255, 255, 255, 0.05);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 12px;
+      padding: 30px;
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover {
+      transform: translateY(-5px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: #ffd700;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.2);
+    }
+
+    .feature-icon {
+      font-size: 3rem;
+      margin-bottom: 15px;
+    }
+
+    .feature-title {
+      font-size: 1.3rem;
+      color: #ffd700;
+      margin-bottom: 10px;
+    }
+
+    .feature-desc {
+      color: #aaa;
+      line-height: 1.6;
+      font-size: 0.95rem;
+    }
+
+    .articles-section {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 60px 20px;
+      margin-top: 40px;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      color: #ffd700;
+      margin-bottom: 40px;
+    }
+
+    .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .article-card {
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.1) 0%, rgba(0, 212, 255, 0.1) 100%);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 12px;
+      padding: 25px;
+      transition: all 0.3s ease;
+    }
+
+    .article-card:hover {
+      transform: scale(1.03);
+      border-color: #ffd700;
+      box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+    }
+
+    .article-num {
+      font-size: 2rem;
+      color: #00d4ff;
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    .article-title {
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: 15px;
+    }
+
+    .article-links {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .article-link {
+      padding: 8px 15px;
+      background: rgba(255, 255, 255, 0.1);
+      color: #ffd700;
+      text-decoration: none;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      transition: all 0.2s ease;
+    }
+
+    .article-link:hover {
+      background: #ffd700;
+      color: #000;
+    }
+
+    .tech-section {
+      padding: 60px 20px;
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .tech-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .tech-badge {
+      padding: 10px 20px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 20px;
+      color: #ffd700;
+      font-size: 0.9rem;
+    }
+
+    footer {
+      background: rgba(0, 0, 0, 0.5);
+      padding: 40px 20px;
+      text-align: center;
+      margin-top: 60px;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 30px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .footer-link {
+      color: #00d4ff;
+      text-decoration: none;
+      transition: color 0.3s ease;
+    }
+
+    .footer-link:hover {
+      color: #ffd700;
+    }
+
+    .copyright {
+      color: #888;
+      font-size: 0.9rem;
+      margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+      .cta-container {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .cta-btn {
+        width: 100%;
+        max-width: 350px;
+        margin: 0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <h1>The Conversation Series</h1>
+    <p class="subtitle">Solomon, Solon, and ʿAsabiyyah at the Gate of the City</p>
+
+    <p class="description">
+      Experience ancient philosophical dialogues in immersive 3D, augmented reality, and virtual reality.
+      Navigate between eight articles, customize the scene, and witness the conversation unfold in space.
+    </p>
+
+    <div class="cta-container">
+      <a href="viewer.html" class="cta-btn cta-primary">🖥️ Launch 3D Viewer</a>
+      <a href="ar-experience.html" class="cta-btn cta-secondary">📱 AR Experience</a>
+      <a href="https://github.com/universal-life-protocol/core" class="cta-btn cta-outline" target="_blank">
+        📚 View Source
+      </a>
+    </div>
+
+    <div class="features">
+      <div class="feature-card">
+        <div class="feature-icon">🎭</div>
+        <h3 class="feature-title">8 Articles</h3>
+        <p class="feature-desc">
+          Complete conversation series encoded as interactive 3D scenes
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎨</div>
+        <h3 class="feature-title">4 Formats</h3>
+        <p class="feature-desc">
+          SVG illustrations, 3D models, glTF scenes, and AR experiences
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🎮</div>
+        <h3 class="feature-title">Full Control</h3>
+        <p class="feature-desc">
+          Customize camera, lighting, characters, and environment in real-time
+        </p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon">🌍</div>
+        <h3 class="feature-title">Cross-Platform</h3>
+        <p class="feature-desc">
+          Desktop browsers, mobile AR, VR headsets, and 3D software
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="articles-section">
+    <h2 class="section-title">Explore the Articles</h2>
+    <div class="articles-grid">
+      <div class="article-card">
+        <div class="article-num">I</div>
+        <div class="article-title">Solomon, Solon, and ʿAsabiyyah</div>
+        <div class="article-links">
+          <a href="projections/svg/article_i.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_i.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_i_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">II</div>
+        <div class="article-title">Continued Dialogue</div>
+        <div class="article-links">
+          <a href="projections/svg/article_ii.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_ii.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_ii_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">III</div>
+        <div class="article-title">Deeper Understanding</div>
+        <div class="article-links">
+          <a href="projections/svg/article_iii.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_iii.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_iii_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">IV</div>
+        <div class="article-title">Practical Wisdom</div>
+        <div class="article-links">
+          <a href="projections/svg/article_iv.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_iv.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_iv_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">V</div>
+        <div class="article-title">Social Bonds</div>
+        <div class="article-links">
+          <a href="projections/svg/article_v.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_v.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_v_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">VI</div>
+        <div class="article-title">Law & Justice</div>
+        <div class="article-links">
+          <a href="projections/svg/article_vi.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_vi.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_vi_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">VII</div>
+        <div class="article-title">Collective Spirit</div>
+        <div class="article-links">
+          <a href="projections/svg/article_vii.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_vii.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_vii_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+
+      <div class="article-card">
+        <div class="article-num">VIII</div>
+        <div class="article-title">Final Synthesis</div>
+        <div class="article-links">
+          <a href="projections/svg/article_viii.svg" class="article-link">2D</a>
+          <a href="projections/gltf/article_viii.gltf" class="article-link">3D</a>
+          <a href="projections/ar/article_viii_ar.html" class="article-link">AR</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="tech-section">
+    <h2 class="section-title">Built With</h2>
+    <div class="tech-list">
+      <span class="tech-badge">A-Frame 1.4.0</span>
+      <span class="tech-badge">AR.js</span>
+      <span class="tech-badge">WebGL</span>
+      <span class="tech-badge">glTF 2.0</span>
+      <span class="tech-badge">SVG</span>
+      <span class="tech-badge">Wavefront OBJ</span>
+      <span class="tech-badge">Universal Life Protocol</span>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-links">
+      <a href="https://github.com/universal-life-protocol/core" class="footer-link" target="_blank">GitHub</a>
+      <a href="https://github.com/universal-life-protocol/core/blob/main/CONVERSATION_SERIES_GUIDE.md" class="footer-link" target="_blank">Documentation</a>
+      <a href="https://github.com/universal-life-protocol/core/blob/main/README.md" class="footer-link" target="_blank">ULP v1.1</a>
+    </div>
+    <p class="copyright">
+      &copy; 2025 Universal Life Protocol<br>
+      <em>"One story. Eight articles. Infinite perspectives."</em>
+    </p>
+  </footer>
+</body>
+</html>

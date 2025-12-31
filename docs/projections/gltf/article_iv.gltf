@@ -1,0 +1,120 @@
+{
+  "asset": {
+    "version": "2.0",
+    "generator": "ULP Story Projection v1.1",
+    "copyright": "Universal Life Protocol"
+  },
+  "scene": 0,
+  "scenes": [
+    {
+      "name": "Conversation at the Gate",
+      "nodes": [0, 1, 2, 3, 4]
+    }
+  ],
+  "nodes": [
+    {
+      "name": "Solomon",
+      "translation": [0,1.8,-3],
+      "mesh": 0
+    },
+    {
+      "name": "Solon",
+      "translation": [2,1.7,-2.5],
+      "mesh": 1
+    },
+    {
+      "name": "Ibn Khaldun",
+      "translation": [-2,1.75,-2.5],
+      "mesh": 2
+    },
+    {
+      "name": "City Gate",
+      "translation": [0,0,-5],
+      "mesh": 3
+    },
+    {
+      "name": "Ground",
+      "translation": [0, 0, 0],
+      "mesh": 4
+    }
+  ],
+  "meshes": [
+    {
+      "name": "Solomon_Figure",
+      "primitives": [{
+        "attributes": {"POSITION": 0},
+        "material": 0
+      }]
+    },
+    {
+      "name": "Solon_Figure",
+      "primitives": [{
+        "attributes": {"POSITION": 1},
+        "material": 1
+      }]
+    },
+    {
+      "name": "IbnKhaldun_Figure",
+      "primitives": [{
+        "attributes": {"POSITION": 2},
+        "material": 2
+      }]
+    },
+    {
+      "name": "City_Gate",
+      "primitives": [{
+        "attributes": {"POSITION": 3},
+        "material": 3
+      }]
+    },
+    {
+      "name": "Ground_Plane",
+      "primitives": [{
+        "attributes": {"POSITION": 4},
+        "material": 4
+      }]
+    }
+  ],
+  "materials": [
+    {
+      "name": "Solomon_Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [1.0, 0.84, 0.0, 1.0],
+        "metallicFactor": 0.5,
+        "roughnessFactor": 0.5
+      }
+    },
+    {
+      "name": "Solon_Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.7, 0.7, 1.0, 1.0],
+        "metallicFactor": 0.3,
+        "roughnessFactor": 0.7
+      }
+    },
+    {
+      "name": "IbnKhaldun_Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.6, 0.8, 0.6, 1.0],
+        "metallicFactor": 0.4,
+        "roughnessFactor": 0.6
+      }
+    },
+    {
+      "name": "Gate_Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.6, 0.5, 0.4, 1.0],
+        "metallicFactor": 0.1,
+        "roughnessFactor": 0.9
+      }
+    },
+    {
+      "name": "Ground_Material",
+      "pbrMetallicRoughness": {
+        "baseColorFactor": [0.5, 0.4, 0.3, 1.0],
+        "metallicFactor": 0.0,
+        "roughnessFactor": 1.0
+      }
+    }
+  ]
+}

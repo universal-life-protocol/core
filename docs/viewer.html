@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conversation Series - Interactive Viewer</title>
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/gh/AR-js-org/AR.js/aframe/build/aframe-ar.js"></script>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      font-family: 'Georgia', serif;
+      background: linear-gradient(135deg, #1a1a1a 0%, #2d1810 100%);
+      color: #ffd700;
+      overflow: hidden;
+      height: 100vh;
+    }
+
+    #controls {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 300px;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.95);
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 2px solid #ffd700;
+      z-index: 1000;
+    }
+
+    #controls h1 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #ffd700;
+      border-bottom: 2px solid #ffd700;
+      padding-bottom: 10px;
+    }
+
+    .control-section {
+      margin-bottom: 25px;
+    }
+
+    .control-section h2 {
+      font-size: 14px;
+      color: #00d4ff;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+
+    .article-btn {
+      width: 100%;
+      padding: 12px;
+      margin: 5px 0;
+      background: linear-gradient(135deg, #8b6914 0%, #ffd700 100%);
+      color: #000;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      font-weight: bold;
+      font-size: 12px;
+      transition: all 0.3s;
+    }
+
+    .article-btn:hover {
+      transform: translateX(5px);
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.5);
+    }
+
+    .article-btn.active {
+      background: linear-gradient(135deg, #00d4ff 0%, #0084ff 100%);
+      color: #fff;
+    }
+
+    .control-group {
+      margin: 15px 0;
+    }
+
+    .control-group label {
+      display: block;
+      font-size: 11px;
+      color: #aaa;
+      margin-bottom: 5px;
+      text-transform: uppercase;
+    }
+
+    input[type="range"] {
+      width: 100%;
+      height: 4px;
+      background: #333;
+      outline: none;
+      border-radius: 2px;
+    }
+
+    input[type="range"]::-webkit-slider-thumb {
+      width: 15px;
+      height: 15px;
+      background: #ffd700;
+      cursor: pointer;
+      border-radius: 50%;
+    }
+
+    select {
+      width: 100%;
+      padding: 8px;
+      background: #222;
+      color: #ffd700;
+      border: 1px solid #444;
+      border-radius: 4px;
+      font-size: 12px;
+    }
+
+    .toggle-btn {
+      padding: 8px 15px;
+      margin: 5px 5px 5px 0;
+      background: #333;
+      color: #ffd700;
+      border: 1px solid #555;
+      border-radius: 4px;
+      cursor: pointer;
+      font-size: 11px;
+      transition: all 0.3s;
+    }
+
+    .toggle-btn.active {
+      background: #ffd700;
+      color: #000;
+      border-color: #ffd700;
+    }
+
+    #viewer {
+      position: fixed;
+      top: 0;
+      left: 300px;
+      width: calc(100% - 300px);
+      height: 100vh;
+    }
+
+    #story-info {
+      position: fixed;
+      bottom: 0;
+      left: 300px;
+      right: 0;
+      background: rgba(0, 0, 0, 0.9);
+      padding: 20px;
+      max-height: 200px;
+      overflow-y: auto;
+      border-top: 2px solid #ffd700;
+    }
+
+    #story-info h3 {
+      color: #ffd700;
+      font-size: 16px;
+      margin-bottom: 10px;
+    }
+
+    #story-info p {
+      color: #ccc;
+      font-size: 13px;
+      line-height: 1.6;
+      font-style: italic;
+    }
+
+    .stats {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 10px 15px;
+      border-radius: 4px;
+      font-size: 11px;
+      color: #00d4ff;
+      font-family: monospace;
+    }
+  </style>
+</head>
+<body>
+  <div id="controls">
+    <h1>📖 Conversation Series</h1>
+
+    <div class="control-section">
+      <h2>Select Article</h2>
+      <button class="article-btn active" data-article="i">I - Solomon, Solon, ʿAsabiyyah</button>
+      <button class="article-btn" data-article="ii">II - Continued Dialogue</button>
+      <button class="article-btn" data-article="iii">III - Deeper Understanding</button>
+      <button class="article-btn" data-article="iv">IV - Practical Wisdom</button>
+      <button class="article-btn" data-article="v">V - Social Bonds</button>
+      <button class="article-btn" data-article="vi">VI - Law & Order</button>
+      <button class="article-btn" data-article="vii">VII - Collective Spirit</button>
+      <button class="article-btn" data-article="viii">VIII - Final Synthesis</button>
+    </div>
+
+    <div class="control-section">
+      <h2>View Mode</h2>
+      <button class="toggle-btn active" data-mode="3d">3D Scene</button>
+      <button class="toggle-btn" data-mode="ar">AR Mode</button>
+      <button class="toggle-btn" data-mode="2d">2D View</button>
+    </div>
+
+    <div class="control-section">
+      <h2>Camera Controls</h2>
+      <div class="control-group">
+        <label>Camera Distance</label>
+        <input type="range" id="camera-distance" min="3" max="15" value="8" step="0.5">
+      </div>
+      <div class="control-group">
+        <label>Camera Height</label>
+        <input type="range" id="camera-height" min="0" max="5" value="1.6" step="0.1">
+      </div>
+      <div class="control-group">
+        <label>Rotation Speed</label>
+        <input type="range" id="rotation-speed" min="0" max="10" value="2" step="0.5">
+      </div>
+    </div>
+
+    <div class="control-section">
+      <h2>Lighting</h2>
+      <div class="control-group">
+        <label>Ambient Light</label>
+        <input type="range" id="ambient-light" min="0" max="1" value="0.5" step="0.1">
+      </div>
+      <div class="control-group">
+        <label>Directional Light</label>
+        <input type="range" id="directional-light" min="0" max="2" value="0.8" step="0.1">
+      </div>
+      <div class="control-group">
+        <label>Light Color</label>
+        <select id="light-color">
+          <option value="#FFFFFF">White</option>
+          <option value="#FFD700">Gold</option>
+          <option value="#00D4FF">Cyan</option>
+          <option value="#FF6B6B">Warm</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="control-section">
+      <h2>Characters</h2>
+      <button class="toggle-btn active" data-character="solomon">Solomon</button>
+      <button class="toggle-btn active" data-character="solon">Solon</button>
+      <button class="toggle-btn active" data-character="ibn">Ibn Khaldun</button>
+    </div>
+
+    <div class="control-section">
+      <h2>Environment</h2>
+      <button class="toggle-btn active" data-env="gate">City Gate</button>
+      <button class="toggle-btn active" data-env="ground">Ground</button>
+      <button class="toggle-btn active" data-env="sky">Sky</button>
+    </div>
+  </div>
+
+  <div id="viewer">
+    <a-scene embedded vr-mode-ui="enabled: false">
+      <!-- Lighting -->
+      <a-entity id="ambient" light="type: ambient; color: #BBB; intensity: 0.5"></a-entity>
+      <a-entity id="directional" light="type: directional; color: #FFF; intensity: 0.8" position="-2 4 2"></a-entity>
+
+      <!-- Characters -->
+      <a-entity id="solomon" class="character" visible="true">
+        <a-box position="0 1.8 -3" rotation="0 0 0" color="#FFD700"
+               scale="0.5 2 0.3"
+               animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear">
+          <a-text value="Solomon" align="center" color="#000"
+                  position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
+        </a-box>
+      </a-entity>
+
+      <a-entity id="solon" class="character" visible="true">
+        <a-box position="2 1.7 -2.5" rotation="0 -30 0" color="#7777FF"
+               scale="0.5 2 0.3"
+               animation="property: rotation; to: 0 330 0; loop: true; dur: 25000; easing: linear">
+          <a-text value="Solon" align="center" color="#FFF"
+                  position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
+        </a-box>
+      </a-entity>
+
+      <a-entity id="ibn" class="character" visible="true">
+        <a-box position="-2 1.75 -2.5" rotation="0 30 0" color="#66CC66"
+               scale="0.5 2 0.3"
+               animation="property: rotation; to: 0 390 0; loop: true; dur: 22000; easing: linear">
+          <a-text value="Ibn Khaldun" align="center" color="#000"
+                  position="0 1.2 0.2" scale="0.7 0.7 0.7"></a-text>
+        </a-box>
+      </a-entity>
+
+      <!-- Environment -->
+      <a-entity id="gate" class="environment" visible="true">
+        <a-box position="0 2 -5" rotation="0 0 0" color="#8B7355" scale="5 4 0.5">
+          <a-text value="Gate of the City" align="center" color="#FFD700"
+                  position="0 1 0.3" scale="1.5 1.5 1.5"></a-text>
+        </a-box>
+      </a-entity>
+
+      <a-entity id="ground" class="environment" visible="true">
+        <a-plane position="0 0 -3" rotation="-90 0 0" width="15" height="15"
+                 color="#7BC8A4" shadow></a-plane>
+      </a-entity>
+
+      <a-entity id="sky" class="environment" visible="true">
+        <a-sky color="#2d1810"></a-sky>
+      </a-entity>
+
+      <!-- Camera with orbit -->
+      <a-entity id="camera-rig" position="0 1.6 0">
+        <a-camera id="main-camera" position="0 0 8"
+                  animation="property: rotation; to: 0 360 0; loop: true; dur: 30000; easing: linear; pauseEvents: pause-rotation; resumeEvents: resume-rotation">
+        </a-camera>
+      </a-entity>
+    </a-scene>
+  </div>
+
+  <div id="story-info">
+    <h3 id="article-title">Article I: Solomon, Solon, and ʿAsabiyyah at the Gate</h3>
+    <p id="article-excerpt">
+      "Order does not begin with law. It begins with right relation." — Solomon<br>
+      Three figures meet at the gate of the city to discuss how humans shall live together.
+    </p>
+  </div>
+
+  <div class="stats">
+    Article: <span id="current-article">I</span><br>
+    Mode: <span id="current-mode">3D</span><br>
+    Camera: <span id="camera-pos">0, 1.6, 8</span>
+  </div>
+
+  <script>
+    // Article data
+    const articles = {
+      i: {
+        title: "Article I: Solomon, Solon, and ʿAsabiyyah",
+        excerpt: '"Order does not begin with law. It begins with right relation." — Solomon',
+        gltf: "gltf/article_i.gltf",
+        ar: "ar/article_i_ar.html"
+      },
+      ii: { title: "Article II: Continued Dialogue", excerpt: "The conversation deepens...", gltf: "gltf/article_ii.gltf", ar: "ar/article_ii_ar.html" },
+      iii: { title: "Article III: Deeper Understanding", excerpt: "Wisdom emerges between voices...", gltf: "gltf/article_iii.gltf", ar: "ar/article_iii_ar.html" },
+      iv: { title: "Article IV: Practical Wisdom", excerpt: "How shall we live together?", gltf: "gltf/article_iv.gltf", ar: "ar/article_iv_ar.html" },
+      v: { title: "Article V: Social Bonds", excerpt: "The strength of ʿAsabiyyah...", gltf: "gltf/article_v.gltf", ar: "ar/article_v_ar.html" },
+      vi: { title: "Article VI: Law & Order", excerpt: "Solon speaks of justice...", gltf: "gltf/article_vi.gltf", ar: "ar/article_vi_ar.html" },
+      vii: { title: "Article VII: Collective Spirit", excerpt: "The bonds that unite us...", gltf: "gltf/article_vii.gltf", ar: "ar/article_vii_ar.html" },
+      viii: { title: "Article VIII: Final Synthesis", excerpt: "The conversation concludes...", gltf: "gltf/article_viii.gltf", ar: "ar/article_viii_ar.html" }
+    };
+
+    let currentArticle = 'i';
+
+    // Article selection
+    document.querySelectorAll('.article-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('.article-btn').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const article = this.dataset.article;
+        currentArticle = article;
+
+        // Update info
+        document.getElementById('article-title').textContent = articles[article].title;
+        document.getElementById('article-excerpt').textContent = articles[article].excerpt;
+        document.getElementById('current-article').textContent = article.toUpperCase();
+      });
+    });
+
+    // Camera controls
+    const cameraRig = document.getElementById('camera-rig');
+    const camera = document.getElementById('main-camera');
+
+    document.getElementById('camera-distance').addEventListener('input', function() {
+      camera.setAttribute('position', `0 0 ${this.value}`);
+      updateCameraStats();
+    });
+
+    document.getElementById('camera-height').addEventListener('input', function() {
+      cameraRig.setAttribute('position', `0 ${this.value} 0`);
+      updateCameraStats();
+    });
+
+    document.getElementById('rotation-speed').addEventListener('input', function() {
+      const duration = 60000 / parseFloat(this.value);
+      camera.setAttribute('animation', `property: rotation; to: 0 360 0; loop: true; dur: ${duration}; easing: linear`);
+    });
+
+    // Lighting controls
+    document.getElementById('ambient-light').addEventListener('input', function() {
+      document.getElementById('ambient').setAttribute('light', `intensity: ${this.value}`);
+    });
+
+    document.getElementById('directional-light').addEventListener('input', function() {
+      document.getElementById('directional').setAttribute('light', `intensity: ${this.value}`);
+    });
+
+    document.getElementById('light-color').addEventListener('change', function() {
+      document.getElementById('directional').setAttribute('light', `color: ${this.value}`);
+    });
+
+    // Character toggles
+    document.querySelectorAll('[data-character]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const char = this.dataset.character;
+        const entity = document.getElementById(char);
+        entity.setAttribute('visible', this.classList.contains('active'));
+      });
+    });
+
+    // Environment toggles
+    document.querySelectorAll('[data-env]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        this.classList.toggle('active');
+        const env = this.dataset.env;
+        const entity = document.getElementById(env);
+        entity.setAttribute('visible', this.classList.contains('active'));
+      });
+    });
+
+    // View mode
+    document.querySelectorAll('[data-mode]').forEach(btn => {
+      btn.addEventListener('click', function() {
+        document.querySelectorAll('[data-mode]').forEach(b => b.classList.remove('active'));
+        this.classList.add('active');
+
+        const mode = this.dataset.mode;
+        document.getElementById('current-mode').textContent = mode.toUpperCase();
+
+        if (mode === 'ar') {
+          window.open(articles[currentArticle].ar, '_blank');
+        }
+      });
+    });
+
+    function updateCameraStats() {
+      const pos = camera.getAttribute('position');
+      const rigPos = cameraRig.getAttribute('position');
+      document.getElementById('camera-pos').textContent = `${rigPos.x}, ${rigPos.y}, ${pos.z}`;
+    }
+
+    // Initial stats
+    updateCameraStats();
+  </script>
+</body>
+</html>
