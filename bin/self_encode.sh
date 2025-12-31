@@ -1,6 +1,69 @@
 #!/bin/sh
-# bin/self_encode.sh - Self-encoding bundle creation
-# ULP v1.1 - Appends MANIFEST/FILE/DATA records to trace
+#===============================================================================
+# bin/self_encode.sh - Self-Encoding Bundle Creation
+#===============================================================================
+# ULP v1.1 - Self-encoding implementation
+#
+# PURPOSE:
+#   Append complete execution environment to trace.
+#   Embeds world definition + utilities so trace can reconstruct itself.
+#
+# USAGE:
+#   ./bin/self_encode.sh WORLD_DIR TRACE_FILE [REPO_DIR]
+#
+# ARGUMENTS:
+#   WORLD_DIR  - World definition directory to encode
+#   TRACE_FILE - Trace file to append to
+#   REPO_DIR   - Repository root for utilities (default: .)
+#
+# INPUT:
+#   - WORLD_DIR/*: All world definition files
+#   - REPO_DIR/bin/*: Core utilities
+#   - REPO_DIR/interrupts/*: Interrupt handlers
+#
+# OUTPUT:
+#   - Appends to TRACE_FILE:
+#     BEGIN encoding
+#     FILE path=... sha256=... mode=... bytes=...
+#     DATA <base64_line1>
+#     DATA <base64_line2>
+#     ...
+#     END_FILE path=...
+#     END encoding
+#
+# ENCODING FORMAT:
+#   - Files listed deterministically (sorted order)
+#   - Content base64 encoded with 76-char line width
+#   - Each DATA line prefixed with "DATA\t"
+#   - SHA-256 hash included for verification
+#   - File permissions preserved (mode)
+#
+# PRESERVES:
+#   - Principle 1: Trace completeness (self-contained)
+#   - Determinism: Same files → same encoding
+#   - Reproducibility: Can extract and re-execute
+#
+# ALGORITHM:
+#   1. List world files (sorted order)
+#   2. For each file:
+#      a. Compute SHA-256 hash
+#      b. Get file mode (permissions)
+#      c. Get byte count
+#      d. Write FILE record
+#      e. Base64 encode content
+#      f. Write DATA records (76-char lines)
+#      g. Write END_FILE record
+#
+# DEPENDENCIES:
+#   - bin/hash.sh - SHA-256 hashing
+#   - base64 - Base64 encoding
+#   - awk, cat, wc
+#
+# EXAMPLE:
+#   ./bin/self_encode.sh world out/trace.log .
+#   # Appends ~30 FILE/DATA records to trace
+#
+#===============================================================================
 set -eu
 
 ROOT="$1"

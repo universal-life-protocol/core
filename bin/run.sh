@@ -1,6 +1,69 @@
 #!/bin/sh
+#===============================================================================
 # bin/run.sh - ULP v1.1 Main Execution Engine
-# Implements: Trace construction with append-only guarantee
+#===============================================================================
+# ULP v1.1 - Core trace construction engine
+#
+# PURPOSE:
+#   Constructs an append-only execution trace from world definition and stdin.
+#   This is THE primary ULP operation: execution = trace construction.
+#
+# USAGE:
+#   echo "input" | ./bin/run.sh [WORLD_DIR] [OUTPUT_DIR] [ENTRY_PROC]
+#
+# ARGUMENTS:
+#   WORLD_DIR   - World definition directory (default: world)
+#   OUTPUT_DIR  - Output directory for trace (default: out)
+#   ENTRY_PROC  - Entry procedure name (default: first in .procedure)
+#
+# INPUT:
+#   - stdin: Input data for the execution
+#   - WORLD_DIR: Directory containing world definition files
+#
+# OUTPUT:
+#   - OUTPUT_DIR/trace.log: Complete execution trace
+#   - stdout: Progress/status messages
+#   - stderr: Error messages
+#
+# TRACE STRUCTURE:
+#   #METADATA     - Non-semantic metadata
+#   HDR + WORLD   - Headers and world identity (WID)
+#   BEGIN/END encoding  - Self-encoding bundle
+#   BEGIN/END input     - Stdin records
+#   BEGIN/END execution - Execution events
+#   SEAL          - Cryptographic seals
+#
+# EXIT CODES:
+#   0   - Success (trace created)
+#   1   - Execution error
+#   2   - Missing world files
+#   127 - Missing required tools
+#
+# PRESERVES:
+#   - Principle 1: Trace is append-only (atomic write with locking)
+#   - Principle 2: World is non-executable (validates with canon.awk)
+#   - Principle 5: Forward-only information flow
+#   - Determinism: Same inputs → byte-identical traces
+#
+# DEPENDENCIES:
+#   - bin/hash.sh        - SHA-256 hashing
+#   - bin/canon.awk      - World file validation
+#   - bin/proc.awk       - Pattern_Syntax parsing
+#   - bin/self_encode.sh - Self-encoding bundle
+#   - awk, sort, cat, base64
+#
+# ALGORITHM:
+#   1. Validate world definition (identifier-only check)
+#   2. Compute World ID (WID) from world file hashes
+#   3. Parse .procedure with multiset validation
+#   4. Write trace header and world identity
+#   5. Append self-encoding bundle (world + utilities)
+#   6. Append stdin records (base64 encoded)
+#   7. Execute interrupt handlers, recording events
+#   8. Append cryptographic seals
+#   9. Atomic publish (mv with lock)
+#
+#===============================================================================
 set -eu
 
 ROOT="${1:-world}"
