@@ -1,0 +1,299 @@
+# ULP v1.1 Conversation Series - Article 4: Networking Without Addresses
+# Demonstrating declarative network topology and late binding
+
+#METADATA version ULP/1.1
+#METADATA article "Networking Without Addresses"
+#METADATA purpose "Explaining .network and .connections as pure capabilities"
+#METADATA author "Brian Thorne"
+#METADATA date "2025-12-31"
+#METADATA architecture_hash 9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+HDR	version	1
+HDR	article	networking
+HDR	concept	declarative_topology
+WORLD	wid	network_world_a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2
+
+BEGIN	encoding
+
+FILE	path	WORLD/.network	sha256	net456	mode	644	bytes	412
+DATA	ZmFtaWxpZXM6CiAgLSBpbmV0CiAgLSB1bml4CnNvY2tldF90eXBlczoKICAtIHN0cmVhbQogIC0g
+DATA	ZGF0YWdyYW0Kc2VjdXJpdHk6CiAgYWlyX2dhcHBlZDogZmFsc2UKICBlbmNyeXB0aW9uOiBvcHRp
+DATA	b25hbAogIGF1dGhlbnRpY2F0aW9uOiByZXF1aXJlZAo=
+END_FILE	path	WORLD/.network
+
+FILE	path	WORLD/.connections	sha256	conn789	mode	644	bytes	528
+DATA	ZW5kcG9pbnRzOgogIHBvcnRhbDoKICAgIHJvbGU6IGNsaWVudAogICAgZmFtaWx5OiBpbmV0CiAg
+DATA	ICBzb2NrZXQ6IHN0cmVhbQogIHNlcnZlcjoKICAgIHJvbGU6IHNlcnZlcgogICAgZmFtaWx5OiBp
+DATA	bmV0CiAgICBwb3J0OiA4MDgwCmFsbG93ZWRfZmxvd3M6CiAgLSBmcm9tOiBwb3J0YWwKICAgIHRv
+DATA	OiBzZXJ2ZXIK
+END_FILE	path	WORLD/.connections
+
+END	encoding
+
+BEGIN	input
+
+STDIN	n	1	text	How does networking work in ULP?
+STDIN	n	2	text	Why are IP addresses forbidden in traces?
+STDIN	n	3	text	What is late binding?
+
+END	input
+
+BEGIN	execution
+
+CLAUSE	qid	network_clause	openSig	(([	closeSig	[((	intr	EXPLAIN_NETWORK
+EXEC	eid	network_exec_1	wid	network_world_a0b1c2d3e4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2	qid	network_clause	intr	EXPLAIN_NETWORK
+
+EVENT	type	NETWORK_DEMO_START	topic	declarative_networking
+
+# The Radical Approach
+STDOUT	n	1	text	=== ULP's Radical Networking Approach ===
+STDOUT	n	2	text
+STDOUT	n	3	text	Traditional networking:
+STDOUT	n	4	text	  socket(AF_INET, SOCK_STREAM, 0)
+STDOUT	n	5	text	  connect(sock, "192.168.1.100:8080")
+STDOUT	n	6	text	  send(sock, data)
+STDOUT	n	7	text
+STDOUT	n	8	text	ULP networking:
+STDOUT	n	9	text	  1. Declare capabilities in .network
+STDOUT	n	10	text	  2. Define topology in .connections
+STDOUT	n	11	text	  3. Reference endpoints by NAME, not address
+STDOUT	n	12	text	  4. Trace records communication, not addresses
+STDOUT	n	13	text	  5. Late binding resolves names to addresses
+STDOUT	n	14	text
+
+# Air-Gapped by Default
+STDOUT	n	15	text	=== Air-Gapped by Default ===
+STDOUT	n	16	text
+STDOUT	n	17	text	Key principle: NO .network file = NO networking
+STDOUT	n	18	text
+STDOUT	n	19	text	World without .network:
+STDOUT	n	20	text	  • Cannot create sockets
+STDOUT	n	21	text	  • Cannot connect to anything
+STDOUT	n	22	text	  • Completely isolated
+STDOUT	n	23	text	  • Perfect for sandboxing
+STDOUT	n	24	text
+STDOUT	n	25	text	World with .network:
+STDOUT	n	26	text	  • Declares which socket families are allowed
+STDOUT	n	27	text	  • Specifies socket types (stream, datagram)
+STDOUT	n	28	text	  • Sets security constraints
+STDOUT	n	29	text	  • Still needs .connections for actual communication
+STDOUT	n	30	text
+
+# .network File
+STDOUT	n	31	text	=== The .network File (Declarative Capabilities) ===
+STDOUT	n	32	text
+STDOUT	n	33	text	Example .network:
+STDOUT	n	34	text
+STDOUT	n	35	text	  families:
+STDOUT	n	36	text	    - inet      # IPv4/IPv6
+STDOUT	n	37	text	    - unix      # Local sockets
+STDOUT	n	38	text
+STDOUT	n	39	text	  socket_types:
+STDOUT	n	40	text	    - stream    # TCP-like
+STDOUT	n	41	text	    - datagram  # UDP-like
+STDOUT	n	42	text
+STDOUT	n	43	text	  security:
+STDOUT	n	44	text	    encryption: optional
+STDOUT	n	45	text	    authentication: required
+STDOUT	n	46	text
+STDOUT	n	47	text	This is NOT executable code - it's a CAPABILITY DESCRIPTION
+STDOUT	n	48	text	It says what CAN exist, not what WILL happen
+STDOUT	n	49	text
+
+# .connections File
+STDOUT	n	50	text	=== The .connections File (Declarative Topology) ===
+STDOUT	n	51	text
+STDOUT	n	52	text	Example .connections:
+STDOUT	n	53	text
+STDOUT	n	54	text	  endpoints:
+STDOUT	n	55	text	    portal:
+STDOUT	n	56	text	      role: client
+STDOUT	n	57	text	      family: inet
+STDOUT	n	58	text	      socket: stream
+STDOUT	n	59	text
+STDOUT	n	60	text	    server:
+STDOUT	n	61	text	      role: server
+STDOUT	n	62	text	      family: inet
+STDOUT	n	63	text	      port: 8080
+STDOUT	n	64	text
+STDOUT	n	65	text	  allowed_flows:
+STDOUT	n	66	text	    - from: portal
+STDOUT	n	67	text	      to: server
+STDOUT	n	68	text	      protocol: http/1.1
+STDOUT	n	69	text
+STDOUT	n	70	text	This defines the COMMUNICATION GRAPH, not the implementation
+STDOUT	n	71	text
+
+# No Address Literals
+STDOUT	n	72	text	=== Forbidden: Address Literals in Traces ===
+STDOUT	n	73	text
+STDOUT	n	74	text	NEVER in a ULP trace:
+STDOUT	n	75	text	  ✗ CONNECT 192.168.1.100:8080
+STDOUT	n	76	text	  ✗ SEND 10.0.0.5 data
+STDOUT	n	77	text	  ✗ BIND 0.0.0.0:3000
+STDOUT	n	78	text
+STDOUT	n	79	text	ALWAYS in a ULP trace:
+STDOUT	n	80	text	  ✓ CONNECT endpoint=portal target=server
+STDOUT	n	81	text	  ✓ SEND endpoint=portal data=<hash>
+STDOUT	n	82	text	  ✓ RECV endpoint=server data=<hash>
+STDOUT	n	83	text
+STDOUT	n	84	text	Why? Because addresses are IMPLEMENTATION DETAILS.
+STDOUT	n	85	text	The trace records SEMANTIC communication, not network details.
+STDOUT	n	86	text
+
+# Late Binding
+STDOUT	n	87	text	=== Late Binding: Same Trace, Different Networks ===
+STDOUT	n	88	text
+STDOUT	n	89	text	Example trace event:
+STDOUT	n	90	text	  EVENT CONNECT endpoint=portal target=server protocol=http
+STDOUT	n	91	text
+STDOUT	n	92	text	Binding 1 (TCP/IP):
+STDOUT	n	93	text	  portal  → 192.168.1.50
+STDOUT	n	94	text	  server  → 192.168.1.100:8080
+STDOUT	n	95	text	  Result: TCP connection to 192.168.1.100:8080
+STDOUT	n	96	text
+STDOUT	n	97	text	Binding 2 (QUIC):
+STDOUT	n	98	text	  portal  → QUIC client
+STDOUT	n	99	text	  server  → quic://server.example.com:443
+STDOUT	n	100	text	  Result: QUIC connection with 0-RTT
+STDOUT	n	101	text
+STDOUT	n	102	text	Binding 3 (WebRTC):
+STDOUT	n	103	text	  portal  → WebRTC peer
+STDOUT	n	104	text	  server  → signaling server + STUN/TURN
+STDOUT	n	105	text	  Result: P2P WebRTC data channel
+STDOUT	n	106	text
+STDOUT	n	107	text	SAME TRACE. DIFFERENT BINDINGS. ALL VALID.
+STDOUT	n	108	text
+
+# Federated Communication
+STDOUT	n	109	text	=== Perfect for Federation ===
+STDOUT	n	110	text
+STDOUT	n	111	text	Federation problem: How do peers communicate without central authority?
+STDOUT	n	112	text
+STDOUT	n	113	text	Traditional approach:
+STDOUT	n	114	text	  • Hardcode DNS names or IP addresses
+STDOUT	n	115	text	  • Use central discovery service
+STDOUT	n	116	text	  • Lock into specific protocols
+STDOUT	n	117	text
+STDOUT	n	118	text	ULP approach:
+STDOUT	n	119	text	  • Trace records: "portal connected to server"
+STDOUT	n	120	text	  • Each peer binds names to their local reality:
+STDOUT	n	121	text	    - Alice's portal → connects via Tor
+STDOUT	n	122	text	    - Bob's portal → connects via I2P
+STDOUT	n	123	text	    - Carol's portal → connects via direct TCP
+STDOUT	n	124	text	  • Same semantic trace, different network paths
+STDOUT	n	125	text
+
+# Trace Events
+STDOUT	n	126	text	=== Network Trace Events (Closed Set) ===
+STDOUT	n	127	text
+STDOUT	n	128	text	The 16 network event types (sealed in v1.1):
+STDOUT	n	129	text
+STDOUT	n	130	text	  CREATE_SOCKET   endpoint=<name> family=<family> type=<type>
+STDOUT	n	131	text	  BIND            endpoint=<name> port=<symbolic>
+STDOUT	n	132	text	  LISTEN          endpoint=<name> backlog=<n>
+STDOUT	n	133	text	  CONNECT         endpoint=<source> target=<dest>
+STDOUT	n	134	text	  ACCEPT          endpoint=<server> peer=<symbolic>
+STDOUT	n	135	text	  SEND            endpoint=<name> data_hash=<hash> bytes=<n>
+STDOUT	n	136	text	  RECV            endpoint=<name> data_hash=<hash> bytes=<n>
+STDOUT	n	137	text	  SEND_TO         endpoint=<name> target=<dest> data_hash=<hash>
+STDOUT	n	138	text	  RECV_FROM       endpoint=<name> source=<symbolic> data_hash=<hash>
+STDOUT	n	139	text	  SHUTDOWN        endpoint=<name> how=<direction>
+STDOUT	n	140	text	  CLOSE_SOCKET    endpoint=<name>
+STDOUT	n	141	text	  SELECT          endpoints=<list> timeout=<symbolic>
+STDOUT	n	142	text	  POLL            endpoints=<list> timeout=<symbolic>
+STDOUT	n	143	text	  ERROR           endpoint=<name> error=<symbolic>
+STDOUT	n	144	text	  TIMEOUT         endpoint=<name> operation=<op>
+STDOUT	n	145	text	  STATE_CHANGE    endpoint=<name> old=<state> new=<state>
+STDOUT	n	146	text
+STDOUT	n	147	text	Notice: NO IP addresses, NO port numbers, NO MACs
+STDOUT	n	148	text	Only symbolic endpoint names and hashed data
+STDOUT	n	149	text
+
+# Security Benefits
+STDOUT	n	150	text	=== Security Benefits ===
+STDOUT	n	151	text
+STDOUT	n	152	text	1. CAPABILITY-BASED
+STDOUT	n	153	text	   No .network file = no networking capability
+STDOUT	n	154	text	   Clear declaration of network permissions
+STDOUT	n	155	text
+STDOUT	n	156	text	2. TOPOLOGY CONSTRAINT
+STDOUT	n	157	text	   .connections defines allowed flows
+STDOUT	n	158	text	   Can't connect to endpoints not in topology
+STDOUT	n	159	text
+STDOUT	n	160	text	3. NO EXFILTRATION VIA TRACE
+STDOUT	n	161	text	   Traces don't contain IP addresses
+STDOUT	n	162	text	   Can't leak network topology through trace inspection
+STDOUT	n	163	text
+STDOUT	n	164	text	4. AUDIT TRAIL
+STDOUT	n	165	text	   Every connection attempt is traced
+STDOUT	n	166	text	   Can verify communication patterns
+STDOUT	n	167	text
+STDOUT	n	168	text	5. SANDBOXING
+STDOUT	n	169	text	   Easy to create air-gapped worlds
+STDOUT	n	170	text	   Just omit .network file
+STDOUT	n	171	text
+
+# Real Example
+STDOUT	n	172	text	=== Concrete Example: Portal ↔ Server ===
+STDOUT	n	173	text
+STDOUT	n	174	text	Trace events:
+STDOUT	n	175	text
+STDOUT	n	176	text	  EVENT CREATE_SOCKET endpoint=portal family=inet socket=stream
+STDOUT	n	177	text	  EVENT CONNECT endpoint=portal target=server protocol=http/1.1
+STDOUT	n	178	text	  EVENT SEND endpoint=portal data_hash=abc123 bytes=1024
+STDOUT	n	179	text	  EVENT RECV endpoint=portal data_hash=def456 bytes=2048
+STDOUT	n	180	text	  EVENT CLOSE_SOCKET endpoint=portal
+STDOUT	n	181	text
+STDOUT	n	182	text	This trace works with:
+STDOUT	n	183	text	  • TCP/IP over IPv4
+STDOUT	n	184	text	  • TCP/IP over IPv6
+STDOUT	n	185	text	  • QUIC
+STDOUT	n	186	text	  • WebRTC data channels
+STDOUT	n	187	text	  • Unix domain sockets (if both local)
+STDOUT	n	188	text	  • Custom protocols (carrier pigeon, sneakernet)
+STDOUT	n	189	text
+STDOUT	n	190	text	The trace is PROTOCOL-AGNOSTIC and ADDRESS-AGNOSTIC
+STDOUT	n	191	text
+
+# Why This Matters
+STDOUT	n	192	text	=== Why Address-Free Networking Matters ===
+STDOUT	n	193	text
+STDOUT	n	194	text	1. PORTABILITY
+STDOUT	n	195	text	   Same trace works on any network
+STDOUT	n	196	text	   IPv4, IPv6, local, remote - doesn't matter
+STDOUT	n	197	text
+STDOUT	n	198	text	2. PRIVACY
+STDOUT	n	199	text	   Traces don't leak network topology
+STDOUT	n	200	text	   Can share execution traces without revealing IPs
+STDOUT	n	201	text
+STDOUT	n	202	text	3. FUTURE-PROOF
+STDOUT	n	203	text	   When IPv4 → IPv6 happened, broke many apps
+STDOUT	n	204	text	   With ULP: just re-bind endpoints, trace still works
+STDOUT	n	205	text
+STDOUT	n	206	text	4. FEDERATION FRIENDLY
+STDOUT	n	207	text	   No central authority needed for addressing
+STDOUT	n	208	text	   Each peer can use their own addressing scheme
+STDOUT	n	209	text
+STDOUT	n	210	text	5. PROTOCOL FLEXIBILITY
+STDOUT	n	211	text	   Switch from HTTP to HTTP/3 to gRPC?
+STDOUT	n	212	text	   Same trace, different binding
+STDOUT	n	213	text
+
+EVENT	type	NETWORK_DEMO_END	topic	declarative_networking
+
+EXIT	intr	EXPLAIN_NETWORK	code	0
+
+END	execution
+
+BEGIN	projection
+
+EVENT	type	PROJECT	projection	network_graph	status	success
+EVENT	type	PROJECT	projection	topology_diagram	status	success
+EVENT	type	PROJECT	projection	posix	status	success
+
+END	projection
+
+SEAL	semantic_hash	9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d0e
+SEAL	network_events	16
+SEAL	article_hash	4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d

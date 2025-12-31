@@ -1,0 +1,4 @@
+record full
+include world
+include runner
+include interrup

@@ -1,0 +1,273 @@
+ARCHITECTURAL PRESERVATION LICENSE v1.0
+========================================
+
+Copyright (c) 2025 Brian Thorne
+
+PREAMBLE
+--------
+
+This license governs the Universal Life Protocol (ULP) v1.1 implementation and
+its sealed architecture. The purpose is to ensure the Five Immutable Principles
+remain intact while allowing modification, distribution, and commercial use.
+
+DEFINITIONS
+-----------
+
+"Software" refers to the ULP v1.1 implementation, including but not limited to:
+  - Core utilities (bin/ directory)
+  - World definition files (world/ directory)
+  - Interrupt handlers (interrupts/ directory)
+  - Documentation (all .md, .txt files)
+  - Architecture specification (ULP-v1.1-ARCHITECTURE.txt)
+
+"Architecture" refers to the sealed v1.1 specification with hash:
+  9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+"Five Principles" refers to:
+  1. Trace is Append-Only and Authoritative
+  2. World Definition is Non-Executable
+  3. Projections are Pure Functions
+  4. Effects are Forward-Only via .interpose
+  5. Information Flows Forward-Only
+
+"Derivative Work" means any modification, extension, or translation of the
+Software that retains compatibility with the Architecture.
+
+"Breaking Change" means any modification that violates one or more of the Five
+Principles.
+
+GRANT OF RIGHTS
+---------------
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this Software, to deal in the Software without restriction, including
+without limitation the rights to:
+
+  - Use the Software for any purpose (personal, commercial, research)
+  - Copy and distribute the Software
+  - Modify the Software
+  - Create Derivative Works
+  - Sublicense the Software
+  - Sell copies of the Software
+
+Subject to the following conditions:
+
+CONDITIONS
+----------
+
+1. ARCHITECTURAL PRESERVATION
+
+   Any Derivative Work that claims compatibility with "ULP v1.1" MUST:
+
+   a) Preserve all Five Principles without exception
+
+   b) Maintain the authority hierarchy:
+      Trace > World Definition > Projections > Effects
+
+   c) Respect closed vocabulary sets:
+      - 13 world file types (sealed)
+      - 16 trace event types (sealed)
+      - 13 effect symbols (sealed)
+      - 16 projection classes (sealed)
+
+   d) Reference the Architecture hash in all traces:
+      9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+2. BREAKING CHANGES
+
+   Any modification that violates the Five Principles is a Breaking Change and:
+
+   a) MUST be released under a new major version (v2.0+, not v1.x)
+
+   b) MUST NOT claim compatibility with "ULP v1.1"
+
+   c) MAY use the name "ULP" but MUST clearly indicate incompatibility:
+      Examples: "ULP v2.0 (incompatible with v1.1)"
+                "Modified ULP (non-standard)"
+
+   d) SHOULD document which principles were changed and why
+
+3. ATTRIBUTION
+
+   All copies and Derivative Works MUST include:
+
+   a) This LICENSE file (unmodified)
+
+   b) Copyright notice: "Copyright (c) 2025 Brian Thorne"
+
+   c) A clear statement of any modifications made
+
+   d) If distributed in binary form, the above notices must appear in
+      documentation and/or other materials provided with the distribution
+
+4. ARCHITECTURE SPECIFICATION
+
+   The file ULP-v1.1-ARCHITECTURE.txt is the canonical specification.
+
+   a) This file MUST be included unmodified in all distributions claiming
+      "ULP v1.1" compatibility
+
+   b) Its SHA-256 hash MUST remain:
+      9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+   c) Alternative architectures are permitted but must use different version
+      numbers and filenames (e.g., "ULP-v2.0-ARCHITECTURE.txt")
+
+5. TRACE VALIDITY
+
+   All traces produced by the Software claiming "ULP v1.1" compatibility MUST:
+
+   a) Include the Architecture hash in #METADATA:
+      #METADATA architecture_hash 9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+   b) Follow the trace format specification exactly
+
+   c) Be deterministically reproducible (same inputs → same trace)
+
+   d) Support self-encoding (trace contains complete execution environment)
+
+6. PATENT GRANT
+
+   Each contributor grants a perpetual, worldwide, non-exclusive, royalty-free
+   patent license under the contributor's essential patent claims to make, use,
+   sell, offer for sale, import and otherwise run, modify and propagate the
+   Software, subject to these conditions.
+
+PERMISSIONS
+-----------
+
+You MAY:
+  ✓ Use this Software commercially
+  ✓ Modify and create Derivative Works
+  ✓ Distribute modified versions
+  ✓ Charge for the Software or services based on it
+  ✓ Create proprietary extensions (if they preserve the Five Principles)
+  ✓ Embed in larger proprietary systems
+  ✓ Create compatible implementations in other languages
+  ✓ Sublicense under compatible terms
+
+You MAY NOT:
+  ✗ Claim "ULP v1.1 compatibility" while violating the Five Principles
+  ✗ Remove or modify the Architecture hash from ULP-v1.1-ARCHITECTURE.txt
+  ✗ Use version numbers v1.x for Breaking Changes
+  ✗ Remove copyright notices or this LICENSE
+  ✗ Use the name "ULP" to misrepresent architectural compatibility
+
+DISCLAIMER
+----------
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+
+IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
+DEALINGS IN THE SOFTWARE.
+
+TERMINATION
+-----------
+
+This license automatically terminates if you fail to comply with its conditions.
+Upon termination:
+  - Your rights under this license cease
+  - You must cease distribution of the Software
+  - Copies already distributed under this license are not affected
+  - You may regain this license by coming into compliance
+
+COMPATIBILITY
+-------------
+
+This license is compatible with:
+  - MIT License (for permissive use)
+  - Apache License 2.0 (patent grant compatibility)
+  - BSD licenses (attribution requirements)
+
+This license is INCOMPATIBLE with:
+  - GPL v2/v3 (architectural preservation requirements may conflict)
+  - AGPL (different scope of requirements)
+
+If combining with GPL code, consult legal counsel about compatibility.
+
+INTERPRETATION
+--------------
+
+1. If any provision of this license is held invalid or unenforceable, the
+   remaining provisions remain in effect.
+
+2. The "Architectural Preservation" requirements apply only to works claiming
+   "ULP v1.1" compatibility. Forks with Breaking Changes are permitted under
+   different version numbers.
+
+3. This license is governed by the laws of the jurisdiction where the copyright
+   holder resides, without regard to conflict of law provisions.
+
+4. Disputes shall be resolved through arbitration in accordance with the rules
+   of the American Arbitration Association.
+
+SPECIAL EXCEPTION FOR EDUCATIONAL USE
+--------------------------------------
+
+Educational institutions and non-profit research organizations may modify the
+Five Principles for teaching or research purposes without changing version
+numbers, provided:
+
+  a) The modifications are clearly documented
+  b) Modified versions are not distributed outside the institution
+  c) The purpose is education or research, not production use
+  d) Clear warnings indicate non-standard behavior
+
+CONTRIBUTION TERMS
+------------------
+
+By submitting a contribution to this Software, you agree that:
+
+  a) Your contribution preserves the Five Principles
+  b) You grant the copyright holder a perpetual, irrevocable license to use,
+     modify, and distribute your contribution
+  c) Your contribution is your original work or you have rights to submit it
+  d) You understand your contribution may be rejected if it violates principles
+
+QUESTIONS
+---------
+
+For questions about this license:
+  - Email: brian@universal-life-protocol.com
+  - Repository: https://github.com/universal-life-protocol/ulp
+  - Discussions: https://github.com/universal-life-protocol/ulp/discussions
+
+---
+
+END OF LICENSE
+
+Appendix: The Five Immutable Principles
+========================================
+
+For reference, the Five Principles that must be preserved:
+
+1. TRACE IS APPEND-ONLY AND AUTHORITATIVE
+   - Trace events are immutable once written
+   - The trace is ground truth, not a log
+   - No retroactive modification allowed
+
+2. WORLD DEFINITION IS NON-EXECUTABLE
+   - World files contain identifier-only data
+   - No control flow, no executable code
+   - Validated by bin/canon.awk
+
+3. PROJECTIONS ARE PURE FUNCTIONS
+   - π(Trace) → View
+   - Read-only, no side effects
+   - Deterministic: same trace → same view
+
+4. EFFECTS ARE FORWARD-ONLY VIA .interpose
+   - Effects declared in .interpose file
+   - EVENT → EFFECT mapping (declarative)
+   - No backward causation
+
+5. INFORMATION FLOWS FORWARD-ONLY
+   - World → Trace → Projections
+   - Causal ordering preserved
+   - No information leakage backward
+
+These principles define ULP v1.1 and are sealed by the Architecture hash.

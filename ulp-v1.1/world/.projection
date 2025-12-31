@@ -1,0 +1,17 @@
+projection posix:
+  function: π_posix
+  inputs: trace
+  outputs: stdout
+  lossy: yes
+
+projection json:
+  function: π_json
+  inputs: trace
+  outputs: structured_data
+  lossy: yes
+
+projection pure:
+  function: π_pure
+  inputs: trace
+  outputs: hashes
+  lossy: yes

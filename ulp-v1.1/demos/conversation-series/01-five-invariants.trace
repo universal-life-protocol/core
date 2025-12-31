@@ -1,0 +1,171 @@
+# ULP v1.1 Conversation Series - Article 1: The Five Invariants
+# A trace demonstrating the core architectural principles through dialogue
+
+#METADATA version ULP/1.1
+#METADATA article "The Five Invariants"
+#METADATA purpose "Demonstrating ULP's core architectural principles"
+#METADATA author "Brian Thorne"
+#METADATA date "2025-12-31"
+#METADATA architecture_hash 9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+# Header: World identification
+HDR	version	1
+HDR	article	five_invariants
+HDR	conversation	demo
+WORLD	wid	a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456
+
+# BEGIN: Self-encoding world definition
+BEGIN	encoding
+
+# World definition files (demonstrating non-executability)
+FILE	path	WORLD/.genesis	sha256	abc123	mode	644	bytes	89
+DATA	dXNlciBicmlhbgpydW50aW1lIHBvc2l4CnBhcmFkaWdtIHRyYWNlX2ZpcnN0CnZlcnNpb24gdjFf
+DATA	MQpjb252ZXJzYXRpb24gZGVtbwo=
+END_FILE	path	WORLD/.genesis
+
+FILE	path	WORLD/.procedure	sha256	def456	mode	644	bytes	62
+DATA	cHJvY2VkdXJlIGV4cGxhaW4KKChbCmludGVycnVwdCBERU1PX0lOVkFSSUFOVFMKWygoCg==
+END_FILE	path	WORLD/.procedure
+
+END	encoding
+
+# BEGIN: Input - Questions about ULP
+BEGIN	input
+
+STDIN	n	1	text	What are the Five Invariants?
+STDIN	n	2	text	Why is the trace append-only?
+STDIN	n	3	text	How do projections stay pure?
+
+END	input
+
+# BEGIN: Execution - Processing the conversation
+BEGIN	execution
+
+# Invariant 1: Trace is Append-Only and Authoritative
+CLAUSE	qid	inv1_clause_hash	openSig	(([	closeSig	[((	intr	DEMO_INVARIANTS
+EXEC	eid	exec1_hash	wid	a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456	qid	inv1_clause_hash	intr	DEMO_INVARIANTS
+
+EVENT	type	CONVERSATION_START	topic	five_invariants
+
+# Output: Explanation of Invariant 1
+STDOUT	n	1	text	=== Invariant 1: Trace is Append-Only and Authoritative ===
+STDOUT	n	2	text
+STDOUT	n	3	text	The trace is the ONLY source of truth in ULP.
+STDOUT	n	4	text	Once written, trace events are immutable.
+STDOUT	n	5	text
+STDOUT	n	6	text	Why? Because execution truth must be stable.
+STDOUT	n	7	text	If we could mutate the trace, we lose:
+STDOUT	n	8	text	  • Deterministic replay
+STDOUT	n	9	text	  • Cryptographic verification
+STDOUT	n	10	text	  • Reproducibility guarantees
+STDOUT	n	11	text
+STDOUT	n	12	text	Implementation: Atomic mv, write-once discipline, lock files
+STDOUT	n	13	text
+
+# Output: Explanation of Invariant 2
+STDOUT	n	14	text	=== Invariant 2: World Definition is Non-Executable ===
+STDOUT	n	15	text
+STDOUT	n	16	text	World files (.genesis, .env, .atom, etc.) are DATA, not CODE.
+STDOUT	n	17	text	They contain identifier-only content - no control flow.
+STDOUT	n	18	text
+STDOUT	n	19	text	Why? Because what EXISTS must be separate from what HAPPENS.
+STDOUT	n	20	text
+STDOUT	n	21	text	This prevents:
+STDOUT	n	22	text	  • Hidden malware in world definitions
+STDOUT	n	23	text	  • Turing-complete world specifications
+STDOUT	n	24	text	  • Non-deterministic world initialization
+STDOUT	n	25	text
+STDOUT	n	26	text	Validation: awk -f bin/canon.awk enforces identifier-only
+STDOUT	n	27	text
+
+# Output: Explanation of Invariant 3
+STDOUT	n	28	text	=== Invariant 3: Projections are Pure Functions ===
+STDOUT	n	29	text
+STDOUT	n	30	text	Projections: π(Trace) → View
+STDOUT	n	31	text	They READ the trace but NEVER cause effects.
+STDOUT	n	32	text
+STDOUT	n	33	text	Why? Because views cannot affect execution truth.
+STDOUT	n	34	text
+STDOUT	n	35	text	Examples of pure projections:
+STDOUT	n	36	text	  π_posix(trace)   → stdout text
+STDOUT	n	37	text	  π_json(trace)    → structured data
+STDOUT	n	38	text	  π_w3c(trace)     → HTML rendering
+STDOUT	n	39	text	  π_bip32(trace)   → cryptographic identity
+STDOUT	n	40	text
+STDOUT	n	41	text	Forbidden in projections: exec, eval, system, >, >>, etc.
+STDOUT	n	42	text
+
+# Output: Explanation of Invariant 4
+STDOUT	n	43	text	=== Invariant 4: Effects are Forward-Only via .interpose ===
+STDOUT	n	44	text
+STDOUT	n	45	text	.interpose is a DECLARATIVE mapping: EVENT → EFFECT
+STDOUT	n	46	text	It may CAUSE effects but may NOT READ the trace.
+STDOUT	n	47	text
+STDOUT	n	48	text	Why? To prevent causal loops and maintain determinism.
+STDOUT	n	49	text
+STDOUT	n	50	text	Example .interpose:
+STDOUT	n	51	text	  INPUT  → read_stdin
+STDOUT	n	52	text	  OUTPUT → write_stdout
+STDOUT	n	53	text	  CREATE → create_file
+STDOUT	n	54	text
+STDOUT	n	55	text	The effect symbols are a CLOSED SET (13 total in v1.1)
+STDOUT	n	56	text	No dynamic effect creation - prevents Turing-completeness
+STDOUT	n	57	text
+
+# Output: Explanation of Invariant 5
+STDOUT	n	58	text	=== Invariant 5: Information Flows Forward-Only ===
+STDOUT	n	59	text
+STDOUT	n	60	text	The architecture has 4 layers in strict order:
+STDOUT	n	61	text
+STDOUT	n	62	text	  Layer 1: World Definition  (What exists)
+STDOUT	n	63	text	      ↓
+STDOUT	n	64	text	  Layer 2: Execution Structure (What happens)
+STDOUT	n	65	text	      ↓
+STDOUT	n	66	text	  Layer 3: Trace (What happened - GROUND TRUTH)
+STDOUT	n	67	text	      ↓
+STDOUT	n	68	text	  Layer 4: Observation (How we see it)
+STDOUT	n	69	text
+STDOUT	n	70	text	Information flows DOWNWARD only. Never backward.
+STDOUT	n	71	text
+STDOUT	n	72	text	This ensures:
+STDOUT	n	73	text	  • No authority inversion
+STDOUT	n	74	text	  • No circular dependencies
+STDOUT	n	75	text	  • Clean architectural boundaries
+STDOUT	n	76	text	  • Verifiable layering
+STDOUT	n	77	text
+
+# Summary
+STDOUT	n	78	text	=== Why These Five? ===
+STDOUT	n	79	text
+STDOUT	n	80	text	These five invariants are NECESSARY and SUFFICIENT for:
+STDOUT	n	81	text	  1. Determinism guaranteed
+STDOUT	n	82	text	  2. Replay soundness
+STDOUT	n	83	text	  3. Projection safety
+STDOUT	n	84	text	  4. Clean composition
+STDOUT	n	85	text	  5. Single source of truth
+STDOUT	n	86	text
+STDOUT	n	87	text	They are SEALED in v1.1 - no additions, no modifications.
+STDOUT	n	88	text
+STDOUT	n	89	text	The architecture hash proves immutability:
+STDOUT	n	90	text	9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+STDOUT	n	91	text
+
+EVENT	type	CONVERSATION_END	topic	five_invariants
+
+EXIT	intr	DEMO_INVARIANTS	code	0
+
+END	execution
+
+# BEGIN: Projection demonstrations
+BEGIN	projection
+
+EVENT	type	PROJECT	projection	posix	timestamp	1735636800
+EVENT	type	PROJECT	projection	json	timestamp	1735636800
+EVENT	type	PROJECT	projection	markdown	timestamp	1735636800
+
+END	projection
+
+# Seal: Cryptographic integrity
+SEAL	semantic_hash	5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1c2d3e4f5a6b
+SEAL	conversation_id	five_invariants_v1
+SEAL	article_hash	1f2e3d4c5b6a7980fedcba9876543210

@@ -1,0 +1,227 @@
+# ULP v1.1 Conversation Series - Article 3: Projections - Pure Views of Truth
+# Demonstrating how projections transform traces without affecting execution
+
+#METADATA version ULP/1.1
+#METADATA article "Projections: Pure Views of Truth"
+#METADATA purpose "Explaining projection algebra and purity constraints"
+#METADATA author "Brian Thorne"
+#METADATA date "2025-12-31"
+#METADATA architecture_hash 9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+HDR	version	1
+HDR	article	projections
+HDR	concept	pure_functions
+WORLD	wid	projection_world_c9b8a7f6e5d4c3b2a1098765432109fedcba098765432
+
+BEGIN	encoding
+
+FILE	path	WORLD/.projection	sha256	proj123	mode	644	bytes	320
+DATA	cHJvamVjdGlvbiBwb3NpeDogZnVuY3Rpb246IM+AX3Bvc2l4IGlucHV0czogdHJhY2Ugb3V0cHV0
+DATA	czogc3Rkb3V0IGxvc3N5OiB5ZXMKCnByb2plY3Rpb24ganNvbjogZnVuY3Rpb246IM+AX2pzb24g
+DATA	aW5wdXRzOiB0cmFjZSBvdXRwdXRzOiBzdHJ1Y3R1cmVkX2RhdGEgbG9zc3k6IHllcwo=
+END_FILE	path	WORLD/.projection
+
+END	encoding
+
+BEGIN	input
+
+STDIN	n	1	text	What are projections in ULP?
+STDIN	n	2	text	Why must projections be pure?
+STDIN	n	3	text	What projections exist in v1.1?
+
+END	input
+
+BEGIN	execution
+
+CLAUSE	qid	proj_clause_hash	openSig	(([	closeSig	[((	intr	EXPLAIN_PROJECTIONS
+EXEC	eid	proj_exec_1	wid	projection_world_c9b8a7f6e5d4c3b2a1098765432109fedcba098765432	qid	proj_clause_hash	intr	EXPLAIN_PROJECTIONS
+
+EVENT	type	DEMONSTRATION_START	topic	projections
+
+# Definition
+STDOUT	n	1	text	=== What Are Projections? ===
+STDOUT	n	2	text
+STDOUT	n	3	text	Projections are PURE FUNCTIONS that transform traces into views:
+STDOUT	n	4	text
+STDOUT	n	5	text	  π: Trace → View
+STDOUT	n	6	text
+STDOUT	n	7	text	Key properties:
+STDOUT	n	8	text	  1. Read-only (cannot modify trace)
+STDOUT	n	9	text	  2. Deterministic (same trace → same view)
+STDOUT	n	10	text	  3. Effect-free (no side effects)
+STDOUT	n	11	text	  4. Lossy allowed (can select/transform data)
+STDOUT	n	12	text	  5. Composable (can chain projections forward-only)
+STDOUT	n	13	text
+
+# The 16 Projection Classes (v1.1)
+STDOUT	n	14	text	=== The 16 Sealed Projection Classes ===
+STDOUT	n	15	text
+STDOUT	n	16	text	Text Projections:
+STDOUT	n	17	text	  π_posix(trace)     → POSIX stdout/stderr text
+STDOUT	n	18	text	  π_json(trace)      → Structured JSON data
+STDOUT	n	19	text	  π_markdown(trace)  → Markdown documentation
+STDOUT	n	20	text	  π_pure(trace)      → Functional hash view
+STDOUT	n	21	text
+STDOUT	n	22	text	Visual Projections:
+STDOUT	n	23	text	  π_w3c_html(trace)  → HTML rendering
+STDOUT	n	24	text	  π_w3c_dom(trace)   → DOM tree structure
+STDOUT	n	25	text	  π_w3c_css(trace)   → CSS layout
+STDOUT	n	26	text
+STDOUT	n	27	text	3D Projections:
+STDOUT	n	28	text	  π_webgl_3d(trace)  → WebGL 3D scene
+STDOUT	n	29	text	  π_canvas_2d(trace) → Canvas 2D graphics
+STDOUT	n	30	text	  π_vulkan(trace)    → Vulkan rendering
+STDOUT	n	31	text
+STDOUT	n	32	text	Identity Projections:
+STDOUT	n	33	text	  π_bip32(trace)     → BIP32 cryptographic identity
+STDOUT	n	34	text	  π_bip39(trace)     → BIP39 mnemonic seeds
+STDOUT	n	35	text
+STDOUT	n	36	text	Analysis Projections:
+STDOUT	n	37	text	  π_graph(trace)     → Execution graph
+STDOUT	n	38	text	  π_network_graph(trace) → Network topology
+STDOUT	n	39	text	  π_print(trace)     → PDF/print output
+STDOUT	n	40	text
+STDOUT	n	41	text	Meta Projections:
+STDOUT	n	42	text	  π_raw(trace)       → Raw trace (lossless)
+STDOUT	n	43	text	  π_canonical(trace) → Canonical semantic view
+STDOUT	n	44	text
+
+# Why Purity Matters
+STDOUT	n	45	text	=== Why Projections Must Be Pure ===
+STDOUT	n	46	text
+STDOUT	n	47	text	If projections could cause effects, we'd have:
+STDOUT	n	48	text
+STDOUT	n	49	text	1. OBSERVER INFLUENCE
+STDOUT	n	50	text	   Viewing the trace would change reality.
+STDOUT	n	51	text	   π(trace) → effects → trace is no longer ground truth
+STDOUT	n	52	text
+STDOUT	n	53	text	2. NON-DETERMINISM
+STDOUT	n	54	text	   Same trace + different projection order = different results
+STDOUT	n	55	text	   Breaks reproducibility guarantees
+STDOUT	n	56	text
+STDOUT	n	57	text	3. AUTHORITY CONFUSION
+STDOUT	n	58	text	   Is the trace truth, or is the projection truth?
+STDOUT	n	59	text	   Violates "trace is authoritative" invariant
+STDOUT	n	60	text
+STDOUT	n	61	text	4. SECURITY HOLES
+STDOUT	n	62	text	   Malicious projection could exfiltrate data
+STDOUT	n	63	text	   Or modify system state via side effects
+STDOUT	n	64	text
+
+# Purity Enforcement
+STDOUT	n	65	text	=== How Purity is Enforced ===
+STDOUT	n	66	text
+STDOUT	n	67	text	1. VALIDATION CHECKS
+STDOUT	n	68	text	   bin/verify_architecture.sh checks .projection files:
+STDOUT	n	69	text	     - No exec, eval, system calls
+STDOUT	n	70	text	     - No file writes (>, >>, tee)
+STDOUT	n	71	text	     - No network operations
+STDOUT	n	72	text
+STDOUT	n	73	text	2. DECLARATIVE DEFINITION
+STDOUT	n	74	text	   .projection file declares functions, doesn't execute them:
+STDOUT	n	75	text	     projection posix:
+STDOUT	n	76	text	       function: π_posix
+STDOUT	n	77	text	       inputs: trace
+STDOUT	n	78	text	       outputs: stdout
+STDOUT	n	79	text	       lossy: yes
+STDOUT	n	80	text
+STDOUT	n	81	text	3. IMPLEMENTATION REVIEW
+STDOUT	n	82	text	   Actual projection code is reviewed for purity
+STDOUT	n	83	text	   Must be deterministic, read-only functions
+STDOUT	n	84	text
+
+# Example: POSIX Projection
+STDOUT	n	85	text	=== Example: π_posix Implementation ===
+STDOUT	n	86	text
+STDOUT	n	87	text	Pure function in bin/observe.sh:
+STDOUT	n	88	text
+STDOUT	n	89	text	  awk -F '\t' '
+STDOUT	n	90	text	  $1=="STDOUT" && NF>=5 {
+STDOUT	n	91	text	      text = $5
+STDOUT	n	92	text	      # Unescape (pure transformation)
+STDOUT	n	93	text	      gsub(/\\\\/, "\\", text)
+STDOUT	n	94	text	      gsub(/\\n/, "\n", text)
+STDOUT	n	95	text	      print text  # To stdout, not to file
+STDOUT	n	96	text	  }
+STDOUT	n	97	text	  ' trace.log
+STDOUT	n	98	text
+STDOUT	n	99	text	This is pure because:
+STDOUT	n	100	text	  • Reads trace.log (input)
+STDOUT	n	101	text	  • Outputs to stdout (return value)
+STDOUT	n	102	text	  • No file writes, no network, no state mutation
+STDOUT	n	103	text	  • Deterministic: same trace → same output
+STDOUT	n	104	text
+
+# Composition
+STDOUT	n	105	text	=== Forward-Only Composition ===
+STDOUT	n	106	text
+STDOUT	n	107	text	Projections can be chained (forward-only):
+STDOUT	n	108	text
+STDOUT	n	109	text	  trace.log → π_json → π_markdown → result.md
+STDOUT	n	110	text
+STDOUT	n	111	text	Valid:   π₃ ∘ π₂ ∘ π₁ (forward composition)
+STDOUT	n	112	text	Invalid: π₁ ∘ π₂ ∘ π₃ (backward composition)
+STDOUT	n	113	text
+STDOUT	n	114	text	Why forward-only?
+STDOUT	n	115	text	  Information flows from trace outward
+STDOUT	n	116	text	  Later projections can't affect earlier ones
+STDOUT	n	117	text	  Maintains causal ordering
+STDOUT	n	118	text
+
+# Lossiness
+STDOUT	n	119	text	=== Lossy vs Lossless Projections ===
+STDOUT	n	120	text
+STDOUT	n	121	text	LOSSY (most projections):
+STDOUT	n	122	text	  π_posix: Extracts only stdout, loses trace structure
+STDOUT	n	123	text	  π_json: Selects certain fields, loses others
+STDOUT	n	124	text	  π_w3c_html: Renders visually, loses execution detail
+STDOUT	n	125	text
+STDOUT	n	126	text	LOSSLESS:
+STDOUT	n	127	text	  π_raw: Returns complete trace, no information loss
+STDOUT	n	128	text	  π_canonical: Semantic content only (strips metadata)
+STDOUT	n	129	text
+STDOUT	n	130	text	Lossiness is ALLOWED and often DESIRED:
+STDOUT	n	131	text	  Users don't need to see all trace details
+STDOUT	n	132	text	  Projections provide focused views
+STDOUT	n	133	text	  Original trace remains available for complete view
+STDOUT	n	134	text
+
+# Real-World Impact
+STDOUT	n	135	text	=== Why This Matters ===
+STDOUT	n	136	text
+STDOUT	n	137	text	1. INTERCHANGEABLE VIEWS
+STDOUT	n	138	text	   Don't like one projection? Use another.
+STDOUT	n	139	text	   Same trace works with all projections.
+STDOUT	n	140	text
+STDOUT	n	141	text	2. NO VENDOR LOCK-IN
+STDOUT	n	142	text	   Browser1's π_w3c_html and Browser2's π_w3c_html
+STDOUT	n	143	text	   might differ slightly, but both are valid views.
+STDOUT	n	144	text	   User chooses their preferred projection.
+STDOUT	n	145	text
+STDOUT	n	146	text	3. FUTURE-PROOF
+STDOUT	n	147	text	   New projections can be added without changing traces.
+STDOUT	n	148	text	   10 years from now: new projection, old trace works.
+STDOUT	n	149	text
+STDOUT	n	150	text	4. VERIFIABILITY
+STDOUT	n	151	text	   Can verify projection correctness by comparing:
+STDOUT	n	152	text	     π₁(trace) vs π₂(trace)
+STDOUT	n	153	text	   Both should give consistent results (modulo lossiness)
+STDOUT	n	154	text
+
+EVENT	type	DEMONSTRATION_END	topic	projections
+
+EXIT	intr	EXPLAIN_PROJECTIONS	code	0
+
+END	execution
+
+BEGIN	projection
+
+EVENT	type	PROJECT	projection	posix	status	success
+EVENT	type	PROJECT	projection	json	status	success
+EVENT	type	PROJECT	projection	markdown	status	success
+
+END	projection
+
+SEAL	semantic_hash	8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c9d
+SEAL	projection_count	16
+SEAL	article_hash	3f4a5b6c7d8e9f0a1b2c3d4e5f6a7b8c

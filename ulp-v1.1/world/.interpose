@@ -1,0 +1,5 @@
+# Effect mapping (declarative)
+INPUT read_stdin
+OUTPUT write_stdout
+ERROR write_stderr
+EXIT exit_with_code

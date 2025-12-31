@@ -1,0 +1,4 @@
+projection posix:
+  function: π_posix
+  inputs: trace
+  

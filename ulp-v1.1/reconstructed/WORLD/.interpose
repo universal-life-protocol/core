@@ -1,0 +1,3 @@
+# Effect mapping (declarative)
+INPUT read_stdin
+OUTPUT wr
