@@ -325,21 +325,24 @@
   </div>
 
   <script>
+    // Wait for DOM and A-Frame to load
+    document.addEventListener('DOMContentLoaded', function() {
+
     // Article data
     const articles = {
       i: {
         title: "Article I: Solomon, Solon, and ʿAsabiyyah",
         excerpt: '"Order does not begin with law. It begins with right relation." — Solomon',
-        gltf: "gltf/article_i.gltf",
-        ar: "ar/article_i_ar.html"
+        gltf: "projections/gltf/article_i.gltf",
+        ar: "projections/ar/article_i_ar.html"
       },
-      ii: { title: "Article II: Continued Dialogue", excerpt: "The conversation deepens...", gltf: "gltf/article_ii.gltf", ar: "ar/article_ii_ar.html" },
-      iii: { title: "Article III: Deeper Understanding", excerpt: "Wisdom emerges between voices...", gltf: "gltf/article_iii.gltf", ar: "ar/article_iii_ar.html" },
-      iv: { title: "Article IV: Practical Wisdom", excerpt: "How shall we live together?", gltf: "gltf/article_iv.gltf", ar: "ar/article_iv_ar.html" },
-      v: { title: "Article V: Social Bonds", excerpt: "The strength of ʿAsabiyyah...", gltf: "gltf/article_v.gltf", ar: "ar/article_v_ar.html" },
-      vi: { title: "Article VI: Law & Order", excerpt: "Solon speaks of justice...", gltf: "gltf/article_vi.gltf", ar: "ar/article_vi_ar.html" },
-      vii: { title: "Article VII: Collective Spirit", excerpt: "The bonds that unite us...", gltf: "gltf/article_vii.gltf", ar: "ar/article_vii_ar.html" },
-      viii: { title: "Article VIII: Final Synthesis", excerpt: "The conversation concludes...", gltf: "gltf/article_viii.gltf", ar: "ar/article_viii_ar.html" }
+      ii: { title: "Article II: Continued Dialogue", excerpt: "The conversation deepens...", gltf: "projections/gltf/article_ii.gltf", ar: "projections/ar/article_ii_ar.html" },
+      iii: { title: "Article III: Deeper Understanding", excerpt: "Wisdom emerges between voices...", gltf: "projections/gltf/article_iii.gltf", ar: "projections/ar/article_iii_ar.html" },
+      iv: { title: "Article IV: Practical Wisdom", excerpt: "How shall we live together?", gltf: "projections/gltf/article_iv.gltf", ar: "projections/ar/article_iv_ar.html" },
+      v: { title: "Article V: Social Bonds", excerpt: "The strength of ʿAsabiyyah...", gltf: "projections/gltf/article_v.gltf", ar: "projections/ar/article_v_ar.html" },
+      vi: { title: "Article VI: Law & Order", excerpt: "Solon speaks of justice...", gltf: "projections/gltf/article_vi.gltf", ar: "projections/ar/article_vi_ar.html" },
+      vii: { title: "Article VII: Collective Spirit", excerpt: "The bonds that unite us...", gltf: "projections/gltf/article_vii.gltf", ar: "projections/ar/article_vii_ar.html" },
+      viii: { title: "Article VIII: Final Synthesis", excerpt: "The conversation concludes...", gltf: "projections/gltf/article_viii.gltf", ar: "projections/ar/article_viii_ar.html" }
     };
 
     let currentArticle = 'i';
@@ -435,6 +438,8 @@
 
     // Initial stats
     updateCameraStats();
+
+    }); // End DOMContentLoaded
   </script>
 </body>
 </html>

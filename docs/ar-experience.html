@@ -308,6 +308,9 @@
   </a-scene>
 
   <script>
+    // Wait for DOM and A-Frame to load
+    document.addEventListener('DOMContentLoaded', function() {
+
     const articles = [
       { num: 1, title: "Article I: Solomon, Solon, and ʿAsabiyyah",
         dialogues: [
@@ -412,6 +415,8 @@
 
     // Initialize
     updateArticle(0);
+
+    }); // End DOMContentLoaded
   </script>
 </body>
 </html>
