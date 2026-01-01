@@ -1,0 +1,71 @@
+{
+  "$schema": "https://modelcontextprotocol.io/schema/mcp.json",
+  "name": "ulp-conversation-studio",
+  "version": "1.1.0",
+  "description": "MCP server for ULP Conversation Studio - create and manipulate 3D scenes programmatically",
+  "homepage": "https://github.com/universal-life-protocol/core",
+  "transport": {
+    "type": "stdio"
+  },
+  "command": {
+    "node": ["index.js"]
+  },
+  "capabilities": {
+    "tools": true,
+    "resources": true
+  },
+  "tools": [
+    {
+      "name": "create_scene",
+      "description": "Create a new 3D scene"
+    },
+    {
+      "name": "add_character",
+      "description": "Add Solomon, Solon, or Ibn Khaldun to the scene"
+    },
+    {
+      "name": "add_object",
+      "description": "Add primitives or environment elements"
+    },
+    {
+      "name": "move_object",
+      "description": "Transform object position, rotation, scale"
+    },
+    {
+      "name": "delete_object",
+      "description": "Remove object from scene"
+    },
+    {
+      "name": "list_objects",
+      "description": "List all objects in a scene"
+    },
+    {
+      "name": "export_trace",
+      "description": "Export scene as ULP v1.1 trace JSON"
+    },
+    {
+      "name": "import_trace",
+      "description": "Import scene from ULP trace"
+    },
+    {
+      "name": "list_scenes",
+      "description": "List all scenes in memory"
+    },
+    {
+      "name": "generate_studio_url",
+      "description": "Generate URL to view scene in web interface"
+    }
+  ],
+  "resources": [
+    {
+      "uri": "ulp://templates/dialogue-scene",
+      "name": "Three-Way Dialogue Scene",
+      "description": "Template for conversation between the three thinkers"
+    },
+    {
+      "uri": "ulp://templates/presentation-scene",
+      "name": "Presentation Scene",
+      "description": "Template for presentation with stage and lighting"
+    }
+  ]
+}
