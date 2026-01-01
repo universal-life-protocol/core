@@ -201,9 +201,13 @@
   <div id="ui-overlay">
     <div id="ar-instructions">
       <h1>📖 Conversation Series</h1>
-      <p>🥽 <strong>Complete AR/VR Experience</strong></p>
+      <p>🥽 <strong>Complete Interactive Experience</strong></p>
       <p>8 Articles • 3 Characters • Infinite Perspectives</p>
-      <p>📱 Point your camera at a flat surface<br>🎭 Navigate between articles<br>🎨 Customize the scene</p>
+      <p>
+        💬 <strong>Chat Mode</strong>: View 3D scene (default)<br>
+        📱 <strong>AR Mode</strong>: Activate camera (by choice)<br>
+        🎭 Navigate articles • 🎨 Customize scene
+      </p>
       <button id="start-btn">Enter the Conversation</button>
     </div>
 
@@ -222,7 +226,11 @@
     </div>
 
     <div id="controls-panel" class="hidden">
-      <h2>⚙️ Scene</h2>
+      <h2>🎭 View Mode</h2>
+      <button class="control-btn active" id="mode-chat">💬 Chat Mode</button>
+      <button class="control-btn" id="mode-ar">📱 AR Camera</button>
+
+      <h2 style="margin-top: 20px;">⚙️ Scene</h2>
       <button class="control-btn active" id="toggle-solomon">Solomon</button>
       <button class="control-btn active" id="toggle-solon">Solon</button>
       <button class="control-btn active" id="toggle-ibn">Ibn Khaldun</button>
@@ -250,7 +258,7 @@
     </div>
   </div>
 
-  <a-scene embedded arjs="sourceType: webcam; debugUIEnabled: false;" vr-mode-ui="enabled: false">
+  <a-scene id="main-scene" embedded vr-mode-ui="enabled: false">
     <!-- Lighting -->
     <a-entity light="type: ambient; color: #CCC; intensity: 0.6"></a-entity>
     <a-entity light="type: directional; color: #FFD700; intensity: 0.9" position="-2 4 2"></a-entity>
@@ -330,6 +338,45 @@
 
     let currentArticle = 0;
     let animationEnabled = false;
+    let arMode = false;
+    const scene = document.getElementById('main-scene');
+
+    // Mode toggle between Chat and AR
+    document.getElementById('mode-chat').addEventListener('click', function() {
+      if (arMode) {
+        // Disable AR mode
+        arMode = false;
+        scene.removeAttribute('arjs');
+        document.getElementById('mode-chat').classList.add('active');
+        document.getElementById('mode-ar').classList.remove('active');
+
+        // Show message
+        const dialoguePanel = document.getElementById('dialogue-panel');
+        const tempMsg = document.createElement('div');
+        tempMsg.style.cssText = 'background: rgba(0,212,255,0.2); padding: 10px; margin: 10px 0; border-left: 3px solid #00d4ff; border-radius: 4px;';
+        tempMsg.textContent = '💬 Chat Mode: View the 3D scene without camera';
+        dialoguePanel.insertBefore(tempMsg, dialoguePanel.firstChild);
+        setTimeout(() => tempMsg.remove(), 3000);
+      }
+    });
+
+    document.getElementById('mode-ar').addEventListener('click', function() {
+      if (!arMode) {
+        // Enable AR mode
+        arMode = true;
+        scene.setAttribute('arjs', 'sourceType: webcam; debugUIEnabled: false;');
+        document.getElementById('mode-ar').classList.add('active');
+        document.getElementById('mode-chat').classList.remove('active');
+
+        // Show message
+        const dialoguePanel = document.getElementById('dialogue-panel');
+        const tempMsg = document.createElement('div');
+        tempMsg.style.cssText = 'background: rgba(255,215,0,0.2); padding: 10px; margin: 10px 0; border-left: 3px solid #ffd700; border-radius: 4px;';
+        tempMsg.textContent = '📱 AR Mode: Point camera at flat surface. Grant camera permission if prompted.';
+        dialoguePanel.insertBefore(tempMsg, dialoguePanel.firstChild);
+        setTimeout(() => tempMsg.remove(), 5000);
+      }
+    });
 
     // Start button
     document.getElementById('start-btn').addEventListener('click', function() {
