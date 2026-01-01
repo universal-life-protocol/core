@@ -264,38 +264,50 @@
     <a-entity light="type: directional; color: #FFD700; intensity: 0.9" position="-2 4 2"></a-entity>
     <a-entity light="type: point; color: #00D4FF; intensity: 0.3" position="0 3 -3"></a-entity>
 
-    <!-- Characters -->
-    <a-entity id="solomon-entity" class="character">
+    <!-- Characters (Interactive) -->
+    <a-entity id="solomon-entity" class="character clickable">
       <a-box id="solomon-box" position="0 1.8 -3" rotation="0 0 0" color="#FFD700"
-             scale="0.5 2 0.3" shadow>
+             scale="0.5 2 0.3" shadow class="interactive-character"
+             animation__click="property: scale; from: 0.5 2 0.3; to: 0.6 2.2 0.35; dur: 300; startEvents: click; dir: alternate; easing: easeInOutQuad"
+             event-set__enter="_event: mouseenter; material.opacity: 0.8"
+             event-set__leave="_event: mouseleave; material.opacity: 1">
         <a-text id="solomon-label" value="Solomon" align="center" color="#000"
                 position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
       </a-box>
-      <a-entity id="solomon-glow" geometry="primitive: sphere; radius: 0.3"
-                material="color: #FFD700; opacity: 0.3; transparent: true"
-                position="0 1.8 -3"></a-entity>
+      <a-entity id="solomon-glow" geometry="primitive: sphere; radius: 0.6"
+                material="color: #FFD700; opacity: 0; transparent: true; shader: flat"
+                position="0 1.8 -3"
+                animation__pulse="property: material.opacity; from: 0; to: 0.3; dur: 2000; loop: true; dir: alternate; easing: easeInOutQuad"></a-entity>
     </a-entity>
 
-    <a-entity id="solon-entity" class="character">
+    <a-entity id="solon-entity" class="character clickable">
       <a-box id="solon-box" position="2 1.7 -2.5" rotation="0 -30 0" color="#7777FF"
-             scale="0.5 2 0.3" shadow>
+             scale="0.5 2 0.3" shadow class="interactive-character"
+             animation__click="property: scale; from: 0.5 2 0.3; to: 0.6 2.2 0.35; dur: 300; startEvents: click; dir: alternate; easing: easeInOutQuad"
+             event-set__enter="_event: mouseenter; material.opacity: 0.8"
+             event-set__leave="_event: mouseleave; material.opacity: 1">
         <a-text id="solon-label" value="Solon" align="center" color="#FFF"
                 position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
       </a-box>
-      <a-entity id="solon-glow" geometry="primitive: sphere; radius: 0.3"
-                material="color: #7777FF; opacity: 0.3; transparent: true"
-                position="2 1.7 -2.5"></a-entity>
+      <a-entity id="solon-glow" geometry="primitive: sphere; radius: 0.6"
+                material="color: #7777FF; opacity: 0; transparent: true; shader: flat"
+                position="2 1.7 -2.5"
+                animation__pulse="property: material.opacity; from: 0; to: 0.3; dur: 2000; loop: true; dir: alternate; easing: easeInOutQuad"></a-entity>
     </a-entity>
 
-    <a-entity id="ibn-entity" class="character">
+    <a-entity id="ibn-entity" class="character clickable">
       <a-box id="ibn-box" position="-2 1.75 -2.5" rotation="0 30 0" color="#66CC66"
-             scale="0.5 2 0.3" shadow>
+             scale="0.5 2 0.3" shadow class="interactive-character"
+             animation__click="property: scale; from: 0.5 2 0.3; to: 0.6 2.2 0.35; dur: 300; startEvents: click; dir: alternate; easing: easeInOutQuad"
+             event-set__enter="_event: mouseenter; material.opacity: 0.8"
+             event-set__leave="_event: mouseleave; material.opacity: 1">
         <a-text id="ibn-label" value="Ibn Khaldun" align="center" color="#000"
                 position="0 1.2 0.2" scale="0.7 0.7 0.7"></a-text>
       </a-box>
-      <a-entity id="ibn-glow" geometry="primitive: sphere; radius: 0.3"
-                material="color: #66CC66; opacity: 0.3; transparent: true"
-                position="-2 1.75 -2.5"></a-entity>
+      <a-entity id="ibn-glow" geometry="primitive: sphere; radius: 0.6"
+                material="color: #66CC66; opacity: 0; transparent: true; shader: flat"
+                position="-2 1.75 -2.5"
+                animation__pulse="property: material.opacity; from: 0; to: 0.3; dur: 2000; loop: true; dir: alternate; easing: easeInOutQuad"></a-entity>
     </a-entity>
 
     <!-- Environment -->
@@ -311,8 +323,14 @@
 
     <a-sky color="#1a1a2e"></a-sky>
 
-    <!-- Camera -->
-    <a-camera position="0 1.6 5"></a-camera>
+    <!-- Camera with cursor -->
+    <a-camera position="0 1.6 5">
+      <a-cursor
+        color="#00D4FF"
+        raycaster="objects: .clickable"
+        fuse="false"
+        animation__click="property: scale; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; startEvents: click; easing: easeInOutQuad; dir: alternate"></a-cursor>
+    </a-camera>
   </a-scene>
 
   <script>
@@ -460,8 +478,72 @@
       }
     });
 
+    // Character click interactions
+    function setupCharacterClick(boxId, glowId, characterName, soundFreq) {
+      const box = document.getElementById(boxId);
+      const glow = document.getElementById(glowId);
+
+      box.addEventListener('click', function() {
+        const dialogue = articles[currentArticle].dialogues.find(d => d.speaker === characterName);
+        if (dialogue) {
+          // Add dialogue to panel
+          const dialoguesDiv = document.getElementById('dialogues');
+          const newLine = document.createElement('div');
+          newLine.className = 'dialogue-line';
+          newLine.style.background = 'rgba(0, 212, 255, 0.2)';
+          newLine.innerHTML = `
+            <div class="speaker">${characterName}</div>
+            <div class="text">"${dialogue.text}"</div>
+          `;
+          dialoguesDiv.insertBefore(newLine, dialoguesDiv.firstChild);
+
+          // Remove after 5 seconds
+          setTimeout(() => {
+            newLine.style.transition = 'opacity 0.5s';
+            newLine.style.opacity = '0';
+            setTimeout(() => newLine.remove(), 500);
+          }, 5000);
+        }
+
+        // Enhance glow
+        glow.setAttribute('animation__click', {
+          property: 'material.opacity',
+          from: 0.3,
+          to: 0.8,
+          dur: 500,
+          dir: 'alternate',
+          easing: 'easeInOutQuad'
+        });
+
+        // Play sound
+        try {
+          const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+          const oscillator = audioCtx.createOscillator();
+          const gainNode = audioCtx.createGain();
+
+          oscillator.connect(gainNode);
+          gainNode.connect(audioCtx.destination);
+          oscillator.frequency.value = soundFreq;
+          oscillator.type = 'sine';
+
+          gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+          gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+          oscillator.start(audioCtx.currentTime);
+          oscillator.stop(audioCtx.currentTime + 0.3);
+        } catch (e) {}
+      });
+    }
+
     // Initialize
     updateArticle(0);
+
+    // Setup character interactions after scene loads
+    setTimeout(() => {
+      setupCharacterClick('solomon-box', 'solomon-glow', 'Solomon', 440);
+      setupCharacterClick('solon-box', 'solon-glow', 'Solon', 523);
+      setupCharacterClick('ibn-box', 'ibn-glow', 'Ibn Khaldun', 587);
+    }, 1000);
 
     }); // End DOMContentLoaded
   </script>

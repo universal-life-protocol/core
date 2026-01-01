@@ -256,32 +256,59 @@
       <a-entity id="ambient" light="type: ambient; color: #BBB; intensity: 0.5"></a-entity>
       <a-entity id="directional" light="type: directional; color: #FFF; intensity: 0.8" position="-2 4 2"></a-entity>
 
-      <!-- Characters -->
-      <a-entity id="solomon" class="character" visible="true">
-        <a-box position="0 1.8 -3" rotation="0 0 0" color="#FFD700"
-               scale="0.5 2 0.3"
-               animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear">
+      <!-- Characters (Interactive) -->
+      <a-entity id="solomon" class="character clickable" visible="true">
+        <a-box id="solomon-box" position="0 1.8 -3" rotation="0 0 0" color="#FFD700"
+               scale="0.5 2 0.3" class="interactive-character"
+               animation="property: rotation; to: 0 360 0; loop: true; dur: 20000; easing: linear"
+               animation__click="property: scale; from: 0.5 2 0.3; to: 0.6 2.2 0.35; dur: 300; startEvents: click; dir: alternate; easing: easeInOutQuad"
+               animation__hover="property: position; from: 0 1.8 -3; to: 0 1.9 -3; dur: 500; startEvents: mouseenter; dir: alternate; easing: easeInOutQuad"
+               event-set__enter="_event: mouseenter; material.opacity: 0.8"
+               event-set__leave="_event: mouseleave; material.opacity: 1">
           <a-text value="Solomon" align="center" color="#000"
                   position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
         </a-box>
+        <!-- Glow effect -->
+        <a-entity id="solomon-glow" geometry="primitive: sphere; radius: 0.6"
+                  material="color: #FFD700; opacity: 0; transparent: true; shader: flat"
+                  position="0 1.8 -3"
+                  animation__pulse="property: material.opacity; from: 0; to: 0.3; dur: 2000; loop: true; dir: alternate; easing: easeInOutQuad"></a-entity>
       </a-entity>
 
-      <a-entity id="solon" class="character" visible="true">
-        <a-box position="2 1.7 -2.5" rotation="0 -30 0" color="#7777FF"
-               scale="0.5 2 0.3"
-               animation="property: rotation; to: 0 330 0; loop: true; dur: 25000; easing: linear">
+      <a-entity id="solon" class="character clickable" visible="true">
+        <a-box id="solon-box" position="2 1.7 -2.5" rotation="0 -30 0" color="#7777FF"
+               scale="0.5 2 0.3" class="interactive-character"
+               animation="property: rotation; to: 0 330 0; loop: true; dur: 25000; easing: linear"
+               animation__click="property: scale; from: 0.5 2 0.3; to: 0.6 2.2 0.35; dur: 300; startEvents: click; dir: alternate; easing: easeInOutQuad"
+               animation__hover="property: position; from: 2 1.7 -2.5; to: 2 1.8 -2.5; dur: 500; startEvents: mouseenter; dir: alternate; easing: easeInOutQuad"
+               event-set__enter="_event: mouseenter; material.opacity: 0.8"
+               event-set__leave="_event: mouseleave; material.opacity: 1">
           <a-text value="Solon" align="center" color="#FFF"
                   position="0 1.2 0.2" scale="0.8 0.8 0.8"></a-text>
         </a-box>
+        <!-- Glow effect -->
+        <a-entity id="solon-glow" geometry="primitive: sphere; radius: 0.6"
+                  material="color: #7777FF; opacity: 0; transparent: true; shader: flat"
+                  position="2 1.7 -2.5"
+                  animation__pulse="property: material.opacity; from: 0; to: 0.3; dur: 2000; loop: true; dir: alternate; easing: easeInOutQuad"></a-entity>
       </a-entity>
 
-      <a-entity id="ibn" class="character" visible="true">
-        <a-box position="-2 1.75 -2.5" rotation="0 30 0" color="#66CC66"
-               scale="0.5 2 0.3"
-               animation="property: rotation; to: 0 390 0; loop: true; dur: 22000; easing: linear">
+      <a-entity id="ibn" class="character clickable" visible="true">
+        <a-box id="ibn-box" position="-2 1.75 -2.5" rotation="0 30 0" color="#66CC66"
+               scale="0.5 2 0.3" class="interactive-character"
+               animation="property: rotation; to: 0 390 0; loop: true; dur: 22000; easing: linear"
+               animation__click="property: scale; from: 0.5 2 0.3; to: 0.6 2.2 0.35; dur: 300; startEvents: click; dir: alternate; easing: easeInOutQuad"
+               animation__hover="property: position; from: -2 1.75 -2.5; to: -2 1.85 -2.5; dur: 500; startEvents: mouseenter; dir: alternate; easing: easeInOutQuad"
+               event-set__enter="_event: mouseenter; material.opacity: 0.8"
+               event-set__leave="_event: mouseleave; material.opacity: 1">
           <a-text value="Ibn Khaldun" align="center" color="#000"
                   position="0 1.2 0.2" scale="0.7 0.7 0.7"></a-text>
         </a-box>
+        <!-- Glow effect -->
+        <a-entity id="ibn-glow" geometry="primitive: sphere; radius: 0.6"
+                  material="color: #66CC66; opacity: 0; transparent: true; shader: flat"
+                  position="-2 1.75 -2.5"
+                  animation__pulse="property: material.opacity; from: 0; to: 0.3; dur: 2000; loop: true; dir: alternate; easing: easeInOutQuad"></a-entity>
       </a-entity>
 
       <!-- Environment -->
@@ -301,10 +328,16 @@
         <a-sky color="#2d1810"></a-sky>
       </a-entity>
 
-      <!-- Camera with orbit -->
+      <!-- Camera with orbit and cursor -->
       <a-entity id="camera-rig" position="0 1.6 0">
         <a-camera id="main-camera" position="0 0 8"
                   animation="property: rotation; to: 0 360 0; loop: true; dur: 30000; easing: linear; pauseEvents: pause-rotation; resumeEvents: resume-rotation">
+          <a-cursor
+            id="cursor"
+            color="#00D4FF"
+            raycaster="objects: .clickable"
+            fuse="false"
+            animation__click="property: scale; from: 1 1 1; to: 0.8 0.8 0.8; dur: 150; startEvents: click; easing: easeInOutQuad; dir: alternate"></a-cursor>
         </a-camera>
       </a-entity>
     </a-scene>
@@ -438,6 +471,131 @@
 
     // Initial stats
     updateCameraStats();
+
+    // Character dialogue data
+    const characterDialogues = {
+      i: {
+        solomon: "Order does not begin with law. It begins with right relation.",
+        solon: "Laws are the practice of wisdom made visible to all.",
+        ibn: "ʿAsabiyyah — the social cohesion that binds us together."
+      },
+      ii: { solomon: "True wisdom sees what others conceal.", solon: "Justice must be blind to status but aware of circumstance.", ibn: "The group feeling animates civilization." },
+      iii: { solomon: "The heart of governance is understanding.", solon: "Law is reason free from passion.", ibn: "Solidarity creates strength." },
+      iv: { solomon: "Wisdom without compassion is mere cleverness.", solon: "Good laws make good citizens.", ibn: "Unity in purpose transcends individual interests." },
+      v: { solomon: "Community begins with mutual recognition.", solon: "The state exists for the good life.", ibn: "Social bonds are the foundation of power." },
+      vi: { solomon: "Justice flows from understanding hearts.", solon: "Written law preserves collective wisdom.", ibn: "Shared identity creates lasting cohesion." },
+      vii: { solomon: "We are stronger together than apart.", solon: "Law channels human nature toward virtue.", ibn: "The collective soul outlives individuals." },
+      viii: { solomon: "In dialogue, we find deeper truth.", solon: "Together we create what none could alone.", ibn: "Our conversation becomes our legacy." }
+    };
+
+    // Interactive character clicks
+    function setupCharacterInteraction(characterId, characterName) {
+      const box = document.getElementById(characterId + '-box');
+      const glow = document.getElementById(characterId + '-glow');
+
+      box.addEventListener('click', function() {
+        // Play dialogue
+        const dialogue = characterDialogues[currentArticle][characterId];
+        showCharacterDialogue(characterName, dialogue);
+
+        // Enhance glow
+        glow.setAttribute('animation__click', {
+          property: 'material.opacity',
+          from: 0.3,
+          to: 0.8,
+          dur: 500,
+          dir: 'alternate',
+          easing: 'easeInOutQuad'
+        });
+
+        // Play sound effect (simple beep using Web Audio API)
+        playClickSound(characterId);
+      });
+
+      box.addEventListener('mouseenter', function() {
+        box.style.cursor = 'pointer';
+        // Brighten glow on hover
+        glow.setAttribute('material', 'opacity', 0.5);
+      });
+
+      box.addEventListener('mouseleave', function() {
+        // Reset glow
+        glow.setAttribute('material', 'opacity', 0);
+      });
+    }
+
+    function showCharacterDialogue(name, text) {
+      const excerpt = document.getElementById('article-excerpt');
+
+      // Clear existing
+      excerpt.innerHTML = '';
+
+      // Add character name
+      const nameSpan = document.createElement('strong');
+      nameSpan.style.color = '#ffd700';
+      nameSpan.style.fontSize = '1.1em';
+      nameSpan.textContent = name + ': ';
+      excerpt.appendChild(nameSpan);
+
+      // Add dialogue
+      const dialogue = document.createElement('span');
+      dialogue.style.fontStyle = 'italic';
+      dialogue.textContent = '"' + text + '"';
+      excerpt.appendChild(dialogue);
+
+      // Fade in animation
+      excerpt.style.opacity = '0';
+      setTimeout(() => {
+        excerpt.style.transition = 'opacity 0.5s';
+        excerpt.style.opacity = '1';
+      }, 50);
+
+      // Auto-clear after 5 seconds
+      setTimeout(() => {
+        excerpt.style.transition = 'opacity 0.5s';
+        excerpt.style.opacity = '0';
+        setTimeout(() => {
+          excerpt.innerHTML = 'Click on a character to hear their wisdom...';
+          excerpt.style.opacity = '1';
+        }, 500);
+      }, 5000);
+    }
+
+    function playClickSound(characterId) {
+      try {
+        const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        const oscillator = audioCtx.createOscillator();
+        const gainNode = audioCtx.createGain();
+
+        oscillator.connect(gainNode);
+        gainNode.connect(audioCtx.destination);
+
+        // Different frequencies for each character
+        const frequencies = { solomon: 440, solon: 523, ibn: 587 };
+        oscillator.frequency.value = frequencies[characterId] || 440;
+        oscillator.type = 'sine';
+
+        // Fade out
+        gainNode.gain.setValueAtTime(0.3, audioCtx.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.3);
+
+        oscillator.start(audioCtx.currentTime);
+        oscillator.stop(audioCtx.currentTime + 0.3);
+      } catch (e) {
+        // Audio not supported, skip sound
+        console.log('Audio not supported');
+      }
+    }
+
+    // Setup interactions after scene loads
+    setTimeout(() => {
+      setupCharacterInteraction('solomon', 'Solomon');
+      setupCharacterInteraction('solon', 'Solon');
+      setupCharacterInteraction('ibn', 'Ibn Khaldun');
+
+      // Initial hint
+      document.getElementById('article-excerpt').textContent = 'Click on a character to hear their wisdom...';
+    }, 1000);
 
     }); // End DOMContentLoaded
   </script>
