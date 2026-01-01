@@ -343,6 +343,178 @@
       font-family: monospace;
       z-index: 100;
     }
+
+    /* Mobile Panel Toggle */
+    .mobile-nav {
+      display: none;
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: #000;
+      border-top: 2px solid #ffd700;
+      z-index: 1000;
+      padding: 10px;
+      gap: 5px;
+      justify-content: space-around;
+    }
+
+    .mobile-nav-btn {
+      flex: 1;
+      padding: 12px 5px;
+      background: #1a1a1a;
+      color: #ffd700;
+      border: 1px solid #333;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .mobile-nav-btn.active {
+      background: #ffd700;
+      color: #000;
+    }
+
+    /* Mobile Responsive Styles */
+    @media (max-width: 768px) {
+      #app {
+        grid-template-areas:
+          "toolbar"
+          "scene"
+          "timeline";
+        grid-template-columns: 1fr;
+        grid-template-rows: 60px 1fr 80px;
+      }
+
+      #toolbar h1 {
+        font-size: 16px;
+      }
+
+      .toolbar-btn {
+        padding: 8px 12px;
+        font-size: 11px;
+      }
+
+      #toolbox, #inspector {
+        position: fixed;
+        top: 60px;
+        bottom: 80px;
+        width: 100%;
+        max-width: 100%;
+        background: rgba(0, 0, 0, 0.98);
+        z-index: 500;
+        display: none;
+        border: none;
+      }
+
+      #toolbox.mobile-active, #inspector.mobile-active {
+        display: block;
+      }
+
+      #scene-container {
+        grid-area: scene;
+      }
+
+      #timeline {
+        height: 80px;
+        padding: 10px;
+      }
+
+      .timeline-controls {
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .timeline-btn {
+        padding: 6px 10px;
+        font-size: 10px;
+      }
+
+      #timeline-track {
+        height: 40px;
+      }
+
+      .mobile-nav {
+        display: flex;
+      }
+
+      #placement-hint {
+        font-size: 12px;
+        padding: 10px 15px;
+      }
+
+      #stats {
+        bottom: 90px;
+        right: 10px;
+        font-size: 10px;
+        padding: 8px 12px;
+      }
+
+      #recording-info {
+        right: 10px;
+        padding: 12px 20px;
+      }
+
+      .recording-time {
+        font-size: 20px;
+      }
+
+      .panel-section h2 {
+        font-size: 13px;
+      }
+
+      .upload-zone {
+        padding: 20px;
+      }
+
+      .asset-btn {
+        padding: 14px;
+        font-size: 14px;
+      }
+
+      .transform-controls {
+        padding: 12px;
+      }
+
+      .transform-row input {
+        font-size: 14px;
+        padding: 8px;
+      }
+
+      .object-item {
+        padding: 14px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      #toolbar {
+        padding: 0 10px;
+        gap: 5px;
+      }
+
+      #toolbar h1 {
+        font-size: 14px;
+      }
+
+      .toolbar-btn {
+        padding: 6px 8px;
+        font-size: 10px;
+      }
+
+      #timeline {
+        padding: 8px;
+      }
+
+      .timeline-controls {
+        font-size: 10px;
+      }
+
+      .mobile-nav-btn {
+        font-size: 10px;
+        padding: 10px 3px;
+      }
+    }
   </style>
 </head>
 <body>
@@ -490,6 +662,43 @@
     Trace Events: <span id="trace-event-count">0</span>
   </div>
 
+  <!-- Mobile Navigation -->
+  <div class="mobile-nav">
+    <button class="mobile-nav-btn active" id="mobile-scene">🎬<br>Scene</button>
+    <button class="mobile-nav-btn" id="mobile-toolbox">🛠️<br>Tools</button>
+    <button class="mobile-nav-btn" id="mobile-inspector">🔍<br>Objects</button>
+  </div>
+
   <script src="studio.js"></script>
+  <script>
+    // Mobile panel switching
+    document.addEventListener('DOMContentLoaded', () => {
+      if (window.innerWidth <= 768) {
+        const buttons = {
+          'mobile-scene': null,
+          'mobile-toolbox': document.getElementById('toolbox'),
+          'mobile-inspector': document.getElementById('inspector')
+        };
+
+        Object.keys(buttons).forEach(btnId => {
+          document.getElementById(btnId).addEventListener('click', function() {
+            // Remove active from all
+            document.querySelectorAll('.mobile-nav-btn').forEach(b => b.classList.remove('active'));
+            this.classList.add('active');
+
+            // Hide all panels
+            Object.values(buttons).forEach(panel => {
+              if (panel) panel.classList.remove('mobile-active');
+            });
+
+            // Show selected panel
+            if (buttons[btnId]) {
+              buttons[btnId].classList.add('mobile-active');
+            }
+          });
+        });
+      }
+    });
+  </script>
 </body>
 </html>
