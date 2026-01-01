@@ -1,6 +1,400 @@
 // Conversation Studio - Asset Management & Recording System
 // Universal Life Protocol v1.1
 
+// ===== CAMERA NAVIGATION SYSTEM =====
+class CameraNavigator {
+  constructor(cameraRig) {
+    this.cameraRig = cameraRig;
+    this.camera = document.querySelector('#main-camera');
+    this.moveSpeed = 0.1;
+    this.rotateSpeed = 0.003;
+    this.zoomSpeed = 0.5;
+
+    this.keys = { w: false, a: false, s: false, d: false };
+    this.mouseDown = false;
+    this.lastMouseX = 0;
+    this.lastMouseY = 0;
+    this.rotation = { x: 0, y: 0 };
+
+    this.touchStartDistance = 0;
+    this.touchStartRotation = { x: 0, y: 0 };
+
+    this.init();
+  }
+
+  init() {
+    this.setupKeyboard();
+    this.setupMouse();
+    this.setupScroll();
+    this.setupTouch();
+    this.startUpdateLoop();
+  }
+
+  setupKeyboard() {
+    window.addEventListener('keydown', (e) => {
+      const key = e.key.toLowerCase();
+      if (key === 'w' || key === 'a' || key === 's' || key === 'd') {
+        this.keys[key] = true;
+        e.preventDefault();
+      }
+    });
+
+    window.addEventListener('keyup', (e) => {
+      const key = e.key.toLowerCase();
+      if (key === 'w' || key === 'a' || key === 's' || key === 'd') {
+        this.keys[key] = false;
+      }
+    });
+  }
+
+  setupMouse() {
+    const sceneContainer = document.getElementById('scene-container');
+
+    sceneContainer.addEventListener('mousedown', (e) => {
+      if (e.button === 2) { // Right click
+        this.mouseDown = true;
+        this.lastMouseX = e.clientX;
+        this.lastMouseY = e.clientY;
+        e.preventDefault();
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (this.mouseDown) {
+        const deltaX = e.clientX - this.lastMouseX;
+        const deltaY = e.clientY - this.lastMouseY;
+
+        this.rotation.y -= deltaX * this.rotateSpeed;
+        this.rotation.x -= deltaY * this.rotateSpeed;
+        this.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, this.rotation.x));
+
+        this.cameraRig.setAttribute('rotation', `${this.rotation.x * 180 / Math.PI} ${this.rotation.y * 180 / Math.PI} 0`);
+
+        this.lastMouseX = e.clientX;
+        this.lastMouseY = e.clientY;
+      }
+    });
+
+    window.addEventListener('mouseup', (e) => {
+      if (e.button === 2) {
+        this.mouseDown = false;
+      }
+    });
+
+    sceneContainer.addEventListener('contextmenu', (e) => e.preventDefault());
+  }
+
+  setupScroll() {
+    const sceneContainer = document.getElementById('scene-container');
+
+    sceneContainer.addEventListener('wheel', (e) => {
+      const currentPos = this.camera.getAttribute('position');
+      const newZ = currentPos.z + (e.deltaY > 0 ? this.zoomSpeed : -this.zoomSpeed);
+      const clampedZ = Math.max(2, Math.min(20, newZ));
+      this.camera.setAttribute('position', `${currentPos.x} ${currentPos.y} ${clampedZ}`);
+      e.preventDefault();
+    });
+  }
+
+  setupTouch() {
+    const sceneContainer = document.getElementById('scene-container');
+
+    sceneContainer.addEventListener('touchstart', (e) => {
+      if (e.touches.length === 2) {
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        this.touchStartDistance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+      } else if (e.touches.length === 1) {
+        this.lastMouseX = e.touches[0].clientX;
+        this.lastMouseY = e.touches[0].clientY;
+        this.touchStartRotation = { ...this.rotation };
+      }
+    });
+
+    sceneContainer.addEventListener('touchmove', (e) => {
+      if (e.touches.length === 2) {
+        // Pinch zoom
+        const touch1 = e.touches[0];
+        const touch2 = e.touches[1];
+        const distance = Math.hypot(
+          touch2.clientX - touch1.clientX,
+          touch2.clientY - touch1.clientY
+        );
+        const delta = this.touchStartDistance - distance;
+
+        const currentPos = this.camera.getAttribute('position');
+        const newZ = currentPos.z + delta * 0.01;
+        const clampedZ = Math.max(2, Math.min(20, newZ));
+        this.camera.setAttribute('position', `${currentPos.x} ${currentPos.y} ${clampedZ}`);
+
+        this.touchStartDistance = distance;
+        e.preventDefault();
+      } else if (e.touches.length === 1) {
+        // Swipe to rotate
+        const deltaX = e.touches[0].clientX - this.lastMouseX;
+        const deltaY = e.touches[0].clientY - this.lastMouseY;
+
+        this.rotation.y -= deltaX * this.rotateSpeed;
+        this.rotation.x -= deltaY * this.rotateSpeed;
+        this.rotation.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, this.rotation.x));
+
+        this.cameraRig.setAttribute('rotation', `${this.rotation.x * 180 / Math.PI} ${this.rotation.y * 180 / Math.PI} 0`);
+
+        this.lastMouseX = e.touches[0].clientX;
+        this.lastMouseY = e.touches[0].clientY;
+        e.preventDefault();
+      }
+    });
+  }
+
+  startUpdateLoop() {
+    const update = () => {
+      if (this.keys.w || this.keys.a || this.keys.s || this.keys.d) {
+        const currentPos = this.cameraRig.getAttribute('position');
+        const rotation = this.cameraRig.getAttribute('rotation');
+        const yRad = rotation.y * Math.PI / 180;
+
+        let dx = 0, dz = 0;
+
+        if (this.keys.w) {
+          dx -= Math.sin(yRad) * this.moveSpeed;
+          dz -= Math.cos(yRad) * this.moveSpeed;
+        }
+        if (this.keys.s) {
+          dx += Math.sin(yRad) * this.moveSpeed;
+          dz += Math.cos(yRad) * this.moveSpeed;
+        }
+        if (this.keys.a) {
+          dx -= Math.cos(yRad) * this.moveSpeed;
+          dz += Math.sin(yRad) * this.moveSpeed;
+        }
+        if (this.keys.d) {
+          dx += Math.cos(yRad) * this.moveSpeed;
+          dz -= Math.sin(yRad) * this.moveSpeed;
+        }
+
+        this.cameraRig.setAttribute('position', `${currentPos.x + dx} ${currentPos.y} ${currentPos.z + dz}`);
+      }
+
+      requestAnimationFrame(update);
+    };
+    update();
+  }
+}
+
+// ===== P2P COLLABORATION SYSTEM =====
+class P2PManager {
+  constructor(studio) {
+    this.studio = studio;
+    this.peer = null;
+    this.connections = new Map();
+    this.peerId = null;
+    this.isHost = false;
+
+    this.peerColors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8'];
+    this.colorIndex = 0;
+  }
+
+  async init() {
+    // Use PeerJS library (will be loaded via CDN)
+    if (typeof Peer === 'undefined') {
+      console.warn('PeerJS not loaded. P2P features disabled.');
+      return;
+    }
+
+    this.peer = new Peer();
+
+    this.peer.on('open', (id) => {
+      this.peerId = id;
+      this.updateConnectionUI();
+      console.log('P2P Ready. Your ID:', id);
+    });
+
+    this.peer.on('connection', (conn) => {
+      this.handleIncomingConnection(conn);
+    });
+
+    this.peer.on('error', (err) => {
+      console.error('P2P Error:', err);
+      this.showNotification('P2P Error: ' + err.type, 'error');
+    });
+  }
+
+  createRoom() {
+    if (!this.peerId) return;
+
+    this.isHost = true;
+    this.updateConnectionUI();
+    this.showNotification(`Room created! Share ID: ${this.peerId}`, 'success');
+  }
+
+  joinRoom(remoteId) {
+    if (!this.peer || !remoteId) return;
+
+    const conn = this.peer.connect(remoteId);
+    this.setupConnection(conn);
+  }
+
+  handleIncomingConnection(conn) {
+    this.setupConnection(conn);
+  }
+
+  setupConnection(conn) {
+    const peerColor = this.peerColors[this.colorIndex % this.peerColors.length];
+    this.colorIndex++;
+
+    conn.on('open', () => {
+      this.connections.set(conn.peer, { conn, color: peerColor });
+      this.updateConnectionUI();
+      this.showNotification(`User connected: ${conn.peer.substring(0, 8)}...`, 'success');
+
+      // Send current scene state to new peer
+      if (this.isHost) {
+        this.sendSceneState(conn);
+      }
+    });
+
+    conn.on('data', (data) => {
+      this.handlePeerMessage(data, conn.peer);
+    });
+
+    conn.on('close', () => {
+      this.connections.delete(conn.peer);
+      this.updateConnectionUI();
+      this.showNotification('User disconnected', 'info');
+    });
+  }
+
+  sendSceneState(conn) {
+    const sceneData = {
+      type: 'SCENE_STATE',
+      objects: this.studio.sceneObjects.map(obj => ({
+        id: obj.id,
+        type: obj.type,
+        position: obj.entity.getAttribute('position'),
+        rotation: obj.entity.getAttribute('rotation'),
+        scale: obj.entity.getAttribute('scale')
+      }))
+    };
+    conn.send(sceneData);
+  }
+
+  broadcast(message) {
+    this.connections.forEach(({ conn }) => {
+      if (conn.open) {
+        conn.send(message);
+      }
+    });
+  }
+
+  handlePeerMessage(data, peerId) {
+    switch(data.type) {
+      case 'SCENE_STATE':
+        this.studio.newScene();
+        data.objects.forEach(obj => {
+          this.studio.placeAsset(obj.type, obj.position);
+        });
+        break;
+
+      case 'ADD_OBJECT':
+        this.studio.placeAsset(data.assetType, data.position);
+        break;
+
+      case 'MOVE_OBJECT':
+        const obj = this.studio.sceneObjects.find(o => o.id === data.objectId);
+        if (obj) {
+          obj.entity.setAttribute('position', data.position);
+          obj.position = data.position;
+        }
+        break;
+
+      case 'DELETE_OBJECT':
+        const delObj = this.studio.sceneObjects.find(o => o.id === data.objectId);
+        if (delObj) {
+          this.studio.deleteObject(delObj);
+        }
+        break;
+
+      case 'CURSOR_MOVE':
+        this.updatePeerCursor(peerId, data.position);
+        break;
+    }
+  }
+
+  updatePeerCursor(peerId, position) {
+    let cursor = document.getElementById(`peer-cursor-${peerId}`);
+
+    if (!cursor) {
+      const peerData = this.connections.get(peerId);
+      cursor = document.createElement('a-sphere');
+      cursor.setAttribute('id', `peer-cursor-${peerId}`);
+      cursor.setAttribute('radius', '0.1');
+      cursor.setAttribute('color', peerData?.color || '#FF6B6B');
+      cursor.setAttribute('opacity', '0.5');
+      this.studio.scene.appendChild(cursor);
+    }
+
+    if (position) {
+      cursor.setAttribute('position', position);
+    }
+  }
+
+  updateConnectionUI() {
+    const statusEl = document.getElementById('p2p-status');
+    const idEl = document.getElementById('p2p-id');
+    const countEl = document.getElementById('peer-count');
+
+    if (statusEl) {
+      statusEl.textContent = this.peerId ? '🟢 Connected' : '🔴 Offline';
+      statusEl.className = this.peerId ? 'status-online' : 'status-offline';
+    }
+
+    if (idEl && this.peerId) {
+      idEl.textContent = this.peerId.substring(0, 12) + '...';
+      idEl.title = this.peerId;
+    }
+
+    if (countEl) {
+      countEl.textContent = this.connections.size;
+    }
+  }
+
+  showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `p2p-notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 80px;
+      right: 20px;
+      background: ${type === 'error' ? '#ff4444' : type === 'success' ? '#44ff44' : '#4444ff'};
+      color: #000;
+      padding: 12px 20px;
+      border-radius: 6px;
+      z-index: 10000;
+      animation: slideIn 0.3s ease-out;
+    `;
+    document.body.appendChild(notification);
+
+    setTimeout(() => {
+      notification.style.animation = 'slideOut 0.3s ease-out';
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  disconnect() {
+    this.connections.forEach(({ conn }) => conn.close());
+    this.connections.clear();
+    if (this.peer) {
+      this.peer.destroy();
+    }
+    this.updateConnectionUI();
+  }
+}
+
 class ConversationStudio {
   constructor() {
     this.scene = document.querySelector('#main-scene');
@@ -23,6 +417,59 @@ class ConversationStudio {
     this.setupRecording();
     this.setupFileUpload();
     this.setupScene();
+    this.setupNavigation();
+    this.setupP2P();
+  }
+
+  setupNavigation() {
+    const cameraRig = document.getElementById('camera-rig');
+    if (cameraRig) {
+      this.navigator = new CameraNavigator(cameraRig);
+      console.log('Navigation controls initialized: WASD, Mouse drag, Scroll, Touch');
+    }
+  }
+
+  setupP2P() {
+    this.p2p = new P2PManager(this);
+    this.p2p.init();
+
+    // Create Room button
+    const createBtn = document.getElementById('btn-create-room');
+    if (createBtn) {
+      createBtn.addEventListener('click', () => {
+        this.p2p.createRoom();
+      });
+    }
+
+    // Join Room button
+    const joinBtn = document.getElementById('btn-join-room');
+    if (joinBtn) {
+      joinBtn.addEventListener('click', () => {
+        const remoteId = prompt('Enter Room ID to join:');
+        if (remoteId) {
+          this.p2p.joinRoom(remoteId);
+        }
+      });
+    }
+
+    // Disconnect button
+    const disconnectBtn = document.getElementById('btn-disconnect');
+    if (disconnectBtn) {
+      disconnectBtn.addEventListener('click', () => {
+        this.p2p.disconnect();
+      });
+    }
+
+    // Copy ID button
+    const copyBtn = document.getElementById('btn-copy-id');
+    if (copyBtn) {
+      copyBtn.addEventListener('click', () => {
+        if (this.p2p.peerId) {
+          navigator.clipboard.writeText(this.p2p.peerId);
+          this.p2p.showNotification('Room ID copied to clipboard!', 'success');
+        }
+      });
+    }
   }
 
   // ===== TOOLBOX SETUP =====
@@ -133,6 +580,15 @@ class ConversationStudio {
     this.updateInspector();
     this.updateStats();
     this.logEvent('ADD_OBJECT', { id, type, position });
+
+    // Broadcast to peers
+    if (this.p2p && this.p2p.connections.size > 0) {
+      this.p2p.broadcast({
+        type: 'ADD_OBJECT',
+        assetType: type,
+        position
+      });
+    }
   }
 
   createCharacter(name, color, pos) {
@@ -360,6 +816,17 @@ class ConversationStudio {
     this.selectedObject.entity.setAttribute('scale', { x: scale, y: scale, z: scale });
 
     this.logEvent('TRANSFORM_OBJECT', { id: this.selectedObject.id, position: { x, y, z }, rotation: rotY, scale });
+
+    // Broadcast to peers
+    if (this.p2p && this.p2p.connections.size > 0) {
+      this.p2p.broadcast({
+        type: 'MOVE_OBJECT',
+        objectId: this.selectedObject.id,
+        position: { x, y, z },
+        rotation: { x: 0, y: rotY, z: 0 },
+        scale: { x: scale, y: scale, z: scale }
+      });
+    }
   }
 
   deleteObject(obj) {
@@ -372,6 +839,14 @@ class ConversationStudio {
     this.updateInspector();
     this.updateStats();
     this.logEvent('DELETE_OBJECT', { id: obj.id });
+
+    // Broadcast to peers
+    if (this.p2p && this.p2p.connections.size > 0) {
+      this.p2p.broadcast({
+        type: 'DELETE_OBJECT',
+        objectId: obj.id
+      });
+    }
   }
 
   // ===== RECORDING =====

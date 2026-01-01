@@ -249,6 +249,37 @@
       background: #444;
     }
 
+    /* P2P Status Indicators */
+    .status-online {
+      color: #44ff44;
+    }
+
+    .status-offline {
+      color: #ff4444;
+    }
+
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+
     .timeline-btn.active {
       background: #ffd700;
       color: #000;
@@ -565,6 +596,26 @@
         <button class="asset-btn" data-asset="cylinder">🔘 Add Cylinder</button>
         <button class="asset-btn" data-asset="plane">▭ Add Plane</button>
       </div>
+
+      <div class="panel-section" style="border-top: 2px solid #ffd700; padding-top: 15px; margin-top: 15px;">
+        <h2>🌐 Collaboration (P2P)</h2>
+        <div style="font-size: 11px; color: #aaa; margin-bottom: 10px; padding: 8px; background: rgba(255,215,0,0.1); border-radius: 4px;">
+          <div><strong id="p2p-status" class="status-offline">🔴 Initializing...</strong></div>
+          <div style="margin-top: 5px;">ID: <span id="p2p-id">-</span></div>
+          <div style="margin-top: 5px;">Peers: <span id="peer-count">0</span></div>
+        </div>
+        <button class="asset-btn" id="btn-create-room" style="background: #28a745;">🏠 Create Room</button>
+        <button class="asset-btn" id="btn-join-room" style="background: #17a2b8;">🚪 Join Room</button>
+        <button class="asset-btn" id="btn-copy-id" style="background: #ffc107;">📋 Copy Room ID</button>
+        <button class="asset-btn" id="btn-disconnect" style="background: #dc3545;">🔌 Disconnect</button>
+        <div style="font-size: 10px; color: #666; margin-top: 10px; padding: 8px; background: rgba(0,0,0,0.3); border-radius: 4px;">
+          <strong>📖 Navigation Controls:</strong><br>
+          • <strong>WASD</strong>: Move camera<br>
+          • <strong>Right-click + drag</strong>: Rotate<br>
+          • <strong>Scroll wheel</strong>: Zoom<br>
+          • <strong>Touch</strong>: Swipe to rotate, pinch to zoom
+        </div>
+      </div>
     </div>
 
     <!-- Scene Container -->
@@ -668,6 +719,10 @@
     <button class="mobile-nav-btn" id="mobile-toolbox">🛠️<br>Tools</button>
     <button class="mobile-nav-btn" id="mobile-inspector">🔍<br>Objects</button>
   </div>
+
+  <!-- A-Frame and PeerJS Libraries -->
+  <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/peerjs@1.5.0/dist/peerjs.min.js"></script>
 
   <script src="studio.js"></script>
   <script>
