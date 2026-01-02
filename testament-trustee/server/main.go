@@ -241,127 +241,153 @@ func (s *TestamentServer) loadRecord(tracePath string) error {
 
 // StartHTTPServer - Serve web UI and QR codes
 func (s *TestamentServer) StartHTTPServer() error {
+	// Initialize WebAuthn
+	webAuthn, err := NewWebAuthnHandler("localhost", "http://localhost:"+fmt.Sprintf("%d", s.httpPort))
+	if err != nil {
+		return err
+	}
+
+	// Static files
 	http.HandleFunc("/", s.handleIndex)
+	http.HandleFunc("/manifest.json", s.handleManifest)
+	http.HandleFunc("/sw.js", s.handleServiceWorker)
+	http.HandleFunc("/icon-192.png", s.handleIcon192)
+	http.HandleFunc("/icon-512.png", s.handleIcon512)
+
+	// QR code
 	http.HandleFunc("/qr", s.handleQR)
+
+	// API endpoints
 	http.HandleFunc("/api/records", s.handleAPIRecords)
 	http.HandleFunc("/api/record/", s.handleAPIRecord)
 	http.HandleFunc("/api/connection", s.handleAPIConnection)
 
+	// WebAuthn endpoints
+	http.HandleFunc("/api/webauthn/register/begin", webAuthn.HandleRegisterBegin)
+	http.HandleFunc("/api/webauthn/register/finish", webAuthn.HandleRegisterFinish)
+	http.HandleFunc("/api/webauthn/login/begin", webAuthn.HandleLoginBegin)
+	http.HandleFunc("/api/webauthn/login/finish", webAuthn.HandleLoginFinish)
+
 	addr := fmt.Sprintf(":%d", s.httpPort)
 	log.Printf("HTTP server listening on http://localhost%s", addr)
+	log.Printf("PWA manifest: http://localhost%s/manifest.json", addr)
 	return http.ListenAndServe(addr, nil)
 }
 
-// handleIndex - Serve web UI
-func (s *TestamentServer) handleIndex(w http.ResponseWriter, r *http.Request) {
-	html := `<!DOCTYPE html>
-<html>
-<head>
-	<title>Testament Trustee - ULP v2.0 Browser</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<style>
-		body { font-family: monospace; max-width: 1200px; margin: 40px auto; padding: 20px; }
-		h1 { border-bottom: 2px solid #333; }
-		.record { border: 1px solid #ccc; padding: 15px; margin: 10px 0; }
-		.rid { color: #0066cc; font-weight: bold; }
-		.policy { background: #f5f5f5; padding: 10px; margin: 10px 0; }
-		.qr-code { text-align: center; margin: 20px 0; }
-		button { padding: 10px 20px; font-size: 16px; cursor: pointer; }
-		#webauthn-status { padding: 10px; background: #ffffcc; margin: 10px 0; }
-	</style>
-</head>
-<body>
-	<h1>Testament Trustee - ULP v2.0 Browser</h1>
 
-	<div class="qr-code">
-		<h2>Scan to Connect</h2>
-		<img id="qr" src="/qr" alt="Connection QR Code" />
-		<p id="peer-id"></p>
-	</div>
 
-	<div id="webauthn-status" style="display:none;">
-		<h3>Optional: WebAuthn Authentication</h3>
-		<button onclick="registerWebAuthn()">Register Device</button>
-		<button onclick="authenticateWebAuthn()">Authenticate</button>
-		<span id="authn-result"></span>
-	</div>
 
-	<h2>Available Records</h2>
-	<div id="records"></div>
 
-	<script>
-		// Load connection info
-		fetch('/api/connection')
-			.then(r => r.json())
-			.then(data => {
-				document.getElementById('peer-id').textContent = 'Peer ID: ' + data.peerId;
-			});
 
-		// Load records
-		fetch('/api/records')
-			.then(r => r.json())
-			.then(records => {
-				const container = document.getElementById('records');
-				records.forEach(record => {
-					const div = document.createElement('div');
-					div.className = 'record';
-					div.innerHTML = \`
-						<div class="rid">ulp://\${record.rid}</div>
-						<div>Size: \${record.size} bytes</div>
-						\${record.policy ? \`
-						<div class="policy">
-							<strong>Policy:</strong><br/>
-							Chirality: \${record.policy.chirality}<br/>
-							Geometry: \${record.policy.projective} / \${record.policy.causality} / \${record.policy.incidence}<br/>
-							Replica Slots: [\${record.policy.slots.join(', ')}]
-						</div>
-						\` : ''}
-						<button onclick="verifyRecord('\${record.rid}')">Verify</button>
-					\`;
-					container.appendChild(div);
-				});
-			});
 
-		function verifyRecord(rid) {
-			fetch('/api/record/' + rid)
-				.then(r => r.arrayBuffer())
-				.then(async bytes => {
-					// Compute SHA-256
-					const hash = await crypto.subtle.digest('SHA-256', bytes);
-					const hashHex = Array.from(new Uint8Array(hash))
-						.map(b => b.toString(16).padStart(2, '0'))
-						.join('');
 
-					if (hashHex === rid) {
-						alert('✓ Record verified! Hash matches RID.');
-					} else {
-						alert('✗ Verification failed! Hash mismatch.');
-					}
-				});
-		}
 
-		// WebAuthn (optional)
-		function registerWebAuthn() {
-			// Placeholder - implement WebAuthn registration
-			document.getElementById('authn-result').textContent = 'WebAuthn registration (TODO)';
-		}
 
-		function authenticateWebAuthn() {
-			// Placeholder - implement WebAuthn authentication
-			document.getElementById('authn-result').textContent = 'WebAuthn auth (TODO)';
-		}
 
-		// Check if WebAuthn is available
-		if (window.PublicKeyCredential) {
-			document.getElementById('webauthn-status').style.display = 'block';
-		}
-	</script>
-</body>
-</html>`
 
-	w.Header().Set("Content-Type", "text/html")
-	w.Write([]byte(html))
-}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 // handleQR - Generate QR code for connection
 func (s *TestamentServer) handleQR(w http.ResponseWriter, r *http.Request) {
@@ -517,4 +543,42 @@ func main() {
 
 	// Start HTTP server (blocking)
 	log.Fatal(srv.StartHTTPServer())
+}
+
+// handleManifest - Serve PWA manifest
+func (s *TestamentServer) handleManifest(w http.ResponseWriter, r *http.Request) {
+	manifest, err := os.ReadFile("manifest.json")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/json")
+	w.Write(manifest)
+}
+
+// handleServiceWorker - Serve service worker
+func (s *TestamentServer) handleServiceWorker(w http.ResponseWriter, r *http.Request) {
+	sw, err := os.ReadFile("sw.js")
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+	w.Header().Set("Content-Type", "application/javascript")
+	w.Write(sw)
+}
+
+// handleIcon192 - Serve 192x192 icon
+func (s *TestamentServer) handleIcon192(w http.ResponseWriter, r *http.Request) {
+	// Generate simple PNG icon (placeholder)
+	png, _ := qrcode.Encode("Testament Trustee", qrcode.Medium, 192)
+	w.Header().Set("Content-Type", "image/png")
+	w.Write(png)
+}
+
+// handleIcon512 - Serve 512x512 icon
+func (s *TestamentServer) handleIcon512(w http.ResponseWriter, r *http.Request) {
+	// Generate simple PNG icon (placeholder)
+	png, _ := qrcode.Encode("Testament Trustee - ULP v2.0", qrcode.High, 512)
+	w.Header().Set("Content-Type", "image/png")
+	w.Write(png)
 }
