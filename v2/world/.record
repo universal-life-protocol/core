@@ -1,0 +1,7 @@
+record full
+include world
+include runner
+include interrupts
+include procedure
+include interrupt
+include record
