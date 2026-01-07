@@ -1,0 +1,2 @@
+MQTT=mqtt://universal-life-protocol.com:1883
+WS=ws://universal-life-protocol.com:3883

@@ -1,3 +1,0 @@
-view canonical
-observe STDOUT as raw
-observe STDERR as ra

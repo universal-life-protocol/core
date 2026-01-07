@@ -1,0 +1,10 @@
+{
+  "name": "ulp-sdk",
+  "version": "0.1.0",
+  "description": "ULP v2.0 templates for record and projection rendering (HTML + JSON schema)",
+  "type": "module",
+  "main": "src/index.js",
+  "exports": {
+    ".": "./src/index.js"
+  }
+}

@@ -1,0 +1,7 @@
+interface v1
+decompile_mode full
+outputs:
+    - recovered.procedure
+    - recovered.interrupt
+end outputs
+end interface

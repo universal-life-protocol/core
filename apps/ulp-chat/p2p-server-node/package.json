@@ -1,0 +1,21 @@
+{
+  "name": "ulp-p2p-server-node",
+  "version": "0.1.0",
+  "description": "ULP v2.0 libp2p WebRTC server with TURN/ICE support and HTTP API",
+  "type": "module",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js --traces=../../out --port=8080",
+    "dev": "node server.js --traces=../../out --port=8080 --log"
+  },
+  "dependencies": {
+    "@chainsafe/libp2p-noise": "^11.0.1",
+    "@libp2p/mplex": "^10.0.2",
+    "@libp2p/webrtc": "^5.0.4",
+    "@libp2p/webrtc-direct": "^6.0.0",
+    "@multiformats/multiaddr": "^12.1.8",
+    "express": "^4.18.2",
+    "libp2p": "^0.46.15",
+    "qrcode": "^1.5.1"
+  }
+}

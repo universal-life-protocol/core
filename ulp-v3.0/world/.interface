@@ -1,0 +1,8 @@
+interface v1
+decompile_mode full
+outputs:
+    - recovered.procedure
+    - recovered.interrupt
+    - canonical_polynomials.txt
+end outputs
+end interface

@@ -1,0 +1,11 @@
+procedure render_lines v3
+domain:
+  +1 line
+end domain
+
+mode open
+sign same
+max_wdegree 3
+shadow first_atom
+
+end procedure

@@ -1,0 +1,68 @@
+view quadrants-octree.v3
+version 3.0
+status normative
+
+requires interface testimony.v3
+
+invariant projection_only true
+invariant no_inference true
+invariant no_mutation true
+invariant stable_order true
+invariant reversible true
+invariant unknown_unknown_non_resolving true
+
+order primary timestamp_asc
+order secondary entry_id_lex
+
+unit statement show
+unit question show
+unit narrative show
+unit silence show
+unit gesture show
+
+partition by quadrant
+partition source interface
+
+projection web allowed
+projection print allowed
+projection text allowed
+projection audio allowed
+
+projection algorithmic forbidden
+projection ranking forbidden
+projection summarization forbidden
+projection classification forbidden
+
+rule unknown_unknown:
+  allow display true
+  allow annotate true
+  forbid resolve true
+  forbid promote_to_known true
+end rule
+
+overlay annotations allowed
+overlay annotations authority none
+
+nav octree enabled
+
+octree root:
+  axes:
+    - quadrant
+    - time_bucket
+    - topic_key
+  depth_max 6
+end octree
+
+time_bucket_seconds 86400
+topic_key_source explicit_only
+
+output model view_model.v3
+output must_include:
+  - header(trace_id, interface_id)
+  - quadrant_sections(known_known, known_unknown, unknown_known, unknown_unknown)
+  - entry_list(canonical_order)
+  - nav_tree(if octree enabled)
+  - hash_panel(trace_id)
+end output
+
+end view

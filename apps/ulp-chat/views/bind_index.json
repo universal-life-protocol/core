@@ -1,0 +1,36 @@
+{
+  "binds": {
+    "clm:ca906838d4d59156": {
+      "intr": "CLAIM_1",
+      "mono": "fact",
+      "ok": true,
+      "reason": "ok",
+      "claim_index": 1,
+      "context_hash": "5caa6861d04b4e17bfbb93568ce8691513f18ea4d483f5a1ab2057a5289f1bd7"
+    },
+    "clm:2f79a4c5835f84c8": {
+      "intr": "CLAIM_1",
+      "mono": "information",
+      "ok": true,
+      "reason": "ok",
+      "claim_index": 1,
+      "context_hash": "714b0c0822973f0e2b1681300ded2557c40c7ec1ea7d347b85e001c0edddd398"
+    },
+    "clm:085af13fe09e004a": {
+      "intr": "CLAIM_1",
+      "mono": "fact",
+      "ok": true,
+      "reason": "ok",
+      "claim_index": 1,
+      "context_hash": "714b0c0822973f0e2b1681300ded2557c40c7ec1ea7d347b85e001c0edddd398"
+    },
+    "clm:aae055c5482d6d6a": {
+      "intr": "CLAIM_1",
+      "mono": "user_message",
+      "ok": true,
+      "reason": "ok",
+      "claim_index": 1,
+      "context_hash": "1a182d1b9bc7f16bf86de231e510deb5380c9132aea63c496248c89f72b0aba9"
+    }
+  }
+}

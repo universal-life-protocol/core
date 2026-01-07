@@ -1,0 +1,38 @@
+{
+  "created": "2026-01-05T00:00:00Z",
+  "interface": "testimony.v3",
+  "trace_id": "sha256:demo123",
+  "entries": [
+    {
+      "id": "e1",
+      "quadrant": "known_known",
+      "unit": "statement",
+      "timestamp": "2026-01-05T00:10:00Z",
+      "content": "Meaning comes from responsibility.",
+      "topic_key": "responsibility"
+    },
+    {
+      "id": "e2",
+      "quadrant": "known_unknown",
+      "unit": "question",
+      "timestamp": "2026-01-05T00:11:00Z",
+      "content": "Why does suffering exist?",
+      "topic_key": "suffering"
+    },
+    {
+      "id": "e3",
+      "quadrant": "unknown_known",
+      "unit": "narrative",
+      "timestamp": "2026-01-05T00:12:00Z",
+      "content": "I feel peace but cannot explain why.",
+      "topic_key": "peace"
+    },
+    {
+      "id": "e4",
+      "quadrant": "unknown_unknown",
+      "unit": "silence",
+      "timestamp": "2026-01-05T00:13:00Z",
+      "content": "[silence 12s]"
+    }
+  ]
+}

@@ -1,0 +1,7 @@
+on_start render_lines
+
+interrupt PRINT v3
+poly:
+  +1 line
+end poly
+end interrupt

@@ -1,0 +1,4 @@
+view canonical
+observe STDOUT as raw
+observe STDERR as raw
+observe EXIT as kv

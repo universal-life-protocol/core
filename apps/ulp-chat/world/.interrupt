@@ -1,0 +1,25 @@
+on_start llm_memory_gate
+
+interrupt EXTRACT_CLAIMS v2
+poly:
+  +2 fact
+  +1 plan
+  +1 task
+  +2 cite
+  +1 confidence
+end poly
+end interrupt
+
+interrupt ANSWER_ONLY v2
+poly:
+  +3 scope
+  +1 cite
+end poly
+end interrupt
+
+interrupt REDACT v2
+poly:
+  +3 redact
+  +2 cite
+end poly
+end interrupt

@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TraceChat - Truly Private</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Source+Code+Pro:wght@400;600&display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/paho-mqtt@1.1.0/paho-mqtt.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ethers@6.10.0/dist/ethers.umd.min.js"></script>
+    <script src="https://webrtc.github.io/adapter/adapter-latest.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@zxing/library@latest/umd/index.min.js"></script>
+    <style>
+        :root {
+            --bg: #0c1116;
+            --surface: #121a22;
+            --panel: #182330;
+            --text: #e6eef5;
+            --muted: #8ea3b4;
+            --accent: #f4b860;
+            --accent-2: #61d095;
+            --danger: #f26b5b;
+            --mono: "Source Code Pro", monospace;
+            --sans: "Space Grotesk", sans-serif;
+        }
+
+        * { box-sizing: border-box; }
+        body {
+            margin: 0;
+            font-family: var(--sans);
+            background: radial-gradient(circle at 20% 20%, #1a2a3a 0%, #0b1117 45%, #06080b 100%);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        #app {
+            max-width: 980px;
+            margin: 0 auto;
+            padding: 32px 20px 60px;
+        }
+
+        header.app-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 28px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .logo span {
+            color: var(--accent);
+        }
+
+        .pill {
+            border: 1px solid #2d3b49;
+            border-radius: 999px;
+            padding: 6px 12px;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        .panel {
+            background: linear-gradient(135deg, #101823 0%, #152131 100%);
+            border: 1px solid #243040;
+            border-radius: 18px;
+            padding: 24px;
+            box-shadow: 0 20px 60px rgba(2, 6, 12, 0.5);
+        }
+
+        .grid {
+            display: grid;
+            gap: 18px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            border: none;
+            background: var(--accent);
+            color: #1b1206;
+            font-weight: 700;
+            padding: 12px 18px;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.2s ease;
+        }
+
+        .cta.secondary {
+            background: transparent;
+            color: var(--text);
+            border: 1px solid #2f3b49;
+        }
+
+        .cta:active {
+            transform: translateY(1px);
+        }
+
+        .muted {
+            color: var(--muted);
+        }
+
+        .fingerprint {
+            font-family: var(--mono);
+            letter-spacing: 1px;
+            font-size: 14px;
+            padding: 6px 10px;
+            background: #0d141b;
+            border-radius: 10px;
+            border: 1px dashed #2e3a48;
+            display: inline-block;
+        }
+
+        .contacts {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .contact-card {
+            padding: 14px 16px;
+            border-radius: 14px;
+            background: #0d141c;
+            border: 1px solid #223041;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+            cursor: pointer;
+        }
+
+        .contact-meta {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .status {
+            font-size: 12px;
+            color: var(--muted);
+        }
+
+        .status.connected { color: var(--accent-2); }
+        .status.disconnected { color: var(--danger); }
+
+        .chat {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .messages {
+            background: #0b1218;
+            border-radius: 16px;
+            padding: 16px;
+            min-height: 220px;
+            border: 1px solid #1d2a36;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message {
+            padding: 10px 14px;
+            border-radius: 14px;
+            max-width: 80%;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        .message.me {
+            align-self: flex-end;
+            background: #1b2a1c;
+            border: 1px solid #28452d;
+        }
+
+        .message.them {
+            align-self: flex-start;
+            background: #141a24;
+            border: 1px solid #2a3342;
+        }
+
+        .composer {
+            display: flex;
+            gap: 12px;
+        }
+
+        .composer textarea {
+            flex: 1;
+            min-height: 80px;
+            resize: vertical;
+            border-radius: 14px;
+            border: 1px solid #2b3847;
+            background: #0b1117;
+            color: var(--text);
+            padding: 12px 14px;
+            font-family: var(--sans);
+        }
+
+        .manual-grid {
+            display: grid;
+            gap: 16px;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+        }
+
+        .manual-textarea {
+            width: 100%;
+            min-height: 120px;
+            resize: vertical;
+            border-radius: 12px;
+            border: 1px solid #2b3847;
+            background: #0b1117;
+            color: var(--text);
+            padding: 10px 12px;
+            font-family: var(--mono);
+            font-size: 12px;
+        }
+
+        .composer .cta {
+            height: fit-content;
+        }
+
+        .qr-box {
+            background: #0b1117;
+            padding: 16px;
+            border-radius: 16px;
+            border: 1px solid #273442;
+        }
+
+        .input-line {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
+
+        .input-line input {
+            flex: 1;
+            border-radius: 10px;
+            border: 1px solid #2b3847;
+            padding: 10px 12px;
+            background: #0b1117;
+            color: var(--text);
+            font-family: var(--mono);
+        }
+
+        .alert {
+            padding: 12px 14px;
+            border-radius: 12px;
+            border: 1px solid #2d3a49;
+            background: #111a24;
+            color: var(--muted);
+            font-size: 13px;
+        }
+
+        @media (max-width: 720px) {
+            header.app-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    <script type="module" src="tracechat.js"></script>
+</body>
+</html>

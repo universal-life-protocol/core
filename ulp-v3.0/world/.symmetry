@@ -1,0 +1,14 @@
+symmetry v2
+policy e8xe8
+projective C
+causality H
+incidence O
+replicas 9
+algebra:
+    mode open
+    weighted_atoms yes
+    decompile_traces yes
+    default_shadow first_atom
+    canonical_form yes
+end algebra
+end symmetry

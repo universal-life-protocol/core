@@ -1,0 +1,63 @@
+{
+  "version": "1.1",
+  "type": "theological-testimony",
+  "created": "2026-01-01T10:35:01.585Z",
+  "metadata": {
+    "participant": "Anonymous",
+    "sessionId": "testimony-1767263624793-o22iwyg",
+    "date": "2026-01-01",
+    "framework": "rumsfeld-matrix",
+    "speaker": "Speaker for the Unknowable"
+  },
+  "matrix": {
+    "known-knowns": [
+      {
+        "text": "God is real",
+        "timestamp": "2026-01-01T10:34:15.245Z"
+      }
+    ],
+    "known-unknowns": [],
+    "unknown-knowns": [
+      {
+        "text": "stmt-1767263655245-wh56jxh47",
+        "timestamp": "2026-01-01T10:34:44.981Z"
+      }
+    ],
+    "unknown-unknowns": {
+      "note": "Space reserved for mystery and the unknowable",
+      "speculation": null
+    }
+  },
+  "events": [
+    {
+      "timestamp": 1767263624808,
+      "iso": "2026-01-01T10:33:44.808Z",
+      "type": "SESSION_START",
+      "data": {
+        "sessionId": "testimony-1767263624793-o22iwyg",
+        "timestamp": "2026-01-01T10:33:44.808Z"
+      }
+    },
+    {
+      "timestamp": 1767263655248,
+      "iso": "2026-01-01T10:34:15.248Z",
+      "type": "ADD_STATEMENT",
+      "data": {
+        "quadrant": "known-knowns",
+        "text": "God is real",
+        "statementId": "stmt-1767263655245-wh56jxh47"
+      }
+    },
+    {
+      "timestamp": 1767263684985,
+      "iso": "2026-01-01T10:34:44.985Z",
+      "type": "ADD_STATEMENT",
+      "data": {
+        "quadrant": "unknown-knowns",
+        "text": "stmt-1767263655245-wh56jxh47",
+        "statementId": "stmt-1767263684981-a6fufuljq"
+      }
+    }
+  ],
+  "hash": "592251ce"
+}

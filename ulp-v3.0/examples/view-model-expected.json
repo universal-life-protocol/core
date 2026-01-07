@@ -1,0 +1,118 @@
+{
+  "entries": {
+    "e1": {
+      "content": "Meaning comes from responsibility.",
+      "id": "e1",
+      "quadrant": "known_known",
+      "timestamp": "2026-01-05T00:10:00Z",
+      "topic_key": "responsibility",
+      "unit": "statement"
+    },
+    "e2": {
+      "content": "Why does suffering exist?",
+      "id": "e2",
+      "quadrant": "known_unknown",
+      "timestamp": "2026-01-05T00:11:00Z",
+      "topic_key": "suffering",
+      "unit": "question"
+    },
+    "e3": {
+      "content": "I feel peace but cannot explain why.",
+      "id": "e3",
+      "quadrant": "unknown_known",
+      "timestamp": "2026-01-05T00:12:00Z",
+      "topic_key": "peace",
+      "unit": "narrative"
+    },
+    "e4": {
+      "content": "[silence 12s]",
+      "id": "e4",
+      "quadrant": "unknown_unknown",
+      "timestamp": "2026-01-05T00:13:00Z",
+      "unit": "silence"
+    }
+  },
+  "generated_at": "2026-01-05T00:00:00Z",
+  "hash_panel": {
+    "trace_hash": "sha256:demo123",
+    "verify_instructions": "Compute sha256 over canonical trace bytes; compare."
+  },
+  "interface_id": "testimony.v3",
+  "nav": {
+    "depth_max": 6,
+    "enabled": true,
+    "nodes": [
+      {
+        "entries": [
+          "e1"
+        ],
+        "path": [
+          "known_known",
+          "2026-01-05T00:00:00Z",
+          "topic:responsibility"
+        ]
+      },
+      {
+        "entries": [
+          "e2"
+        ],
+        "path": [
+          "known_unknown",
+          "2026-01-05T00:00:00Z",
+          "topic:suffering"
+        ]
+      },
+      {
+        "entries": [
+          "e3"
+        ],
+        "path": [
+          "unknown_known",
+          "2026-01-05T00:00:00Z",
+          "topic:peace"
+        ]
+      },
+      {
+        "entries": [
+          "e4"
+        ],
+        "path": [
+          "unknown_unknown",
+          "2026-01-05T00:00:00Z",
+          "topic:~"
+        ]
+      }
+    ],
+    "time_bucket_seconds": 86400,
+    "type": "octree"
+  },
+  "order": [
+    "timestamp_asc",
+    "entry_id_lex"
+  ],
+  "quadrants": {
+    "known_known": {
+      "entries": [
+        "e1"
+      ]
+    },
+    "known_unknown": {
+      "entries": [
+        "e2"
+      ]
+    },
+    "unknown_known": {
+      "entries": [
+        "e3"
+      ]
+    },
+    "unknown_unknown": {
+      "entries": [
+        "e4"
+      ]
+    }
+  },
+  "trace_id": "sha256:demo123",
+  "view_id": "quadrants-octree.v3",
+  "view_model_version": "v3"
+}

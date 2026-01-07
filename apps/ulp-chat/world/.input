@@ -1,0 +1,7 @@
+input v1
+poly:
+  +1 scope
+  +1 cite
+  +1 redact
+end poly
+end input

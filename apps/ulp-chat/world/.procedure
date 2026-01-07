@@ -1,0 +1,22 @@
+procedure llm_memory_gate v2
+domain:
+  +3 fact
+  +2 plan
+  +2 task
+  +1 commit
+  +2 topic
+  +2 artifact
+  +1 contact
+  +4 cite
+  +1 confidence
+  +6 scope
+  +0 summary
+  +9 redact
+end domain
+
+mode open
+shadow longest_prefix
+sign same
+max_wdegree 12
+
+end procedure

@@ -1,0 +1,7 @@
+output v1
+poly:
+  +1 assistant_text
+  +1 memory_claims
+  +1 redactions
+end poly
+end output
