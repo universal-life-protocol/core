@@ -37,7 +37,7 @@ Add to your Claude Desktop configuration (`~/Library/Application Support/Claude/
   "mcpServers": {
     "ulp-studio": {
       "command": "node",
-      "args": ["/path/to/ulp-v1.1/mcp-server/index.js"]
+      "args": ["/path/to/apps/ulp-v1.1-mcp-server/index.js"]
     }
   }
 }

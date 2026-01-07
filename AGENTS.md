@@ -2,8 +2,9 @@
 
 ## Repository Overview
 - `ulp-v3.0/` is the platform-agnostic POSIX/awk core (spec + conformance tests).
-- `ulp-v2.0/` is the v2.0 reference implementation (core + P2P + SDK).
-- `ulp-v1.1/` is the sealed v1.1 implementation.
+- `ulp-v2.0/` is the v2.0 reference implementation (core execution only).
+- `ulp-v1.1/` is the sealed v1.1 implementation (core only).
+- `apps/` contains application implementations (P2P servers, SDK, MCP server, Testament Trustee, ULP Chat, demos, etc.).
 - `docs/` and `dev-docs/` contain design and spec material (v3 specs live in `dev-docs/v3/`).
 - `out/` holds generated traces; do not hand-edit.
 

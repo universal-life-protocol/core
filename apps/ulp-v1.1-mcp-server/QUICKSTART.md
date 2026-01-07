@@ -107,7 +107,7 @@ Edit the config file:
     "ulp-studio": {
       "command": "node",
       "args": [
-        "/absolute/path/to/ulp-v1.1/mcp-server/index.js"
+        "/absolute/path/to/apps/ulp-v1.1-mcp-server/index.js"
       ]
     }
   }
