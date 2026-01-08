@@ -1,0 +1,7 @@
+view v1
+canvas infinite
+layout quadrant
+node default
+  shape card
+end node
+end view

@@ -1,0 +1,14 @@
+symmetry v3
+delta hash sha256
+canon json v1
+delta profile CONV_MIN
+delta weights set=0.40 order=0.10 quad=0.40 unit=0.10 kind=0
+delta components set order quad unit
+delta threshold 0
+transform reorder allowed
+invariant entry_hash_set
+forbid invent_entries
+forbid drop_entries
+forbid rewrite_entries
+forbid change_units
+end symmetry
