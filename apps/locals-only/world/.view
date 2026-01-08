@@ -1,0 +1,30 @@
+# .view
+# Local rendering preferences
+# Controls how YOU see the data
+
+mode: card
+# Options: card, list, grid, map
+
+show:
+  - title
+  - price
+  - location
+  - description
+  - timestamp
+
+hide:
+  - contact  # reveal on click
+  - record_id  # show in details view only
+
+# Theme
+theme: light
+# Options: light, dark, auto
+
+# Density
+density: comfortable
+# Options: compact, comfortable, spacious
+
+# Additional view modes (future)
+# map_view: false
+# graph_view: false
+# timeline_view: false

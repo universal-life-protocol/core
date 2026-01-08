@@ -1,0 +1,26 @@
+# .ignore
+# Local filtering rules
+# Define what YOU don't want to see
+
+# Keyword blocklist (case-insensitive)
+keywords:
+  - scam
+  - crypto
+  - nft
+  - mlm
+  - ponzi
+  - get rich quick
+  - miracle cure
+
+# Patterns to ignore
+patterns:
+  - .*viagra.*
+  - .*casino.*
+  - .*URGENT.*
+
+# Record IDs to ignore (manual blocks)
+blocked_rids:
+  # sha256:abc123... (example)
+
+# Age filter (ignore records older than N days)
+max_age_days: 30

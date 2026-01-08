@@ -1,0 +1,25 @@
+# .include
+# Local inclusion rules
+# Define what YOU want to prioritize
+
+# Preferred keywords (boost in local ranking)
+keywords:
+  - local
+  - handmade
+  - organic
+  - vintage
+  - free
+
+# Preferred locations (if using geo filtering)
+locations:
+  - nearby
+  - neighborhood
+  - community
+
+# Preferred record IDs (trusted sellers)
+trusted_rids:
+  # sha256:def456... (example)
+
+# Sort preferences
+sort_by: timestamp_desc
+# Options: timestamp_desc, timestamp_asc, price_asc, price_desc, custom

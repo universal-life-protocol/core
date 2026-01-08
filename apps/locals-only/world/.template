@@ -1,0 +1,44 @@
+# .template
+# Local template selection and preferences
+# Templates are lenses, not laws
+
+# Primary template (used by default)
+primary: sha256:listing-card-default
+
+# Fallback template (if primary unavailable)
+fallback: sha256:listing-text-minimal
+
+# Template storage preference
+store_received_templates: true
+max_stored_templates: 100
+
+# Auto-apply rules
+auto_apply:
+  - type: listing
+    template: sha256:listing-card-default
+
+  - type: reply
+    template: sha256:reply-threaded
+
+# Template composition (base + overrides)
+compose:
+  - base: sha256:listing-base
+    override: sha256:listing-card-local
+    name: my-custom-card
+
+# Accessibility mode (forces a11y templates)
+accessibility_mode: false
+accessibility_template: sha256:listing-a11y-highcontrast
+
+# Template trust (only apply templates from these sources)
+# Leave empty to accept all templates
+trusted_template_sources:
+  # - sha256:...
+
+# Template blocklist (never apply these templates)
+blocked_templates:
+  # - sha256:...
+
+# Subscription settings
+subscribe_to_templates: true
+template_topic: locals/template

@@ -1,0 +1,11 @@
+# .genesis
+# First-run initialization for locals-only client
+# This file defines the bootstrap state
+
+protocol: ulp-v2.0
+network: locals/market
+bootstrap_broker: wss://test.mosquitto.org:8081
+created: 2026-01-02T00:00:00Z
+
+# Core principle: nothing here is authoritative
+# It's just a suggestion for your local client

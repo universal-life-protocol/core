@@ -1,0 +1,33 @@
+# .schema
+# Local schema validation rules
+# These never leave your machine
+
+required:
+  - type
+  - title
+  - timestamp
+
+optional:
+  - price
+  - location
+  - description
+  - contact
+  - images
+
+forbidden:
+  - script
+  - iframe
+  - eval
+  - __proto__
+
+# Field validation
+rules:
+  title:
+    max_length: 200
+    min_length: 3
+
+  price:
+    pattern: '^\$?\d+(\.\d{2})?$'
+
+  timestamp:
+    format: iso8601

@@ -1,0 +1,62 @@
+[
+  {
+    "text": "type: listing\ntitle: Vintage Typewriter - Royal Quiet De Luxe\nprice: $120\nlocation: San Francisco, CA\ncondition: Good\ncategory: Antiques\ndescription: Beautiful 1950s Royal Quiet De Luxe typewriter in working condition. Original case included. Some cosmetic wear but all keys function perfectly.\ncontact: email@example.com\ntimestamp: 2026-01-02T10:30:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: MacBook Pro 14\" M3 Pro\nprice: $1899\nlocation: Austin, TX\ncondition: Like New\ncategory: Electronics\nbrand: Apple\ndescription: 2024 MacBook Pro, barely used. 18GB RAM, 512GB SSD. Includes original box, charger, and USB-C cable. AppleCare+ until 2027.\ncontact: seller@email.com\ntimestamp: 2026-01-02T11:15:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Handmade Oak Dining Table\nprice: $450\nlocation: Portland, OR\ncondition: Excellent\ncategory: Furniture\ndescription: Custom-built solid oak dining table. Seats 6 comfortably. Dimensions: 72\"L x 36\"W x 30\"H. Beautiful grain pattern, finished with natural oil.\ncontact: woodworker@local.com\ntimestamp: 2026-01-02T09:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Road Bike - Specialized Allez\nprice: $600\nlocation: Denver, CO\ncondition: Good\ncategory: Sporting Goods\nbrand: Specialized\ndescription: Specialized Allez road bike, aluminum frame, 54cm. Shimano 105 groupset. New tires and bar tape. Great for commuting or weekend rides.\ncontact: cyclist@ride.com\ntimestamp: 2026-01-02T08:45:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Vinyl Records Collection - 50+ Jazz & Blues\nprice: $200\nlocation: New Orleans, LA\ncondition: Very Good\ncategory: Music\ndescription: Curated collection of classic jazz and blues vinyl. Includes Miles Davis, John Coltrane, BB King, and more. All records play well with minimal surface noise.\ncontact: jazz.collector@music.net\ntimestamp: 2026-01-02T12:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Arduino Starter Kit + Components\nprice: $45\nlocation: Seattle, WA\ncondition: Excellent\ncategory: Electronics\nbrand: Arduino\ndescription: Official Arduino Uno starter kit with extra sensors, LEDs, resistors, and breadboards. Perfect for beginners. Includes project book.\ncontact: maker@tech.io\ntimestamp: 2026-01-02T13:20:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Organic Honey - Local Wildflower\nprice: $12\nlocation: Boulder, CO\ncondition: New\ncategory: Food\ndescription: Raw, unfiltered wildflower honey from local hives. 16oz jar. Harvested this season. Supports local beekeepers and sustainable practices.\ncontact: beekeeper@local.org\ntimestamp: 2026-01-02T07:30:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Leica M6 Film Camera with 50mm Lens\nprice: $2800\nlocation: New York, NY\ncondition: Excellent\ncategory: Cameras\nbrand: Leica\ndescription: Classic Leica M6 rangefinder camera in black. Comes with Summicron 50mm f/2 lens. Excellent condition, recently serviced. Film tested and working perfectly.\ncontact: photo@classic.camera\ntimestamp: 2026-01-02T14:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Sourdough Starter - 100 Year Old Culture\nprice: Free\nlocation: San Francisco, CA\ncondition: Active\ncategory: Food\ndescription: Share of my family's 100-year-old sourdough starter. Maintained continuously since 1925. Includes feeding instructions and basic recipe.\ncontact: baker@sourdough.local\ntimestamp: 2026-01-02T06:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Electric Guitar - Fender Stratocaster\nprice: $850\nlocation: Nashville, TN\ncondition: Very Good\ncategory: Musical Instruments\nbrand: Fender\ndescription: American Standard Stratocaster, sunburst finish. Plays beautifully, well maintained. Minor cosmetic wear on body. Includes hard case and strap.\ncontact: musician@nashville.music\ntimestamp: 2026-01-02T15:30:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Camping Tent - REI Half Dome 2+\nprice: $180\nlocation: Boise, ID\ncondition: Like New\ncategory: Outdoor Gear\nbrand: REI\ndescription: 2-person backpacking tent, used only 3 times. Includes footprint and original stuff sack. Lightweight and easy to set up. Perfect for weekend trips.\ncontact: outdoors@adventure.net\ntimestamp: 2026-01-02T16:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Antique Cast Iron Skillet - Griswold #8\nprice: $95\nlocation: Chicago, IL\ncondition: Excellent\ncategory: Kitchenware\nbrand: Griswold\ndescription: Vintage Griswold #8 cast iron skillet, circa 1940s. Fully restored and seasoned. Smooth cooking surface, no cracks or warping. A true heirloom piece.\ncontact: chef@castiron.cook\ntimestamp: 2026-01-02T10:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Standing Desk - Fully Jarvis Bamboo\nprice: $350\nlocation: San Jose, CA\ncondition: Good\ncategory: Furniture\nbrand: Fully\ndescription: Electric standing desk, 60\"x30\" bamboo top. Programmable height settings. Minor scratches on surface but fully functional. Great for home office.\ncontact: wfh@desk.setup\ntimestamp: 2026-01-02T11:45:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Espresso Machine - Gaggia Classic Pro\nprice: $380\nlocation: Seattle, WA\ncondition: Like New\ncategory: Appliances\nbrand: Gaggia\ndescription: Semi-automatic espresso machine, barely used. Includes portafilter, tamper, and cleaning supplies. Makes excellent espresso with proper technique.\ncontact: coffee@beans.local\ntimestamp: 2026-01-02T08:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Handwoven Wool Rug - Persian Style\nprice: $280\nlocation: Santa Fe, NM\ncondition: Excellent\ncategory: Home Decor\ndescription: Hand-knotted wool rug, 5'x8', traditional Persian design. Rich reds and blues. Made by local artisan using traditional techniques.\ncontact: weaver@textile.art\ntimestamp: 2026-01-02T13:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Mechanical Keyboard - Leopold FC660C\nprice: $220\nlocation: Austin, TX\ncondition: Very Good\ncategory: Electronics\nbrand: Leopold\ndescription: Topre switches, compact layout. Very clean, light use. Includes original box and cable. Perfect for typing enthusiasts.\ncontact: keeb@mechanical.keys\ntimestamp: 2026-01-02T12:30:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Kayak - Perception Pescador 12\nprice: $450\nlocation: Miami, FL\ncondition: Good\ncategory: Watercraft\nbrand: Perception\ndescription: Fishing kayak with rod holders and storage. Stable and comfortable. Includes paddle and life vest. Great for coastal fishing or recreation.\ncontact: paddler@water.sports\ntimestamp: 2026-01-02T14:30:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Telescope - Celestron NexStar 8SE\nprice: $1200\nlocation: Flagstaff, AZ\ncondition: Excellent\ncategory: Optics\nbrand: Celestron\ndescription: 8-inch Schmidt-Cassegrain telescope with computerized mount. Excellent optics, easy to use. Includes eyepieces and star charts.\ncontact: stargazer@astronomy.club\ntimestamp: 2026-01-02T19:00:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Bookshelf - Mid-Century Modern\nprice: $165\nlocation: Minneapolis, MN\ncondition: Very Good\ncategory: Furniture\ndescription: Solid walnut bookshelf, Danish modern design. Five shelves, adjustable height. Beautiful grain and finish. Minor wear consistent with age.\ncontact: vintage@furniture.mn\ntimestamp: 2026-01-02T10:45:00Z"
+  },
+  {
+    "text": "type: listing\ntitle: Skateboard Deck - Powell Peralta\nprice: $55\nlocation: Los Angeles, CA\ncondition: New\ncategory: Sporting Goods\nbrand: Powell Peralta\ndescription: Brand new deck, never mounted. Classic graphics. 8.5\" width. Perfect for street or park skating.\ncontact: skater@sk8.local\ntimestamp: 2026-01-02T16:45:00Z"
+  }
+]

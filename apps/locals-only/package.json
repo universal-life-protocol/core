@@ -1,0 +1,23 @@
+{
+  "name": "locals-only",
+  "version": "1.0.0",
+  "description": "A client-side, content-addressed marketplace",
+  "type": "module",
+  "scripts": {
+    "start": "python3 -m http.server 8080",
+    "dev": "python3 -m http.server 8080"
+  },
+  "keywords": [
+    "marketplace",
+    "p2p",
+    "decentralized",
+    "content-addressed",
+    "mqtt",
+    "local-first",
+    "ulp"
+  ],
+  "author": "",
+  "license": "Unlicense",
+  "devDependencies": {},
+  "dependencies": {}
+}

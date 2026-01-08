@@ -1,0 +1,64 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>locals-only</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header>
+    <h1>locals-only</h1>
+    <p class="tagline">Global transport, local meaning</p>
+  </header>
+
+  <main>
+    <section class="composer">
+      <h2>New Listing</h2>
+      <textarea id="new" placeholder="type: listing&#x0A;title: Your item title&#x0A;price: $100&#x0A;location: Your city&#x0A;description: Details about your item&#x0A;timestamp: 2026-01-02T12:00:00Z"></textarea>
+      <button id="post">Post Listing</button>
+    </section>
+
+    <section class="template-controls">
+      <h2>View Template</h2>
+      <div class="control-group">
+        <label for="template-selector">Select template:</label>
+        <select id="template-selector">
+          <option value="">Auto (find best match)</option>
+        </select>
+      </div>
+      <details class="template-composer">
+        <summary>Create & Publish Template</summary>
+        <textarea id="template-text" placeholder="type: template&#x0A;name: my-custom-template&#x0A;applies_to:&#x0A;  type: listing&#x0A;&#x0A;select:&#x0A;  required:&#x0A;    - title&#x0A;  optional:&#x0A;    - price&#x0A;  forbidden:&#x0A;    - script&#x0A;&#x0A;render:&#x0A;  layout: card&#x0A;  emphasize:&#x0A;    - title"></textarea>
+        <button id="publish-template">Publish Template</button>
+      </details>
+    </section>
+
+    <section class="feed">
+      <div class="feed-header">
+        <h2>Market Feed</h2>
+        <div class="feed-controls">
+          <button id="load-sample" class="secondary">Load Sample Data</button>
+          <button id="clear-data" class="secondary">Clear All</button>
+          <span id="record-count" class="count">0 listings</span>
+        </div>
+      </div>
+      <div id="listings"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>
+      <strong>Core invariants:</strong>
+      Records are immutable • Edits = new records • MQTT is transport only •
+      All filtering, trust, ranking is local • Nothing authoritative leaves the client
+    </p>
+    <p>
+      <strong>Template principle:</strong>
+      Templates are lenses, not laws • Participation is declared, never granted
+    </p>
+  </footer>
+
+  <script type="module" src="../client/main.js"></script>
+</body>
+</html>

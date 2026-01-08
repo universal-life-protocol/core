@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8" />
+  <title>Debug - Sample Data Loading</title>
+  <style>
+    body {
+      font-family: monospace;
+      padding: 2rem;
+      background: #f5f5f5;
+    }
+    .log {
+      background: #000;
+      color: #0f0;
+      padding: 1rem;
+      border-radius: 4px;
+      margin: 1rem 0;
+      max-height: 400px;
+      overflow-y: auto;
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+    button {
+      background: #4a90e2;
+      color: white;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1rem;
+      cursor: pointer;
+      border-radius: 4px;
+      margin: 0.5rem;
+    }
+    button:hover {
+      background: #357abd;
+    }
+    .error {
+      color: #ff6b6b;
+    }
+    .success {
+      color: #51cf66;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sample Data Loading Debug</h1>
+
+  <div>
+    <button id="test-fetch">Test Fetch JSON</button>
+    <button id="test-db">Test IndexedDB</button>
+    <button id="test-create-record">Test Create Record</button>
+    <button id="test-load-all">Test Load All Sample Data</button>
+    <button id="clear-log">Clear Log</button>
+  </div>
+
+  <div id="log" class="log"></div>
+
+  <script type="module">
+    import { createRecord } from './client/record.js';
+    import { openDB, storeRecord, getAllRecords } from './client/index.js';
+
+    const log = document.getElementById('log');
+
+    function addLog(message, type = 'info') {
+      const className = type === 'error' ? 'error' : type === 'success' ? 'success' : '';
+      const timestamp = new Date().toISOString().split('T')[1].split('.')[0];
+      log.innerHTML += `<div class="${className}">[${timestamp}] ${message}</div>`;
+      log.scrollTop = log.scrollHeight;
+      console.log(message);
+    }
+
+    document.getElementById('clear-log').addEventListener('click', () => {
+      log.innerHTML = '';
+    });
+
+    // Test 1: Fetch JSON
+    document.getElementById('test-fetch').addEventListener('click', async () => {
+      try {
+        addLog('Fetching /world/sample-data.json...');
+        const response = await fetch('/world/sample-data.json');
+        addLog(`Response status: ${response.status} ${response.statusText}`);
+
+        if (!response.ok) {
+          addLog(`Fetch failed: ${response.status}`, 'error');
+          return;
+        }
+
+        const data = await response.json();
+        addLog(`✓ Loaded ${data.length} sample listings`, 'success');
+        addLog(`First listing: ${data[0].text.split('\\n')[1]}`);
+      } catch (err) {
+        addLog(`✗ Fetch error: ${err.message}`, 'error');
+        addLog(`Stack: ${err.stack}`, 'error');
+      }
+    });
+
+    // Test 2: IndexedDB
+    document.getElementById('test-db').addEventListener('click', async () => {
+      try {
+        addLog('Opening IndexedDB...');
+        const db = await openDB();
+        addLog(`✓ Database opened: ${db.name}`, 'success');
+
+        const count = await new Promise((resolve, reject) => {
+          const tx = db.transaction('records', 'readonly');
+          const req = tx.objectStore('records').count();
+          req.onsuccess = () => resolve(req.result);
+          req.onerror = () => reject(req.error);
+        });
+
+        addLog(`Current record count: ${count}`, 'success');
+      } catch (err) {
+        addLog(`✗ Database error: ${err.message}`, 'error');
+      }
+    });
+
+    // Test 3: Create Record
+    document.getElementById('test-create-record').addEventListener('click', async () => {
+      try {
+        addLog('Creating test record...');
+        const text = \`type: listing
+title: Test Item
+price: $10
+location: Test City
+timestamp: \${new Date().toISOString()}\`;
+
+        const record = await createRecord(text);
+        addLog(`✓ Record created: ${record.rid.substring(0, 20)}...`, 'success');
+
+        const db = await openDB();
+        await storeRecord(db, record);
+        addLog(`✓ Record stored in database`, 'success');
+      } catch (err) {
+        addLog(`✗ Create record error: ${err.message}`, 'error');
+      }
+    });
+
+    // Test 4: Load All Sample Data
+    document.getElementById('test-load-all').addEventListener('click', async () => {
+      try {
+        addLog('Starting full sample data load...');
+        addLog('Step 1: Fetching JSON...');
+
+        const response = await fetch('/world/sample-data.json');
+        if (!response.ok) {
+          throw new Error(\`HTTP \${response.status}: \${response.statusText}\`);
+        }
+
+        const sampleListings = await response.json();
+        addLog(\`✓ Fetched \${sampleListings.length} listings\`, 'success');
+
+        addLog('Step 2: Opening database...');
+        const db = await openDB();
+        addLog('✓ Database opened', 'success');
+
+        addLog('Step 3: Creating records...');
+        let loaded = 0;
+
+        for (let i = 0; i < sampleListings.length; i++) {
+          try {
+            const item = sampleListings[i];
+            const record = await createRecord(item.text);
+            await storeRecord(db, record);
+            loaded++;
+
+            if ((i + 1) % 5 === 0) {
+              addLog(\`  ... \${i + 1}/\${sampleListings.length} records processed\`);
+            }
+          } catch (err) {
+            addLog(\`  ✗ Failed record \${i + 1}: \${err.message}\`, 'error');
+          }
+        }
+
+        addLog(\`✓ Successfully loaded \${loaded}/\${sampleListings.length} records\`, 'success');
+
+        const all = await getAllRecords(db);
+        addLog(\`Total records in database: \${all.length}\`, 'success');
+
+      } catch (err) {
+        addLog(\`✗ Load all error: \${err.message}\`, 'error');
+        addLog(\`Stack: \${err.stack}\`, 'error');
+      }
+    });
+
+    addLog('Debug page loaded. Click buttons to test each step.');
+  </script>
+</body>
+</html>
