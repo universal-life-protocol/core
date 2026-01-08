@@ -6,17 +6,74 @@
 [![Status](https://img.shields.io/badge/status-SEALED-green.svg)](ULP-v1.1-SEAL.md)
 [![Version](https://img.shields.io/badge/version-1.1.0-brightgreen.svg)](CHANGELOG.md)
 
+## Table of Contents
+
+- [What is ULP?](#what-is-ulp)
+- [Why ULP?](#why-ulp)
+- [The Five Immutable Principles](#the-five-immutable-principles)
+- [Quick Start](#quick-start)
+- [Architecture](#architecture)
+- [Features](#features)
+- [Pattern_Syntax](#pattern_syntax)
+- [Trace Format](#trace-format)
+- [Examples](#examples)
+- [Validation](#validation)
+- [Troubleshooting](#troubleshooting)
+- [Documentation](#documentation)
+- [Sealed Vocabulary Sets](#sealed-vocabulary-sets)
+- [Architecture Hash](#architecture-hash)
+- [Requirements](#requirements)
+- [Installation](#installation)
+- [License](#license)
+- [Contributing](#contributing)
+- [Philosophy](#philosophy)
+- [Quick Reference](#quick-reference)
+- [Contact](#contact)
+- [Acknowledgments](#acknowledgments)
+
 ## What is ULP?
 
-ULP (Universal Life Protocol) is a paradigm shift in computing where:
+ULP (Universal Life Protocol) is a **paradigm shift in computing** where:
 
 - **Execution = Trace Construction** (not "programs produce traces")
 - **The Trace is the Machine** (not "a log of machine state")
 - **POSIX/Browsers are Projections** (not "runtimes")
 
-Traditional computing: `Program → Runtime → Effects → (maybe) Logs`
+**Traditional computing:**
+```
+Program → Runtime → Effects → (maybe) Logs
+```
 
-ULP computing: `World → Execution → TRACE → Projections`
+**ULP computing:**
+```
+World → Execution → TRACE → Projections
+```
+
+## Why ULP?
+
+ULP solves fundamental problems in software:
+
+**Problem: "Works on my machine"**
+- Solution: Deterministic traces are byte-identical across all machines, forever
+
+**Problem: Irreproducible bugs**
+- Solution: Traces are perfect recordings - replay any execution byte-for-byte
+
+**Problem: Vendor lock-in**
+- Solution: The trace is authoritative, not any particular runtime or platform
+
+**Problem: Lost execution context**
+- Solution: Self-encoding traces contain their complete execution environment
+
+**Problem: Time-travel debugging is hard**
+- Solution: Traces are immutable history - jump to any moment instantly
+
+**Use Cases:**
+- **Reproducible builds** - Prove builds are deterministic
+- **Forensic analysis** - Perfect audit trails for security/compliance
+- **Scientific computing** - Guaranteed reproducibility of research
+- **Distributed systems** - Cryptographically verifiable execution
+- **Time-travel debugging** - Replay and inspect any execution state
 
 ## The Five Immutable Principles
 
@@ -30,25 +87,39 @@ These principles are **sealed** - breaking any requires a version bump.
 
 ## Quick Start
 
+**Get started in 60 seconds:**
+
 ```bash
-# 1. Create a simple world
+# 1. Navigate to ULP directory
 cd ulp-v1.1
+
+# 2. Verify installation
+./validate.sh
+
+# 3. Create your first trace
 echo "hello world" | ./bin/run.sh world out
 
-# 2. View the trace
+# 4. View the result
 ./bin/observe.sh world out/trace.log
 
-# 3. Verify determinism
+# 5. Verify determinism (same input → identical trace)
 echo "hello world" | ./bin/run.sh world out2
-cmp out/trace.log out2/trace.log  # Byte-identical!
+cmp out/trace.log out2/trace.log && echo "✓ Byte-identical!"
+
+# 6. Verify self-encoding (trace contains everything needed to reproduce)
+./bin/decode_trace.sh out/trace.log reconstructed/
+echo "hello world" | ./bin/run.sh reconstructed/WORLD reconstructed/out
+cmp out/trace.log reconstructed/out/trace.log && echo "✓ Perfect reproduction!"
 ```
 
-See [QUICKSTART.md](QUICKSTART.md) for more examples.
+**Next:** See [QUICKSTART.md](QUICKSTART.md) for detailed tutorials and examples.
 
 ## Architecture
 
+### Directory Structure
+
 ```
-world/              World definition (13 dotfiles)
+world/              World definition (14 dotfiles - closed set)
 ├── .genesis        Identity and version
 ├── .env            Environment declarations
 ├── .atom           Primitive values
@@ -109,11 +180,16 @@ Every trace contains its complete execution environment:
 # Extract world definition from trace
 ./bin/decode_trace.sh out/trace.log reconstructed/
 
-# Re-execute from reconstructed world
-echo "test" | ./bin/run.sh reconstructed/WORLD reconstructed/out
+# Look at what was extracted
+ls reconstructed/WORLD/      # World dotfiles
+ls reconstructed/REPO/bin/   # Execution engine
 
-# Traces are byte-identical!
-cmp out/trace.log reconstructed/out/trace.log ✓
+# Re-execute from reconstructed world
+cd reconstructed/REPO
+echo "test" | ./bin/run.sh ../WORLD out
+
+# Verify traces are byte-identical
+cmp out/trace.log <original_path>/out/trace.log && echo "✓ Perfect reproduction!"
 ```
 
 ### Pure Projections
@@ -144,16 +220,35 @@ grep -v "^#METADATA" out/trace.log | ./bin/hash.sh
 
 ## Pattern_Syntax
 
-ULP uses delimiter-based scope syntax with multiset validation:
+ULP uses delimiter-based scope syntax with **multiset validation** (order-independent delimiter matching):
 
 ```
 procedure demo
-(([                    # Open: ((, [
+(([                    # Open:  ( ( [  → multiset: [((
 interrupt PRINT
-](())                  # Close: ], ((, )  → multiset matches (([
+[((                    # Close: [ ( (  → multiset: [((  ✓ Match!
 ```
 
-Validation ensures opening and closing delimiters match as multisets (order-independent).
+**Key insight:** Opening `(([` and closing `[((` contain the same delimiters when sorted, so they form a valid scope.
+
+**Multiset validation:**
+- Extract delimiters from opening and closing signatures
+- Sort both sets of characters
+- Verify they match (order-independent)
+
+**Examples:**
+```bash
+# Valid patterns
+(([  ... [((    # Sorted: [(( = [((  ✓
+([[  ... ]])    # Sorted: [[] = [[]  ✓
+()() ... ()()   # Sorted: (()) = (())  ✓
+
+# Invalid patterns
+(([  ... ]()    # Sorted: [(( ≠ ()]  ✗
+([[  ... )]     # Sorted: [[] ≠ )]   ✗
+```
+
+This is validated by `bin/proc.awk` during world validation.
 
 ## Trace Format
 
@@ -187,30 +282,70 @@ SEAL   wid            <world_hash>
 
 ## Examples
 
-### Hello World
+### Example 1: Hello World
+
+Create a simple interrupt that outputs text:
 
 ```bash
+# Create interrupt handler
 cat > interrupts/HELLO.sh << 'EOF'
 #!/bin/sh
 echo "Hello, ULP!"
 EOF
 chmod +x interrupts/HELLO.sh
 
+# Update world definition
+echo "HELLO" >> world/.include
 echo "interrupt HELLO" >> world/.interrupt
+
+# Execute
 echo "" | ./bin/run.sh world out
 ./bin/observe.sh world out/trace.log
 # Output: Hello, ULP!
 ```
 
-### Text Processing Pipeline
+### Example 2: Text Transformation
+
+Process stdin with an uppercase transformation:
 
 ```bash
-echo "hello ulp world" | ./bin/run.sh world out
-# Trace contains complete execution history
-# Can project to POSIX, JSON, HTML, etc.
+# Create transformation interrupt
+cat > interrupts/UPPER.sh << 'EOF'
+#!/bin/sh
+tr '[:lower:]' '[:upper:]'
+EOF
+chmod +x interrupts/UPPER.sh
+
+# Add to world
+echo "UPPER" >> world/.include
+echo "interrupt UPPER" >> world/.interrupt
+
+# Execute
+echo "hello ulp" | ./bin/run.sh world out
+./bin/observe.sh world out/trace.log
+# Output: HELLO ULP
 ```
 
-See [demos/conversation-series/](demos/conversation-series/) for comprehensive examples.
+### Example 3: Self-Encoding Verification
+
+Demonstrate perfect reproducibility:
+
+```bash
+# Create trace
+echo "reproducible" | ./bin/run.sh world out
+
+# Extract embedded world and tools
+./bin/decode_trace.sh out/trace.log reconstructed/
+
+# Re-execute from extracted files
+cd reconstructed/REPO
+echo "reproducible" | ./bin/run.sh ../WORLD out2
+
+# Verify byte-identical
+cmp out2/trace.log ../../out/trace.log && echo "✓ Perfect!"
+```
+
+**More examples:** See [QUICKSTART.md](QUICKSTART.md) and [demos/conversation-series/](demos/conversation-series/) for comprehensive tutorials.
 
 ## Validation
 
@@ -227,18 +362,94 @@ See [demos/conversation-series/](demos/conversation-series/) for comprehensive e
 # ✓ Architecture invariant verification
 ```
 
+## Troubleshooting
+
+### Trace not created?
+
+```bash
+# Validate world definition
+./bin/validate_world.sh world
+
+# Common issues:
+# - .procedure has unbalanced Pattern_Syntax delimiters
+# - World files contain non-identifier content (control flow forbidden)
+# - Interrupt handler not executable (check with: ls -l interrupts/)
+# - Interrupt not listed in .include
+```
+
+### Traces not deterministic?
+
+```bash
+# Interrupt handlers must be pure - no randomness, timestamps, or network
+# Test the interrupt directly:
+echo "test input" | ./interrupts/YOUR_INTERRUPT.sh
+
+# Forbidden in interrupts:
+# - $(date) or timestamps
+# - $RANDOM or random numbers
+# - Network calls (curl, wget, nc)
+# - File system reads (other than stdin)
+```
+
+### "Permission denied" errors?
+
+```bash
+# Make scripts executable
+chmod +x bin/*.sh
+chmod +x interrupts/*.sh
+
+# Verify with:
+./bin/verify_architecture.sh
+```
+
+### "Command not found: sha256sum"?
+
+```bash
+# bin/hash.sh tries multiple commands. Ensure you have one:
+which sha256sum   # Linux
+which shasum      # macOS/BSD
+which openssl     # Fallback (all platforms)
+```
+
+### Wrong architecture hash?
+
+```bash
+# Verify the canonical architecture file
+sha256sum ULP-v1.1-ARCHITECTURE.txt
+
+# Should output:
+# 9872936e788b17f2b2114565b2af789350ea3e155e93ee0ce5cb1f656c5a57fd
+
+# If different, the architecture file may be modified
+```
+
+### Can't reconstruct from trace?
+
+```bash
+# Check self-encoding is present
+grep "^BEGIN.*encoding" out/trace.log
+grep "^FILE" out/trace.log | wc -l    # Should show multiple files
+grep "^DATA" out/trace.log | wc -l    # Should show data lines
+
+# Try manual decode
+./bin/decode_trace.sh out/trace.log /tmp/test_decode
+ls -la /tmp/test_decode/WORLD/
+ls -la /tmp/test_decode/REPO/
+```
+
 ## Documentation
 
 - [ULP-v1.1-ARCHITECTURE.txt](ULP-v1.1-ARCHITECTURE.txt) - Canonical specification (source of architecture hash)
 - [ULP-v1.1-SEAL.md](ULP-v1.1-SEAL.md) - Verification procedures and change policy
-- [QUICKSTART.md](QUICKSTART.md) - Step-by-step tutorials
+- [QUICKSTART.md](QUICKSTART.md) - Step-by-step tutorials (highly recommended!)
+- [CLAUDE.md](CLAUDE.md) - Guide for AI assistants working with this codebase
 - [CHANGELOG.md](CHANGELOG.md) - Version history
 - [CONTRIBUTING.md](CONTRIBUTING.md) - Development guidelines
 - [demos/conversation-series/](demos/conversation-series/) - Educational traces explaining ULP concepts
 
 ## Sealed Vocabulary Sets
 
-### 13 World File Types (Closed Set)
+### 14 World File Types (Closed Set)
 .genesis, .env, .atom, .manifest, .schema, .sequence, .include, .ignore, .procedure, .interrupt, .view, .record, .interpose, .projection
 
 ### 16 Trace Event Types (Closed Set)
@@ -331,6 +542,58 @@ The Five Principles are sealed to prevent architectural drift. Without immutabil
 - "Works on my machine" problems return
 
 The seal ensures ULP v1.1 traces work identically in 2025 and 2045.
+
+## Quick Reference
+
+### Common Commands
+
+```bash
+# Execute trace
+echo "input" | ./bin/run.sh world out
+
+# View trace
+./bin/observe.sh world out/trace.log
+
+# Validate world
+./bin/validate_world.sh world
+
+# Run all tests
+./validate.sh
+
+# Decode trace
+./bin/decode_trace.sh out/trace.log dest/
+
+# Compute hash
+./bin/hash.sh < file
+
+# Verify determinism
+echo "test" | ./bin/run.sh world out1
+echo "test" | ./bin/run.sh world out2
+cmp out1/trace.log out2/trace.log
+```
+
+### Important Files
+
+```bash
+world/.procedure      # Execution structure (Pattern_Syntax)
+world/.interrupt      # Interrupt declarations
+world/.genesis        # World identity metadata
+out/trace.log         # The trace (ground truth)
+bin/run.sh            # Trace construction engine
+bin/observe.sh        # Projection dispatcher
+```
+
+### Trace Inspection
+
+```bash
+# View specific record types
+grep "^HDR" out/trace.log       # Headers
+grep "^WORLD" out/trace.log     # World identity
+grep "^STDIN" out/trace.log     # Input
+grep "^STDOUT" out/trace.log    # Output
+grep "^EXEC" out/trace.log      # Execution events
+grep "^SEAL" out/trace.log      # Cryptographic seals
+```
 
 ## Contact
 

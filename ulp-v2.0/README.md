@@ -1,30 +1,30 @@
 # Universal Life Protocol v2.0
 
-## From First Principles: Dotfile-Defined, Self-Encoding, Network-Replicable
+> **Deterministic execution that creates self-encoding, verifiable traces from dotfile-defined worlds**
 
-**Status**: Reference Implementation
-**Spec Version**: 2.0
-**Compliance**: ✓ Deterministic, ✓ Self-Encoding, ✓ Policy-Derived
+[![Status](https://img.shields.io/badge/status-reference_implementation-blue)](.)
+[![Spec](https://img.shields.io/badge/spec-v2.0-green)](.)
+[![Deterministic](https://img.shields.io/badge/deterministic-✓-success)](.)
 
----
+## What is ULP v2.0?
 
-## The Prime Rule
+ULP v2.0 is a deterministic execution protocol where:
+- **BALL** (World) + **input** → **execute once** → **POINT** (Trace)
+- Traces are immutable, content-addressed, and self-encoding
+- Policy is derived from trace content via E8×E8 lattice projections
+- Everything is defined by dotfiles - no hidden state, no configuration
 
-**If it is not expressible as a dotfile, it is not part of the system.**
-
-All behavior, authority, symmetry, projection, routing, and replication **must be derivable from dotfiles**.
-
----
+**The Prime Rule**: *If it is not expressible as a dotfile, it is not part of the system.*
 
 ## Quick Start
 
-### 1. Execute and Create a POINT (Record)
+### 1. Execute and Create a Trace
 
 ```bash
 echo -e 'hello\nworld' | ./bin/run.sh world out
 ```
 
-Output:
+**Output:**
 ```
 # Computing WID...
 # WID: 6cde1b0e411dc118c6de9992b8d454a21c000d3742ed414790a585bf994daeae
@@ -34,19 +34,24 @@ Output:
 cbc3673fa91e5851fe51a0be44cb1b53c46da6db34dd5decf68276603b104e55
 ```
 
+**What just happened?**
+1. Computed WID (World ID) from dotfiles in `world/`
+2. Executed interrupts through procedure algebra
+3. Created immutable trace at `out/trace.log`
+4. Derived E8×E8 policy metadata (chirality, geometry, replica slots)
+5. Appended self-encoding bundle
+6. Returned RID (Record ID) for content addressing
+
 ### 2. Verify Determinism
 
 ```bash
 ./test_determinism.sh
 ```
 
-Output:
+**Critical invariant**: Same inputs → byte-for-byte identical traces
+
 ```
 === ULP v2.0 Determinism Test ===
-Run 1: Executing...
-  RID: cbc3673fa91e5851fe51a0be44cb1b53c46da6db34dd5decf68276603b104e55
-Run 2: Executing...
-  RID: cbc3673fa91e5851fe51a0be44cb1b53c46da6db34dd5decf68276603b104e55
 ✓ RIDs match
 ✓ Traces are byte-for-byte identical
 ✓ Policy seeds deterministic
@@ -56,13 +61,17 @@ Run 2: Executing...
 === ALL TESTS PASSED ===
 ```
 
-### 3. Inspect Policy Derivation
+### 3. Inspect the Trace
 
 ```bash
+# View the trace
+cat out/trace.log
+
+# See policy derivation
 grep "^POLICY\|^GEOMETRY\|^REPLICA" out/trace.log
 ```
 
-Output:
+**Output:**
 ```
 POLICY	rid	cbc3673fa91e5851fe51a0be44cb1b53c46da6db34dd5decf68276603b104e55
 POLICY	e8l	1ac41f523a3de6c0b584e1097fb3b68e37aa512db0690c309db1f9f5d0cfbd8b
@@ -71,267 +80,327 @@ POLICY	chirality	LEFT
 GEOMETRY	projective	SPHERE
 GEOMETRY	causality	CUBE
 GEOMETRY	incidence	SIMPLEX5
-REPLICA	slots	 [4, 1, 3, 3, 5, 0, 4, 3, 5]
+REPLICA	slots	[4, 1, 3, 3, 5, 0, 4, 3, 5]
 ```
 
----
+## Core Concepts
 
-## The Two Primitives
-
-### 1. POINT (Record)
-
-An immutable, content-addressed record produced by execution **exactly once**.
-
-```
-POINT ≡ sha256(record_bytes)
-```
-
-- Execution happens once
-- Never re-executed by observers
-- Identified by RID (Record ID)
-
-### 2. BALL (World)
-
-A closed interior of non-executable constraints defined by dotfiles.
-
-```
-BALL ≡ sha256(canonicalize(all_dotfiles))
-```
-
-- Identifier-only content
-- Canonicalizable
-- Non-executable
-- Identified by WID (World ID)
-
----
-
-## The Execution Rule
+### The Execution Rule
 
 ```
 (BALL + input stream) → execute once → POINT
 ```
 
-1. **BALL**: World constraints (dotfiles)
+1. **BALL**: World constraints defined by dotfiles (non-executable, identifier-only)
 2. **Input**: stdin stream
-3. **Execute**: Run interrupts through procedures **once**
-4. **POINT**: Immutable trace record
+3. **Execute**: Run interrupts through procedure envelope **exactly once**
+4. **POINT**: Immutable, content-addressed trace
 
----
+### BALL (World)
 
-## Dotfiles (The Only Axioms)
-
-### Required Dotfiles (v2.0)
-
-| Dotfile | Role | Layer |
-|---------|------|-------|
-| `.genesis` | Origin metadata | BALL |
-| `.env` | Environment constraints | BALL |
-| `.schema` | Trace structure spec | BALL |
-| `.atom` | Primitive units | BALL |
-| `.manifest` | Component inventory | BALL |
-| `.sequence` | Ordering constraints | BALL |
-| `.include` | Allowed interrupts | BALL |
-| `.ignore` | Blocked interrupts | BALL |
-| `.interrupt` | Event hooks | Execution |
-| `.procedure` | Boundary declarations | Execution |
-| `.view` | Observation projections | Projection |
-| `.record` | Self-encoding spec | POINT |
-| **`.symmetry`** | **Policy declarations (v2.0)** | **Policy** |
-
-### NEW: `.symmetry` (v2.0 Feature)
-
-Declares allowed policy space without execution:
+A world is a closed interior of non-executable constraints:
 
 ```
-symmetry v1
+BALL ≡ sha256(canonicalize(all_dotfiles))
+```
+
+**Properties:**
+- Identifier-only content (no executable code in dotfiles)
+- Canonicalizable (deterministic sorting)
+- Identified by WID (World ID)
+
+### POINT (Record)
+
+A record is an immutable execution trace:
+
+```
+POINT ≡ sha256(trace_bytes)
+```
+
+**Properties:**
+- Content-addressed
+- Self-encoding (contains everything to reproduce itself)
+- Execution happens exactly once
+- Never re-executed by observers
+- Identified by RID (Record ID)
+
+### Policy Derivation (v2.0 Feature)
+
+From any RID, the system **derives** (not stores):
+
+1. **E8×E8 Seeds**:
+   ```
+   E8L = sha256("E8L" || RID)
+   E8R = sha256("E8R" || RID)
+   ```
+
+2. **Chirality** (ordering direction):
+   ```
+   LEFT or RIGHT based on (E8L[1] XOR E8R[1]) & 1
+   ```
+
+3. **Geometry** (table-driven selection):
+   - **Projective** (ℂ): LINE, PLANE, SPHERE, SHAPE
+   - **Causality** (ℍ): TETRA, CUBE, OCTA, DODECA, ICOSA
+   - **Incidence** (𝕆): SIMPLEX5, CELL16, CELL24, CELL120, CELL600
+
+4. **Replica Slots** (9 deterministic positions)
+
+**Critical**: No E8 lattice is ever enumerated. All derivations use table lookups.
+
+## Directory Structure
+
+```
+ulp-v2.0/
+├── bin/                    # Core execution engine
+│   ├── run.sh              # Main executor
+│   ├── poly.awk            # Polynomial algebra processor
+│   ├── canon.sh            # Dotfile canonicalization
+│   ├── policy.sh           # E8×E8 seed derivation
+│   ├── geometry.sh         # Geometry table lookups
+│   ├── replica.sh          # Replica slot generation
+│   ├── hash.sh             # Portable SHA-256
+│   └── self_encode.sh      # Self-encoding bundler
+├── interrupts/             # Executable handlers
+│   └── PRINT.sh            # Example interrupt
+├── world/                  # Example world dotfiles
+│   ├── .genesis            # Origin metadata
+│   ├── .env                # Environment constraints
+│   ├── .atom               # Primitive units
+│   ├── .manifest           # Component inventory
+│   ├── .procedure          # Execution envelope
+│   ├── .interrupt          # Event hooks
+│   ├── .symmetry           # Policy declarations (v2.0)
+│   └── ...                 # Other dotfiles
+├── network/                # libp2p protocol implementation
+│   └── ulp_peer.go         # ulp:// protocol handler
+├── test_determinism.sh     # Determinism test suite
+└── README.md               # This file
+```
+
+## Dotfiles Reference
+
+All worlds require these 13 dotfiles:
+
+| Dotfile | Purpose | Example |
+|---------|---------|---------|
+| `.genesis` | Origin metadata | `user brian\nruntime posix` |
+| `.env` | Environment constraints | `stdin file\nstdout file` |
+| `.atom` | Primitive units | `atom line weight 1` |
+| `.manifest` | Component constraints | `max_degree 3\nmax_wdegree 3` |
+| `.schema` | Trace structure spec | `version 2` |
+| `.sequence` | Ordering constraints | (ordering rules) |
+| `.include` | Allowed interrupts | `PRINT` |
+| `.ignore` | Blocked interrupts | (empty or blocklist) |
+| `.procedure` | Execution envelope | `domain:\n  +1 line\nend domain` |
+| `.interrupt` | Event hooks | `interrupt PRINT v2\npoly:\n  +1 line` |
+| `.view` | Observation projections | (view declarations) |
+| `.record` | Self-encoding spec | (bundle specification) |
+| **`.symmetry`** | **Policy declarations** | `policy e8xe8` **(v2.0)** |
+
+## Common Commands
+
+### Execution
+
+```bash
+# Execute with default entry procedure
+echo -e 'hello\nworld' | ./bin/run.sh world out
+
+# Execute with specific procedure
+echo -e 'test' | ./bin/run.sh world out my_procedure
+```
+
+### Testing
+
+```bash
+# Run full determinism test
+./test_determinism.sh
+
+# Manual verification
+echo "test" | ./bin/run.sh world out1
+echo "test" | ./bin/run.sh world out2
+cmp out1/trace.log out2/trace.log  # Should be identical
+```
+
+### Debugging
+
+```bash
+# View raw trace
+cat out/trace.log
+
+# Filter execution events
+awk -F '\t' '$1=="EXEC"' out/trace.log
+
+# Check algebra evaluation
+awk -F '\t' '$1 ~ /^ALG_/' out/trace.log
+
+# View stdout/stderr
+awk -F '\t' '$1=="STDOUT" {print $5}' out/trace.log
+awk -F '\t' '$1=="STDERR" {print $5}' out/trace.log
+
+# Inspect policy metadata
+grep "^POLICY\|^GEOMETRY\|^REPLICA" out/trace.log
+
+# Decode self-encoding bundle
+awk '/^MANIFEST/,/^END$/' out/trace.log
+```
+
+### Utilities
+
+```bash
+# Compute WID from world
+./bin/canon.sh world
+
+# Derive policy from RID
+./bin/policy.sh <RID>
+
+# Get geometry for E8L/E8R seeds
+./bin/geometry.sh <E8L> <E8R>
+
+# Calculate replica slots
+./bin/replica.sh <E8L> <E8R> <geometry_size>
+
+# Hash anything
+echo "hello" | ./bin/hash.sh
+```
+
+## Creating a Custom World
+
+### 1. Create World Directory
+
+```bash
+mkdir -p myworld
+```
+
+### 2. Define Origin
+
+```bash
+cat > myworld/.genesis << 'EOF'
+user alice
+runtime posix
+EOF
+```
+
+### 3. Set Environment
+
+```bash
+cat > myworld/.env << 'EOF'
+stdin file
+stdout file
+EOF
+```
+
+### 4. Declare Atoms
+
+```bash
+cat > myworld/.atom << 'EOF'
+atom line weight 1
+atom word weight 2
+EOF
+```
+
+### 5. Set Constraints
+
+```bash
+cat > myworld/.manifest << 'EOF'
+manifest v2
+
+max_degree 3
+max_wdegree 5
+EOF
+```
+
+### 6. Define Procedure Envelope
+
+```bash
+cat > myworld/.procedure << 'EOF'
+procedure process v2
+domain:
+  +1 line
+  +2 word
+end domain
+
+mode open
+sign same
+max_wdegree 5
+shadow first_atom
+
+end procedure
+EOF
+```
+
+### 7. Create Interrupt
+
+```bash
+cat > interrupts/PROCESS.sh << 'EOF'
+#!/bin/sh
+# Custom interrupt handler
+cat
+EOF
+
+chmod +x interrupts/PROCESS.sh
+```
+
+### 8. Register Interrupt
+
+```bash
+cat > myworld/.interrupt << 'EOF'
+on_start process
+
+interrupt PROCESS v2
+poly:
+  +1 line
+end poly
+end interrupt
+EOF
+```
+
+```bash
+echo "PROCESS" > myworld/.include
+touch myworld/.ignore
+```
+
+### 9. Add Required Files
+
+```bash
+cat > myworld/.schema << 'EOF'
+version 2
+EOF
+
+cat > myworld/.sequence << 'EOF'
+EOF
+
+cat > myworld/.view << 'EOF'
+EOF
+
+cat > myworld/.record << 'EOF'
+EOF
+
+cat > myworld/.symmetry << 'EOF'
+symmetry v2
 policy e8xe8
 projective C
 causality H
 incidence O
 replicas 9
+algebra:
+    mode open
+    weighted_atoms yes
+    canonical_form yes
+end algebra
+end symmetry
+EOF
 ```
 
-This file **does not execute** anything. It declares which families of behavior are permitted.
-
----
-
-## Policy Derivation (v2.0)
-
-From a POINT (RID), the system derives:
-
-### 1. E8×E8 Seeds
+### 10. Execute
 
 ```bash
-E8L = sha256("E8L" || RID)
-E8R = sha256("E8R" || RID)
+echo -e 'hello\nworld' | ./bin/run.sh myworld out
 ```
 
-### 2. Chirality (Ordering Direction)
+## Network Protocol (ulp://)
 
-```bash
-chirality = (byte1(E8L) XOR byte1(E8R)) & 1
-  → 0 = LEFT
-  → 1 = RIGHT
-```
-
-**Critical**: Chirality affects **order only**, never content or truth.
-
-### 3. Geometry Selection (Table-Driven)
-
-```bash
-mix = byte0(E8L) XOR byte0(E8R)
-projective_ladder ← table[mix % 4]   # C family: LINE, PLANE, SPHERE, SHAPE
-causality_ladder  ← table[E8L[2] % 5] # H family: TETRA, CUBE, OCTA, DODECA, ICOSA
-incidence_ladder  ← table[E8R[2] % 5] # O family: SIMPLEX5, CELL16, CELL24, CELL120, CELL600
-```
-
-**Critical**: No E8 lattice is enumerated. Only table lookups.
-
-### 4. Replica Slots (Deterministic)
-
-```bash
-for i in 0..8:
-  slot[i] = (E8L[i]*257 + E8R[i] + i) mod geometry_size
-```
-
-Generates exactly 9 slots per record.
-
----
-
-## The Four Ladders (Explanatory)
-
-You don't need to understand these to use ULP. They explain **why** it works.
-
-### Ontology Ladder (ℝ - Self-Reflective)
-
-```
-POINT (Record) → axiom
-BALL (World)   → constraint interior
-```
-
-- No adjacency
-- No traversal
-- No projection
-- **Source of authority**
-
-### Projective Ladder (ℂ - Observation / Phase)
-
-```
-LINE   → first reflection (boundary crossing)
-PLANE  → contextual grouping
-SPHERE → interface / observation surface
-SHAPE  → projected form (non-causal)
-```
-
-- Reflection only
-- No propagation
-- Hopf ℂ fibration (S¹ fibers)
-- **Views live here**
-
-### Causality Ladder (ℍ - Propagation)
-
-```
-SHAPE → hinge
-TETRA → 4 vertices
-CUBE / OCTA → routing
-DODECA / ICOSA → isotropic propagation
-```
-
-- Adjacency-based
-- Routing
-- Self-healing traversal
-- Quaternionic orientation (S³ fibers)
-- **Network routing lives here**
-
-### Incidence Ladder (𝕆 - Coexistence)
-
-```
-SHAPE → hinge
-SIMPLEX5 → 6 vertices
-CELL16 / CELL24 → replica envelopes
-CELL120 / CELL600 → quorum-free coexistence
-```
-
-- Higher-order relations
-- Replication without consensus
-- Non-associative composition (S⁷ fibers)
-- **Replica slots live here**
-
----
-
-## Architecture
-
-### Directory Structure
-
-```
-ulpv2/
-├── bin/               # Core utilities
-│   ├── hash.sh        # SHA-256 (portable)
-│   ├── canon.sh       # Dotfile canonicalization
-│   ├── policy.sh      # E8×E8 seed/chirality derivation
-│   ├── geometry.sh    # Table-driven geometry selection
-│   ├── replica.sh     # Replica slot generation
-│   ├── proc.awk       # Procedure parser (multiset validation)
-│   ├── run.sh         # Main execution engine
-│   └── self_encode.sh # Self-encoding bundle creator
-├── interrupts/        # Executable handlers
-│   └── PRINT.sh       # Example: echo stdin → stdout
-├── world/             # Example world dotfiles
-│   ├── .genesis
-│   ├── .env
-│   ├── .schema
-│   ├── .atom
-│   ├── .manifest
-│   ├── .sequence
-│   ├── .include
-│   ├── .ignore
-│   ├── .interrupt
-│   ├── .procedure
-│   ├── .view
-│   ├── .record
-│   └── .symmetry      # NEW in v2.0
-├── network/           # libp2p implementation
-│   ├── ulp_peer.go    # ULP protocol handler
-│   └── go.mod
-├── test_determinism.sh
-└── README.md
-```
-
-### Trace Format (v2.0)
-
-```
-HDR       version  2
-HDR       entry    <procedure_name>
-BALL      wid      <WID>
-STDIN     n <num>  text <escaped>
-CLAUSE    qid ...  openSig ... closeSig ... intr ...
-EXEC      eid ...  wid ... qid ... intr ...
-STDOUT    n <num>  text <escaped>
-STDERR    n <num>  text <escaped>
-EXIT      intr ... code <rc>
-END       ok 1
-
-#METADATA policy v2
-POLICY    rid      <RID>
-POLICY    e8l      <E8L_hex>
-POLICY    e8r      <E8R_hex>
-POLICY    chirality <LEFT|RIGHT>
-GEOMETRY  projective <geometry>
-GEOMETRY  causality  <geometry>
-GEOMETRY  incidence  <geometry>
-REPLICA   slots      <JSON_array>
-
-MANIFEST  sha256 ... count ...
-FILE      path ... sha256 ... mode ... bytes ...
-DATA      <base64>
-END_FILE  path ...
-```
-
----
-
-## Network Layer (ulp:// Protocol)
-
-### Serving Records
+### Start P2P Server
 
 ```bash
 cd network
@@ -341,238 +410,95 @@ go build -o ulp_peer ulp_peer.go
 
 ### Protocol
 
-```
-Request:  ulp://<RID>
-Response: <raw_record_bytes>
-```
+- **Request**: `ulp://<RID>`
+- **Response**: Raw trace bytes (never re-executed)
 
-**Critical invariants:**
-- Transport layer is semantics-blind
-- Records are never re-executed
-- Nodes serve raw bytes only
+**Transport properties:**
+- Semantics-blind
+- Content-addressed routing
+- Deterministic peer ordering via chirality
+- Deterministic replication via replica slots
 
-### Routing (Causality)
+## Key Invariants
 
-Peer ordering derived from chirality and causality geometry:
-- LEFT chirality → forward order
-- RIGHT chirality → reverse order
-- Causality geometry determines fallback paths
+### Determinism
+- ✓ No timestamps
+- ✓ No randomness
+- ✓ No network literals (IPs, MACs, ports)
+- ✓ Canonical sorting
+- ✓ Trace-time ordering only
 
-### Replication (Incidence)
+### Architecture
+- ✓ Trace is immutable and append-only
+- ✓ World files are non-executable
+- ✓ Execution happens exactly once
+- ✓ Policy is derived, never stored
+- ✓ Chirality affects ordering only, never content
+- ✓ No E8 lattice enumeration
+- ✓ Transport is semantics-blind
 
-Replica slots are deterministic pure functions of RID:
-- No voting
-- No quorum agreement
-- No consensus protocol
-- Each node independently computes its slots
+## Trace Format
 
----
-
-## Core Utilities
-
-### hash.sh
-
-Portable SHA-256 (works with sha256sum, shasum, or openssl):
-
-```bash
-echo "hello" | ./bin/hash.sh
-# Output: 5891b5b522d5df086d0ff0b110fbd9d21bb4fc7163af34d08286a2e846f6be03
-```
-
-### canon.sh
-
-Canonicalize world dotfiles and compute WID:
-
-```bash
-./bin/canon.sh world
-# Output: 6cde1b0e411dc118c6de9992b8d454a21c000d3742ed414790a585bf994daeae
-```
-
-### policy.sh
-
-Derive E8×E8 policy from RID:
-
-```bash
-./bin/policy.sh cbc3673fa91e5851fe51a0be44cb1b53c46da6db34dd5decf68276603b104e55
-# Output: JSON with E8L, E8R, chirality
-```
-
-### geometry.sh
-
-Table-driven geometry selection:
-
-```bash
-./bin/geometry.sh <E8L> <E8R>
-# Output: JSON with projective, causality, incidence geometries
-```
-
-### replica.sh
-
-Generate 9 deterministic replica slots:
-
-```bash
-./bin/replica.sh <E8L> <E8R> <geometry_size>
-# Output: JSON with slot indices
-```
-
----
-
-## Self-Encoding
-
-Every trace contains **everything needed to recreate the system that produced it**.
-
-### What Gets Embedded
+Traces are tab-separated records:
 
 ```
-WORLD/      # All dotfiles (including .symmetry)
-REPO/bin/   # All utilities (*.sh, *.awk)
-REPO/interrupts/  # All handlers
+HDR       version  2
+HDR       entry    <procedure>
+BALL      wid      <WID>
+ALG_*     ...      # Algebra evaluation
+STDIN     n <num>  text <escaped>
+CLAUSE    qid ...  intr ...
+EXEC      eid ...  wid ... qid ... intr ...
+STDOUT    n <num>  text <escaped>
+STDERR    n <num>  text <escaped>
+EXIT      intr ... code <rc>
+END       ok 1
+
+#METADATA  policy v2
+POLICY    rid      <RID>
+POLICY    e8l      <E8L>
+POLICY    e8r      <E8R>
+POLICY    chirality <LEFT|RIGHT>
+GEOMETRY  projective <geometry>
+GEOMETRY  causality  <geometry>
+GEOMETRY  incidence  <geometry>
+REPLICA   slots      <array>
+
+MANIFEST  sha256 ... count ...
+FILE      path ... sha256 ... bytes ...
+DATA      <base64>
+END_FILE  path ...
+END
 ```
 
-### Reconstruction (Future)
-
-```bash
-./bin/decode.sh out/trace.log /tmp/reconstructed
-cd /tmp/reconstructed/REPO
-echo -e 'hello\nworld' | ./bin/run.sh ../WORLD out2
-# Result: byte-for-byte identical trace
-```
-
----
-
-## Compliance Checklist
-
-An implementation is ULP v2.0 compliant if and only if:
-
-- [x] Records are content-addressed (RID = sha256(bytes))
-- [x] Dotfiles are identifier-only
-- [x] Views are derived, not stored as truth
-- [x] Chirality only affects ordering
-- [x] No E8 or cell graph is enumerated
-- [x] Transport layer is semantics-blind
-- [x] Execution happens exactly once
-- [x] Policy is derived from RID (E8L, E8R, chirality, geometry)
-- [x] Replica slots are deterministic
-- [x] Self-encoding is complete
-
----
-
-## Testing
-
-### Determinism Test
-
-```bash
-./test_determinism.sh
-```
-
-Verifies:
-- ✓ Execution → identical RID
-- ✓ Trace → byte-for-byte identical
-- ✓ Policy → deterministic seeds
-- ✓ Geometry → deterministic selection
-- ✓ Replicas → deterministic slots
-
-### Manual Verification
-
-```bash
-# Run twice
-echo "test" | ./bin/run.sh world out1
-echo "test" | ./bin/run.sh world out2
-
-# Compare traces
-cmp out1/trace.log out2/trace.log
-echo $?  # Should be 0 (identical)
-
-# Compare RIDs
-grep "^POLICY	rid" out1/trace.log
-grep "^POLICY	rid" out2/trace.log
-# Should match exactly
-```
-
----
-
-## Examples
-
-### Minimal World
-
-```bash
-mkdir -p myworld
-cat > myworld/.genesis << 'EOF'
-user alice
-runtime posix
-EOF
-
-cat > myworld/.env << 'EOF'
-stdin file
-stdout file
-EOF
-
-cat > myworld/.atom << 'EOF'
-atom line
-EOF
-
-cat > myworld/.symmetry << 'EOF'
-symmetry v1
-policy e8xe8
-projective C
-causality H
-incidence O
-replicas 9
-EOF
-
-# ... add other required dotfiles
-```
-
-### Custom Interrupt
-
-```bash
-cat > interrupts/UPPERCASE.sh << 'EOF'
-#!/bin/sh
-tr '[:lower:]' '[:upper:]'
-EOF
-
-chmod +x interrupts/UPPERCASE.sh
-
-# Add to .include
-echo "UPPERCASE" >> world/.include
-
-# Add to .procedure
-cat >> world/.procedure << 'EOF'
-procedure transform
-(([
-interrupt UPPERCASE
-[((
-EOF
-
-# Run
-echo "hello" | ./bin/run.sh world out
-```
-
----
-
-## Key Differences from v1.1
+## What's New in v2.0
 
 | Feature | v1.1 | v2.0 |
 |---------|------|------|
-| Policy | Implicit | Explicit (E8×E8) |
+| Policy | Implicit | Explicit E8×E8 derivation |
 | Chirality | None | LEFT/RIGHT ordering |
-| Geometry | None | Table-driven selection |
+| Geometry | None | Table-driven (C/H/O families) |
 | Replicas | None | 9 deterministic slots |
-| Dotfile | 12 files | 13 files (+`.symmetry`) |
-| Trace Metadata | None | POLICY, GEOMETRY, REPLICA |
-| Network Protocol | Not specified | ulp://<RID> |
-| Ladders | Implicit | ℝ, ℂ, ℍ, 𝕆 (explanatory) |
+| Dotfiles | 12 | 13 (+`.symmetry`) |
+| Algebra | Pattern_Syntax | Polynomial v2 |
+| Metadata | None | POLICY, GEOMETRY, REPLICA |
+| Network | Unspecified | `ulp://<RID>` protocol |
 
----
+## Platform Notes
 
-## References
+Developed on **Termux (Android)** with POSIX compatibility:
+- Uses `#!/bin/sh` (not bash)
+- Portable SHA-256 (sha256sum → shasum → openssl)
+- Manual sorting in awk (no asort)
+- Portable stat handling
+- No GNU-specific features
 
-- **ULP v1.1 Architecture**: `../archive/ulp/`
-- **From First Principles Spec**: See normative docs
-- **Symmetry & Projection Spec**: See ladder definitions
-- **libp2p**: https://github.com/libp2p/go-libp2p
+## Learn More
 
----
+- **CLAUDE.md** - Development guide for working with this codebase
+- **Execution Flow** - See `bin/run.sh` for complete execution pipeline
+- **Algebra System** - See `bin/poly.awk` for polynomial evaluation
+- **Policy Derivation** - See `bin/policy.sh`, `bin/geometry.sh`, `bin/replica.sh`
 
 ## License
 
@@ -580,6 +506,4 @@ Reference implementation of Universal Life Protocol v2.0.
 
 ---
 
-## Contact
-
-For questions, issues, or contributions, see project repository.
+**The trace is the machine. Everything else is a view.**
