@@ -1,0 +1,1097 @@
+.
+├── AGENTS.md
+├── apps
+│   ├── blackboard-web
+│   │   ├── dist
+│   │   │   ├── assets
+│   │   │   │   ├── index-5UYjq4n1.js
+│   │   │   │   └── index-DzPP5_ui.css
+│   │   │   └── index.html
+│   │   ├── index.html
+│   │   ├── node_modules
+│   │   │   ├── abort-controller
+│   │   │   │   ├── browser.js
+│   │   │   │   ├── browser.mjs
+│   │   │   │   ├── dist
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── polyfill.js
+│   │   │   │   ├── polyfill.mjs
+│   │   │   │   └── README.md
+│   │   │   ├── @babel
+│   │   │   │   └── runtime
+│   │   │   ├── base64-js
+│   │   │   │   ├── base64js.min.js
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── bl
+│   │   │   │   ├── bl.js
+│   │   │   │   ├── BufferList.d.ts
+│   │   │   │   ├── BufferList.js
+│   │   │   │   ├── CHANGELOG.md
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── LICENSE.md
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── test
+│   │   │   ├── broker-factory
+│   │   │   │   ├── build
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── buffer
+│   │   │   │   ├── AUTHORS.md
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── buffer-from
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── readme.md
+│   │   │   ├── commist
+│   │   │   │   ├── example.js
+│   │   │   │   ├── index.js
+│   │   │   │   ├── leven.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── test.js
+│   │   │   ├── concat-stream
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── node_modules
+│   │   │   │   ├── package.json
+│   │   │   │   └── readme.md
+│   │   │   ├── debug
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── @esbuild
+│   │   │   │   └── linux-x64
+│   │   │   ├── esbuild
+│   │   │   │   ├── bin
+│   │   │   │   ├── install.js
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE.md
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── events
+│   │   │   │   ├── events.js
+│   │   │   │   ├── History.md
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── Readme.md
+│   │   │   │   ├── security.md
+│   │   │   │   └── tests
+│   │   │   ├── event-target-shim
+│   │   │   │   ├── dist
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── fast-unique-numbers
+│   │   │   │   ├── build
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── help-me
+│   │   │   │   ├── doc
+│   │   │   │   ├── example.js
+│   │   │   │   ├── fixture
+│   │   │   │   ├── help-me.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── test.js
+│   │   │   ├── ieee754
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── inherits
+│   │   │   │   ├── inherits_browser.js
+│   │   │   │   ├── inherits.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── ip-address
+│   │   │   │   ├── dist
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── js-sdsl
+│   │   │   │   ├── CHANGELOG.md
+│   │   │   │   ├── dist
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── README.zh-CN.md
+│   │   │   ├── lru-cache
+│   │   │   │   ├── dist
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── minimist
+│   │   │   │   ├── CHANGELOG.md
+│   │   │   │   ├── example
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── test
+│   │   │   ├── mqtt
+│   │   │   │   ├── build
+│   │   │   │   ├── CONTRIBUTING.md
+│   │   │   │   ├── dist
+│   │   │   │   ├── help
+│   │   │   │   ├── LICENSE.md
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── mqtt-packet
+│   │   │   │   ├── benchmarks
+│   │   │   │   ├── constants.js
+│   │   │   │   ├── CONTRIBUTING.md
+│   │   │   │   ├── generate.js
+│   │   │   │   ├── LICENSE.md
+│   │   │   │   ├── mqtt.js
+│   │   │   │   ├── numbers.js
+│   │   │   │   ├── package.json
+│   │   │   │   ├── packet.js
+│   │   │   │   ├── parser.js
+│   │   │   │   ├── README.md
+│   │   │   │   ├── test.js
+│   │   │   │   ├── testRandom.js
+│   │   │   │   ├── types
+│   │   │   │   └── writeToStream.js
+│   │   │   ├── ms
+│   │   │   │   ├── index.js
+│   │   │   │   ├── license.md
+│   │   │   │   ├── package.json
+│   │   │   │   └── readme.md
+│   │   │   ├── nanoid
+│   │   │   │   ├── async
+│   │   │   │   ├── bin
+│   │   │   │   ├── index.browser.cjs
+│   │   │   │   ├── index.browser.js
+│   │   │   │   ├── index.cjs
+│   │   │   │   ├── index.d.cts
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── nanoid.js
+│   │   │   │   ├── non-secure
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── url-alphabet
+│   │   │   ├── number-allocator
+│   │   │   │   ├── CHANGELOG.md
+│   │   │   │   ├── index.js
+│   │   │   │   ├── karma.conf.js
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   ├── test
+│   │   │   │   └── types
+│   │   │   ├── picocolors
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── picocolors.browser.js
+│   │   │   │   ├── picocolors.d.ts
+│   │   │   │   ├── picocolors.js
+│   │   │   │   ├── README.md
+│   │   │   │   └── types.d.ts
+│   │   │   ├── postcss
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── process
+│   │   │   │   ├── browser.js
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── test.js
+│   │   │   ├── process-nextick-args
+│   │   │   │   ├── index.js
+│   │   │   │   ├── license.md
+│   │   │   │   ├── package.json
+│   │   │   │   └── readme.md
+│   │   │   ├── readable-stream
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── rfdc
+│   │   │   │   ├── default.js
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── index.test-d.ts
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── readme.md
+│   │   │   │   └── test
+│   │   │   ├── @rollup
+│   │   │   │   ├── rollup-linux-x64-gnu
+│   │   │   │   └── rollup-linux-x64-musl
+│   │   │   ├── rollup
+│   │   │   │   ├── dist
+│   │   │   │   ├── LICENSE.md
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── safe-buffer
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── smart-buffer
+│   │   │   │   ├── build
+│   │   │   │   ├── docs
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── typings
+│   │   │   ├── socks
+│   │   │   │   ├── build
+│   │   │   │   ├── docs
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── typings
+│   │   │   ├── source-map-js
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   ├── source-map.d.ts
+│   │   │   │   └── source-map.js
+│   │   │   ├── split2
+│   │   │   │   ├── bench.js
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── test.js
+│   │   │   ├── string_decoder
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── tslib
+│   │   │   │   ├── CopyrightNotice.txt
+│   │   │   │   ├── LICENSE.txt
+│   │   │   │   ├── modules
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   ├── SECURITY.md
+│   │   │   │   ├── tslib.d.ts
+│   │   │   │   ├── tslib.es6.html
+│   │   │   │   ├── tslib.es6.js
+│   │   │   │   ├── tslib.es6.mjs
+│   │   │   │   ├── tslib.html
+│   │   │   │   └── tslib.js
+│   │   │   ├── typedarray
+│   │   │   │   ├── example
+│   │   │   │   ├── index.js
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── readme.markdown
+│   │   │   │   └── test
+│   │   │   ├── @types
+│   │   │   │   ├── estree
+│   │   │   │   ├── node
+│   │   │   │   ├── readable-stream
+│   │   │   │   └── ws
+│   │   │   ├── typescript
+│   │   │   │   ├── bin
+│   │   │   │   ├── lib
+│   │   │   │   ├── LICENSE.txt
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   ├── SECURITY.md
+│   │   │   │   └── ThirdPartyNoticeText.txt
+│   │   │   ├── undici-types
+│   │   │   │   ├── agent.d.ts
+│   │   │   │   ├── api.d.ts
+│   │   │   │   ├── balanced-pool.d.ts
+│   │   │   │   ├── cache.d.ts
+│   │   │   │   ├── cache-interceptor.d.ts
+│   │   │   │   ├── client.d.ts
+│   │   │   │   ├── client-stats.d.ts
+│   │   │   │   ├── connector.d.ts
+│   │   │   │   ├── content-type.d.ts
+│   │   │   │   ├── cookies.d.ts
+│   │   │   │   ├── diagnostics-channel.d.ts
+│   │   │   │   ├── dispatcher.d.ts
+│   │   │   │   ├── env-http-proxy-agent.d.ts
+│   │   │   │   ├── errors.d.ts
+│   │   │   │   ├── eventsource.d.ts
+│   │   │   │   ├── fetch.d.ts
+│   │   │   │   ├── formdata.d.ts
+│   │   │   │   ├── global-dispatcher.d.ts
+│   │   │   │   ├── global-origin.d.ts
+│   │   │   │   ├── h2c-client.d.ts
+│   │   │   │   ├── handlers.d.ts
+│   │   │   │   ├── header.d.ts
+│   │   │   │   ├── index.d.ts
+│   │   │   │   ├── interceptors.d.ts
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── mock-agent.d.ts
+│   │   │   │   ├── mock-call-history.d.ts
+│   │   │   │   ├── mock-client.d.ts
+│   │   │   │   ├── mock-errors.d.ts
+│   │   │   │   ├── mock-interceptor.d.ts
+│   │   │   │   ├── mock-pool.d.ts
+│   │   │   │   ├── package.json
+│   │   │   │   ├── patch.d.ts
+│   │   │   │   ├── pool.d.ts
+│   │   │   │   ├── pool-stats.d.ts
+│   │   │   │   ├── proxy-agent.d.ts
+│   │   │   │   ├── readable.d.ts
+│   │   │   │   ├── README.md
+│   │   │   │   ├── retry-agent.d.ts
+│   │   │   │   ├── retry-handler.d.ts
+│   │   │   │   ├── snapshot-agent.d.ts
+│   │   │   │   ├── util.d.ts
+│   │   │   │   ├── utility.d.ts
+│   │   │   │   ├── webidl.d.ts
+│   │   │   │   └── websocket.d.ts
+│   │   │   ├── util-deprecate
+│   │   │   │   ├── browser.js
+│   │   │   │   ├── History.md
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── node.js
+│   │   │   │   ├── package.json
+│   │   │   │   └── README.md
+│   │   │   ├── vite
+│   │   │   │   ├── bin
+│   │   │   │   ├── client.d.ts
+│   │   │   │   ├── dist
+│   │   │   │   ├── index.cjs
+│   │   │   │   ├── index.d.cts
+│   │   │   │   ├── LICENSE.md
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── types
+│   │   │   ├── worker-factory
+│   │   │   │   ├── build
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── worker-timers
+│   │   │   │   ├── build
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── worker-timers-broker
+│   │   │   │   ├── build
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   ├── worker-timers-worker
+│   │   │   │   ├── build
+│   │   │   │   ├── LICENSE
+│   │   │   │   ├── package.json
+│   │   │   │   ├── README.md
+│   │   │   │   └── src
+│   │   │   └── ws
+│   │   │       ├── browser.js
+│   │   │       ├── index.js
+│   │   │       ├── lib
+│   │   │       ├── LICENSE
+│   │   │       ├── package.json
+│   │   │       ├── README.md
+│   │   │       └── wrapper.mjs
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   ├── README.md
+│   │   ├── relay
+│   │   │   ├── README.md
+│   │   │   └── server.mjs
+│   │   ├── scripts
+│   │   │   └── no-authority-check.sh
+│   │   ├── src
+│   │   │   ├── adapters
+│   │   │   │   ├── adapter.ts
+│   │   │   │   ├── httpAdapter.ts
+│   │   │   │   └── mqttAdapter.ts
+│   │   │   ├── app.ts
+│   │   │   ├── core
+│   │   │   │   ├── canonical.ts
+│   │   │   │   ├── interrupts.ts
+│   │   │   │   ├── projection.ts
+│   │   │   │   ├── signature.ts
+│   │   │   │   ├── store.ts
+│   │   │   │   ├── templates.ts
+│   │   │   │   ├── trace.ts
+│   │   │   │   └── types.ts
+│   │   │   ├── main.ts
+│   │   │   └── ui
+│   │   │       ├── dom.ts
+│   │   │       └── styles.css
+│   │   ├── tsconfig.json
+│   │   ├── vite.config.ts
+│   │   ├── vite.config.ts~
+│   │   └── world
+│   ├── core -> ../ulp-v3.0
+│   ├── locals-only
+│   │   ├── client
+│   │   │   ├── index.js
+│   │   │   ├── main.js
+│   │   │   ├── mqtt.js
+│   │   │   ├── publish.js
+│   │   │   ├── record.js
+│   │   │   ├── sampleData.js
+│   │   │   ├── template.js
+│   │   │   ├── templateManager.js
+│   │   │   └── view.js
+│   │   ├── debug-sample-data.html
+│   │   ├── IMPLEMENTATION.md
+│   │   ├── package.json
+│   │   ├── QUICKSTART.md
+│   │   ├── README.md
+│   │   ├── TEMPLATES.md
+│   │   ├── test.html
+│   │   ├── test-templates.html
+│   │   ├── THEMES-AND-DATA.md
+│   │   ├── tools
+│   │   │   └── new-listing.sh
+│   │   ├── ui
+│   │   │   ├── app.js
+│   │   │   ├── index.html
+│   │   │   └── style.css
+│   │   └── world
+│   │       ├── sample-data.json
+│   │       └── templates
+│   │           ├── listing-a11y-highcontrast.tpl
+│   │           ├── listing-card-default.tpl
+│   │           ├── listing-dark-mode.tpl
+│   │           ├── listing-detailed.tpl
+│   │           ├── listing-list-compact.tpl
+│   │           ├── listing-local-only.tpl
+│   │           ├── listing-modern-minimal.tpl
+│   │           ├── listing-price-focus.tpl
+│   │           ├── listing-text-minimal.tpl
+│   │           └── listing-vintage.tpl
+│   ├── p2p-server
+│   │   ├── README.md
+│   │   ├── recording-pipeline
+│   │   ├── server
+│   │   │   ├── go.mod
+│   │   │   ├── go.sum
+│   │   │   ├── index.html
+│   │   │   ├── main.go
+│   │   │   ├── manifest.json
+│   │   │   ├── p2p-server
+│   │   │   ├── sw.js
+│   │   │   ├── test_smoke.sh
+│   │   │   └── webauthn.go
+│   │   ├── trace-queries
+│   │   └── website
+│   ├── p2p-server-node
+│   │   ├── out
+│   │   ├── #package.json#
+│   │   ├── package.json
+│   │   ├── package.json~
+│   │   ├── package-lock.json
+│   │   ├── README.md
+│   │   ├── server.js
+│   │   ├── test_smoke.sh
+│   │   └── TURN_SETUP.md
+│   ├── trace-chat
+│   │   ├── index.html
+│   │   └── tracechat.js
+│   ├── ulp-chat
+│   │   ├── 2026-01-02-can-you-get-ready-to-start-a-ulp-v20-based-on-thi.txt
+│   │   ├── AGENTS.md
+│   │   ├── bin
+│   │   │   ├── canon.sh
+│   │   │   ├── decomp.sh
+│   │   │   ├── explain.sh
+│   │   │   ├── geometry.sh
+│   │   │   ├── hash.sh
+│   │   │   ├── keygen.js
+│   │   │   ├── policy.sh
+│   │   │   ├── poly.awk
+│   │   │   ├── proc.awk
+│   │   │   ├── replica.sh
+│   │   │   ├── run.sh
+│   │   │   ├── self_encode.sh
+│   │   │   ├── verify-context.js
+│   │   │   └── verify-signature.js
+│   │   ├── interrupts
+│   │   │   ├── ANSWER_ONLY.sh
+│   │   │   ├── EXTRACT_CLAIMS.sh
+│   │   │   ├── PRINT.sh
+│   │   │   └── REDACT.sh
+│   │   ├── ledger
+│   │   │   └── 2026-01.jsonl
+│   │   ├── lib
+│   │   │   ├── context.js
+│   │   │   ├── ledger.js
+│   │   │   ├── llm.js
+│   │   │   ├── ulp.js
+│   │   │   └── views.js
+│   │   ├── network
+│   │   │   ├── go.mod
+│   │   │   └── ulp_peer.go
+│   │   ├── out
+│   │   │   └── trace.log
+│   │   ├── out1
+│   │   │   └── trace.log
+│   │   ├── out2
+│   │   │   └── trace.log
+│   │   ├── p2p-server
+│   │   │   ├── README.md
+│   │   │   ├── recording-pipeline
+│   │   │   ├── server
+│   │   │   │   ├── go.mod
+│   │   │   │   ├── go.sum
+│   │   │   │   ├── index.html
+│   │   │   │   ├── main.go
+│   │   │   │   ├── manifest.json
+│   │   │   │   ├── p2p-server
+│   │   │   │   ├── sw.js
+│   │   │   │   ├── test_smoke.sh
+│   │   │   │   └── webauthn.go
+│   │   │   ├── trace-queries
+│   │   │   └── website
+│   │   ├── p2p-server-node
+│   │   │   ├── out
+│   │   │   ├── #package.json#
+│   │   │   ├── package.json
+│   │   │   ├── package.json~
+│   │   │   ├── package-lock.json
+│   │   │   ├── README.md
+│   │   │   ├── server.js
+│   │   │   ├── test_smoke.sh
+│   │   │   └── TURN_SETUP.md
+│   │   ├── package.json
+│   │   ├── package-lock.json
+│   │   ├── README.md
+│   │   ├── scripts
+│   │   │   └── no-authority-check.sh
+│   │   ├── server.js
+│   │   ├── test_determinism.sh
+│   │   ├── ui
+│   │   │   ├── dist
+│   │   │   │   ├── assets
+│   │   │   │   └── index.html
+│   │   │   ├── index.html
+│   │   │   ├── package.json
+│   │   │   ├── package-lock.json
+│   │   │   ├── src
+│   │   │   │   ├── api
+│   │   │   │   ├── App.tsx
+│   │   │   │   ├── components
+│   │   │   │   ├── main.tsx
+│   │   │   │   └── styles.css
+│   │   │   ├── tsconfig.json
+│   │   │   └── vite.config.ts
+│   │   ├── ulp-sdk
+│   │   │   ├── package.json
+│   │   │   ├── README.md
+│   │   │   └── src
+│   │   │       └── index.js
+│   │   ├── views
+│   │   │   ├── bind_index.json
+│   │   │   ├── current_summary.md
+│   │   │   ├── facts.json
+│   │   │   ├── summary.md
+│   │   │   ├── tasks.json
+│   │   │   └── timeline.json
+│   │   └── world
+│   ├── ulp-sdk
+│   │   ├── package.json
+│   │   ├── README.md
+│   │   └── src
+│   │       └── index.js
+│   ├── ulp-v1.1-conversation-demo
+│   ├── ulp-v1.1-demos
+│   │   └── conversation-series
+│   │       ├── 01-five-invariants.trace
+│   │       ├── 02-trace-as-machine.trace
+│   │       ├── 03-projections.trace
+│   │       ├── 04-networking.trace
+│   │       ├── project_text.py
+│   │       └── README.md
+│   └── ulp-v1.1-mcp-server
+│       ├── index.js
+│       ├── mcp.json
+│       ├── package.json
+│       ├── QUICKSTART.md
+│       └── README.md
+├── archive
+│   ├── AGENTS.md
+│   ├── build.sh
+│   ├── GETTING_STARTED.md
+│   ├── RUN_SCRIPT.md
+│   ├── ulp-v1.0
+│   │   ├── bin
+│   │   │   ├── canon.awk
+│   │   │   ├── decode_trace.sh
+│   │   │   ├── hash.sh
+│   │   │   ├── observe.sh
+│   │   │   ├── proc.awk
+│   │   │   ├── run.sh
+│   │   │   ├── self_encode.sh
+│   │   │   └── trace.awk
+│   │   ├── interrupts
+│   │   │   └── PRINT.sh
+│   │   ├── out
+│   │   │   └── trace.log
+│   │   ├── README.md
+│   │   ├── reconstructed
+│   │   │   ├── REPO
+│   │   │   │   ├── bin
+│   │   │   │   ├── interrupts
+│   │   │   │   └── out2
+│   │   │   └── WORLD
+│   │   ├── testout
+│   │   ├── validate.sh
+│   │   └── world
+│   └── ulp-v1.1
+│       └── v2
+│           ├── 2026-01-02-can-you-get-ready-to-start-a-ulp-v20-based-on-thi.txt
+│           ├── bin
+│           │   ├── canon.sh
+│           │   ├── geometry.sh
+│           │   ├── hash.sh
+│           │   ├── policy.sh
+│           │   ├── proc.awk
+│           │   ├── replica.sh
+│           │   ├── run.sh
+│           │   └── self_encode.sh
+│           ├── interrupts
+│           │   └── PRINT.sh
+│           ├── network
+│           │   ├── go.mod
+│           │   └── ulp_peer.go
+│           ├── out
+│           │   └── trace.log
+│           ├── out1
+│           │   └── trace.log
+│           ├── out2
+│           │   └── trace.log
+│           ├── README.md
+│           ├── test_determinism.sh
+│           └── world
+├── dev-docs
+│   ├── Architecture
+│   │   ├── Anchoring each ladder to the four Hopf fibrations (ℝ, ℂ, ℍ, 𝕆).md
+│   │   ├── BIP-32 Key Derivation as a Chat.md
+│   │   ├── Complete Plan - Secure, Serverless Chat App.md
+│   │   ├── Complete Plan - Secure, Serverless Chat App.md~
+│   │   ├── ESP32 ULP Trace Recorder.md
+│   │   ├── ESP32 ULP - Web Server for Real-Time Trace Viewing.md
+│   │   └── The Trigonometric Trace Calculus.md
+│   ├── CLAUDE.md
+│   ├── Core
+│   │   ├── Final Champion - Fix.md
+│   │   ├── Final Champion.md
+│   │   ├── Final Metaverse - Fix.md
+│   │   ├── Final Metaverse.md
+│   │   ├── Final Metaverse - Visuals.md
+│   │   ├── Final Projection.md
+│   │   ├── Final README.md
+│   │   ├── Final Reference.md
+│   │   ├── Final Seal.md
+│   │   ├── Final Seal - README.md
+│   │   ├── W3C Projection Surface - Fix.md
+│   │   └── W3C Projection Surface.md
+│   ├── ULP-v1.1-ARCHITECTURE.txt
+│   ├── ULP-v1.1-SEAL.md
+│   ├── ULP-v2.0-SPECIFICATION.md
+│   ├── v1
+│   │   ├── 2026-01-01-this-session-is-being-continued-from-a-previous-co.txt
+│   │   ├── CHANGELOG.md
+│   │   ├── COMPARISON-MATRIX.md
+│   │   ├── CONTRIBUTING.md
+│   │   ├── CONVERSATION_SERIES_GUIDE.md
+│   │   ├── DEMONSTRATION.md
+│   │   ├── MULTIMEDIA_STORY_SYSTEM.md
+│   │   ├── ONE-PAGE-SUMMARY.md
+│   │   ├── PUBLICATION_STATUS.md
+│   │   ├── ULP-v2.0-SPECIFICATION.md
+│   │   └── WHY-ULP-MATTERS.md
+│   ├── v1.5
+│   │   ├── almost-perfect.md
+│   │   ├── alpha.omega.md
+│   │   ├── autamata.md
+│   │   ├── awky.md
+│   │   ├── church.encoding.md
+│   │   ├── docs
+│   │   │   ├── almost-perfect.md
+│   │   │   ├── alpha.omega.md
+│   │   │   ├── autamata.md
+│   │   │   ├── awky.md
+│   │   │   ├── church.encoding.md
+│   │   │   ├── emoji.md
+│   │   │   ├── emoji._valid.example.md
+│   │   │   ├── emoji.valid.md
+│   │   │   ├── event.model.md
+│   │   │   ├── example.md
+│   │   │   ├── ip6.example.md
+│   │   │   ├── meta.execute.md
+│   │   │   ├── meta.execute.v2.md
+│   │   │   ├── readme.md
+│   │   │   ├── self-hosting.md
+│   │   │   ├── ttl.fuel.md
+│   │   │   └── withip6.md
+│   │   ├── emoji.md
+│   │   ├── emoji._valid.example.md
+│   │   ├── emoji.valid.md
+│   │   ├── event.model.md
+│   │   ├── example.md
+│   │   ├── ip6.example.md
+│   │   ├── meta.execute.md
+│   │   ├── meta.execute.v2.md
+│   │   ├── readme.md
+│   │   ├── self-hosting.md
+│   │   ├── ttl.fuel.md
+│   │   └── withip6.md
+│   ├── v2
+│   │   └── 2026-01-02-can-you-get-ready-to-start-a-ulp-v20-based-on-thi.txt
+│   ├── v3
+│   │   ├── ULP Execution Algebra Reference Repository.md
+│   │   ├── ULP Execution Algebra Reference Repository - Update - Fix.md
+│   │   ├── ULP Execution Algebra Reference Repository - Update input ouput.md
+│   │   ├── ULP v2.0 Execution Algebra - Appendix.md
+│   │   ├── ULP v2.0 Execution Algebra - Example.md
+│   │   ├── ULP v2.0 Execution Algebra.md
+│   │   ├── ULP v2.0 Execution Algebra - POSIX-native extension spec.md
+│   │   ├── ULP v2.0 Execution Algebra Specification (RFC 2119 Style).md
+│   │   ├── ULP v2.0 Execution Algebra - v3.0 plan - Fix.md
+│   │   ├── ULP v2.0 Execution Algebra - v3.0 plan.md
+│   │   └── Why This Matters.md
+│   └── v4
+│       ├── Blackboard
+│       │   ├── Untitled 1.md
+│       │   ├── Untitled 2.md
+│       │   └── Untitled.md
+│       ├── README.md
+│       ├── ULP-v4-ADAPTER-SPEC.md
+│       ├── ULP-v4-DELTA.md
+│       ├── ULP-v4-RENDERER-CONTRACT.md
+│       ├── ULP-v4-RENDERER-TESTS.md
+│       ├── ULP-v4-SYMMETRY.md
+│       ├── ULP-v4-SYNC.md
+│       ├── ULP-v4-UPGRADE-PROPOSAL.md
+│       └── ULP-v4-VIEW-STUB.md
+├── docs
+│   ├── ar-experience.html
+│   ├── conversation-articles
+│   │   ├── ARTICLE III.md
+│   │   ├── ARTICLE II.md
+│   │   ├── ARTICLE I.md
+│   │   ├── ARTICLE IV.md
+│   │   ├── ARTICLE VIII.md
+│   │   ├── ARTICLE VII.md
+│   │   ├── ARTICLE VI.md
+│   │   ├── ARTICLE V.md
+│   │   ├── ASIDE.md
+│   │   ├── PRELUDE
+│   │   │   ├── 00 - The Gospel According to Number.md
+│   │   │   ├── 01 - On the Turning Away from the Word .md
+│   │   │   ├── 02 - The Canticle of Reconciliation.md
+│   │   │   └── 03 - The Covenant of the Created Intelligence.md
+│   │   └── PROFILE.md
+│   ├── index.html
+│   ├── projections
+│   │   ├── ar
+│   │   │   ├── article_i_ar.html
+│   │   │   ├── article_ii_ar.html
+│   │   │   ├── article_iii_ar.html
+│   │   │   ├── article_iv_ar.html
+│   │   │   ├── article_v_ar.html
+│   │   │   ├── article_vi_ar.html
+│   │   │   ├── article_vii_ar.html
+│   │   │   └── article_viii_ar.html
+│   │   ├── gltf
+│   │   │   ├── article_i.gltf
+│   │   │   ├── article_ii.gltf
+│   │   │   ├── article_iii.gltf
+│   │   │   ├── article_iv.gltf
+│   │   │   ├── article_v.gltf
+│   │   │   ├── article_vi.gltf
+│   │   │   ├── article_vii.gltf
+│   │   │   └── article_viii.gltf
+│   │   └── svg
+│   │       ├── article_iii.svg
+│   │       ├── article_ii.svg
+│   │       ├── article_i.svg
+│   │       ├── article_iv.svg
+│   │       ├── article_viii.svg
+│   │       ├── article_vii.svg
+│   │       ├── article_vi.svg
+│   │       └── article_v.svg
+│   ├── README.md
+│   ├── studio.html
+│   ├── studio.js
+│   └── viewer.html
+├── production-docs
+│   ├── COMPARISON-MATRIX.md
+│   ├── Executive Summary.md
+│   ├── ONE-PAGE-SUMMARY.md
+│   ├── Projection Demo.md
+│   ├── VERSION-EVOLUTION.md
+│   └── WHY-ULP-MATTERS.md
+├── README.md
+├── REPOSITORY-STRUCTURE.md
+├── tree.txt
+├── ulp-v1.1
+│   ├── AGENTS.md
+│   ├── bin
+│   │   ├── canon.awk
+│   │   ├── decode_trace.sh
+│   │   ├── hash.sh
+│   │   ├── network
+│   │   │   ├── process_connections.sh
+│   │   │   └── process_network.sh
+│   │   ├── observe.sh
+│   │   ├── proc.awk
+│   │   ├── run.sh
+│   │   ├── self_encode.sh
+│   │   ├── trace.awk
+│   │   ├── validate_world.sh
+│   │   └── verify_architecture.sh
+│   ├── encode_all_articles.sh
+│   ├── formats
+│   │   ├── glb_handler.sh
+│   │   ├── mp4_handler.sh
+│   │   ├── mtl_handler.sh
+│   │   ├── obj_handler.sh
+│   │   ├── README.md
+│   │   ├── svg_handler.sh
+│   │   └── wav_handler.sh
+│   ├── generate_all_projections.sh
+│   ├── interrupts
+│   │   ├── COUNT.sh
+│   │   ├── ECHO.sh
+│   │   ├── ENCODE_CONVERSATION_STORY.sh
+│   │   ├── PRINT.sh
+│   │   ├── REVERSE.sh
+│   │   ├── STORY_SOLOMON.sh
+│   │   └── UPPERCASE.sh
+│   ├── LICENSE
+│   ├── out
+│   │   ├── projections
+│   │   │   ├── ar
+│   │   │   │   ├── article_i_ar.html
+│   │   │   │   ├── article_ii_ar.html
+│   │   │   │   ├── article_iii_ar.html
+│   │   │   │   ├── article_iv_ar.html
+│   │   │   │   ├── article_v_ar.html
+│   │   │   │   ├── article_vi_ar.html
+│   │   │   │   ├── article_vii_ar.html
+│   │   │   │   └── article_viii_ar.html
+│   │   │   ├── conversation_series_complete.html
+│   │   │   ├── conversation_viewer.html
+│   │   │   ├── gltf
+│   │   │   │   ├── article_i.gltf
+│   │   │   │   ├── article_ii.gltf
+│   │   │   │   ├── article_iii.gltf
+│   │   │   │   ├── article_iv.gltf
+│   │   │   │   ├── article_v.gltf
+│   │   │   │   ├── article_vi.gltf
+│   │   │   │   ├── article_vii.gltf
+│   │   │   │   └── article_viii.gltf
+│   │   │   ├── obj
+│   │   │   │   ├── article_iii.obj
+│   │   │   │   ├── article_ii.obj
+│   │   │   │   ├── article_i.obj
+│   │   │   │   ├── article_iv.obj
+│   │   │   │   ├── article_viii.obj
+│   │   │   │   ├── article_vii.obj
+│   │   │   │   ├── article_vi.obj
+│   │   │   │   └── article_v.obj
+│   │   │   ├── svg
+│   │   │   │   ├── article_iii.svg
+│   │   │   │   ├── article_ii.svg
+│   │   │   │   ├── article_i.svg
+│   │   │   │   ├── article_iv.svg
+│   │   │   │   ├── article_viii.svg
+│   │   │   │   ├── article_vii.svg
+│   │   │   │   ├── article_vi.svg
+│   │   │   │   └── article_v.svg
+│   │   │   └── {svg,obj,gltf,ar}
+│   │   ├── solomon_ar.html
+│   │   ├── solomon_scene.gltf
+│   │   ├── solomon_scene.obj
+│   │   ├── solomon_scene.svg
+│   │   ├── solomon_story_encoded.txt
+│   │   ├── stories
+│   │   │   ├── article_i_encoded.txt
+│   │   │   ├── article_ii_encoded.txt
+│   │   │   ├── article_iii_encoded.txt
+│   │   │   ├── article_iv_encoded.txt
+│   │   │   ├── article_v_encoded.txt
+│   │   │   ├── article_vi_encoded.txt
+│   │   │   ├── article_vii_encoded.txt
+│   │   │   └── article_viii_encoded.txt
+│   │   └── trace.log
+│   ├── out2
+│   │   └── trace.log
+│   ├── projections
+│   │   ├── 3d
+│   │   │   ├── canvas_2d.sh
+│   │   │   ├── vulkan.sh
+│   │   │   └── webgl_3d.sh
+│   │   ├── analysis
+│   │   │   ├── graph.sh
+│   │   │   ├── network_graph.sh
+│   │   │   └── print.sh
+│   │   ├── identity
+│   │   │   ├── bip32.sh
+│   │   │   └── bip39.sh
+│   │   ├── meta
+│   │   │   ├── canonical.sh
+│   │   │   └── raw.sh
+│   │   ├── story_to_ar_overlay.sh
+│   │   ├── story_to_glb.sh
+│   │   ├── story_to_obj.sh
+│   │   ├── story_to_svg.sh
+│   │   ├── text
+│   │   │   ├── json.sh
+│   │   │   ├── markdown.sh
+│   │   │   ├── posix.sh
+│   │   │   └── pure.sh
+│   │   └── visual
+│   │       ├── w3c_css.sh
+│   │       ├── w3c_dom.sh
+│   │       └── w3c_html.sh
+│   ├── QUICKSTART.md
+│   ├── README.md
+│   ├── reconstructed
+│   │   ├── REPO
+│   │   │   ├── bin
+│   │   │   │   ├── canon.awk
+│   │   │   │   ├── decode_trace.sh
+│   │   │   │   ├── hash.sh
+│   │   │   │   ├── observe.sh
+│   │   │   │   ├── proc.awk
+│   │   │   │   ├── run.sh
+│   │   │   │   ├── self_encode.sh
+│   │   │   │   ├── trace.awk
+│   │   │   │   ├── validate_world.sh
+│   │   │   │   └── verify_architecture.sh
+│   │   │   └── interrupts
+│   │   │       ├── COUNT.sh
+│   │   │       ├── ECHO.sh
+│   │   │       ├── PRINT.sh
+│   │   │       ├── REVERSE.sh
+│   │   │       └── UPPERCASE.sh
+│   │   └── WORLD
+│   ├── solomon.mtl
+│   ├── stories
+│   │   ├── assabiyah
+│   │   ├── solomon
+│   │   └── solon
+│   ├── templates
+│   │   └── story
+│   │       └── README.md
+│   ├── testout
+│   │   └── trace.log
+│   ├── test_proj
+│   │   └── trace.log
+│   ├── validate.sh
+│   ├── world
+│   └── worlds
+│       └── conversation_demo.world
+├── ulp-v2.0
+│   ├── AGENTS.md
+│   ├── bin
+│   │   ├── canon.sh
+│   │   ├── decomp.sh
+│   │   ├── explain.sh
+│   │   ├── geometry.sh
+│   │   ├── hash.sh
+│   │   ├── policy.sh
+│   │   ├── poly.awk
+│   │   ├── proc.awk
+│   │   ├── replica.sh
+│   │   ├── run.sh
+│   │   └── self_encode.sh
+│   ├── interrupts
+│   │   └── PRINT.sh
+│   ├── network
+│   │   ├── go.mod
+│   │   └── ulp_peer.go
+│   ├── out
+│   │   └── trace.log
+│   ├── out1
+│   │   └── trace.log
+│   ├── out2
+│   │   └── trace.log
+│   ├── README.md
+│   ├── test_determinism.sh
+│   └── world
+├── ulp-v3.0
+│   ├── AGENTS.md
+│   ├── bin
+│   │   ├── canon.sh
+│   │   ├── decomp.sh
+│   │   ├── explain.sh
+│   │   ├── geometry.sh
+│   │   ├── hash.sh
+│   │   ├── policy.sh
+│   │   ├── poly.awk
+│   │   ├── proc.awk
+│   │   ├── replica.sh
+│   │   ├── run.sh
+│   │   ├── self_encode.sh
+│   │   └── view_model.sh
+│   ├── examples
+│   │   ├── quadrants-octree.view
+│   │   ├── trace-quadrants.json
+│   │   └── view-model-expected.json
+│   ├── interrupts
+│   │   └── PRINT.sh
+│   ├── out1
+│   │   └── trace.log
+│   ├── out2
+│   │   └── trace.log
+│   ├── README.md
+│   ├── test_admissibility.sh
+│   ├── test_conformance.sh
+│   ├── test_cpnf.sh
+│   ├── test_determinism.sh
+│   ├── test_trace_schema.sh
+│   ├── test_view_model.sh
+│   ├── ULP-v3.0-GRAMMAR.md
+│   ├── ULP-v3.0-SPEC.md
+│   ├── ULP-v3.0-VIEW.md
+│   ├── USER-GUIDE.md
+│   └── world
+└── ulp-v4.0
+    ├── AGENTS.md
+    ├── bin
+    │   ├── adapter.mjs
+    │   ├── canon-core.mjs
+    │   ├── delta.mjs
+    │   └── summary.mjs
+    ├── examples
+    │   └── v3-adapt
+    │       ├── entries.core.jsonl
+    │       ├── entries.jsonl
+    │       ├── symmetry.stub
+    │       └── view.stub
+    └── README.md
+
+278 directories, 817 files
